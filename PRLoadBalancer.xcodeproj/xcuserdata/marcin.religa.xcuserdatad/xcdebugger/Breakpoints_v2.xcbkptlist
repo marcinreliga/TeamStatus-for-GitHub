@@ -1,0 +1,247 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Bucket
+   type = "1"
+   version = "2.0">
+   <Breakpoints>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "PRLoadBalancer/NetworkManager.swift"
+            timestampString = "517337753.689556"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "40"
+            endingLineNumber = "40"
+            landmarkName = "query(_:completion:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "PRLoadBalancer/PRLoadBalancerApp.swift"
+            timestampString = "517853681.954489"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "77"
+            endingLineNumber = "77"
+            landmarkName = "parseResponse(data:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "PRLoadBalancer/PRLoadBalancerApp.swift"
+            timestampString = "517422891.682388"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "15"
+            endingLineNumber = "15"
+            landmarkName = "run()"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "PRLoadBalancer.PRLoadBalancerApp.run () -&gt; ()"
+                  moduleName = "PRLoadBalancer"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/marcin.religa/projects/PRLoadBalancer/PRLoadBalancer/PRLoadBalancerApp.swift"
+                  timestampString = "517422728.522546"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "18"
+                  endingLineNumber = "18"
+                  offsetFromSymbolStart = "180">
+               </Location>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "PRLoadBalancer.PRLoadBalancerApp.run () -&gt; ()"
+                  moduleName = "PRLoadBalancer"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/marcin.religa/projects/PRLoadBalancer/PRLoadBalancer/PRLoadBalancerApp.swift"
+                  timestampString = "517422728.524457"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "18"
+                  endingLineNumber = "18"
+                  offsetFromSymbolStart = "238">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "PRLoadBalancer/PRLoadBalancerApp.swift"
+            timestampString = "517423253.139092"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "32"
+            endingLineNumber = "32"
+            landmarkName = "parse(json:)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "PRLoadBalancer.PRLoadBalancerApp.(parse in _BFCDD6AB8CE6A0FB6D2C2EB321B54C54) (json : Swift.Dictionary&lt;Swift.String, Any&gt;) -&gt; ()"
+                  moduleName = "PRLoadBalancer"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/marcin.religa/projects/PRLoadBalancer/PRLoadBalancer/PRLoadBalancerApp.swift"
+                  timestampString = "517423927.617029"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "32"
+                  endingLineNumber = "32"
+                  offsetFromSymbolStart = "388">
+               </Location>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "PRLoadBalancer.PRLoadBalancerApp.(parse in _BFCDD6AB8CE6A0FB6D2C2EB321B54C54) (json : Swift.Dictionary&lt;Swift.String, Any&gt;) -&gt; ()"
+                  moduleName = "PRLoadBalancer"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/marcin.religa/projects/PRLoadBalancer/PRLoadBalancer/PRLoadBalancerApp.swift"
+                  timestampString = "517423927.61865"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "32"
+                  endingLineNumber = "32"
+                  offsetFromSymbolStart = "711">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "PRLoadBalancer/PRLoadBalancerApp.swift"
+            timestampString = "517423612.024819"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "38"
+            endingLineNumber = "38"
+            landmarkName = "parse(json:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "PRLoadBalancer/PRLoadBalancerApp.swift"
+            timestampString = "517423936.795278"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "44"
+            endingLineNumber = "44"
+            landmarkName = "parse(json:)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "PRLoadBalancer.PRLoadBalancerApp.(parse in _BFCDD6AB8CE6A0FB6D2C2EB321B54C54) (json : Swift.Dictionary&lt;Swift.String, Any&gt;) -&gt; ()"
+                  moduleName = "PRLoadBalancer"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/marcin.religa/projects/PRLoadBalancer/PRLoadBalancer/PRLoadBalancerApp.swift"
+                  timestampString = "517853682.468526"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "44"
+                  endingLineNumber = "44"
+                  offsetFromSymbolStart = "2840">
+               </Location>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "PRLoadBalancer.PRLoadBalancerApp.(parse in _BFCDD6AB8CE6A0FB6D2C2EB321B54C54) (json : Swift.Dictionary&lt;Swift.String, Any&gt;) -&gt; ()"
+                  moduleName = "PRLoadBalancer"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/marcin.religa/projects/PRLoadBalancer/PRLoadBalancer/PRLoadBalancerApp.swift"
+                  timestampString = "517853682.471131"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "44"
+                  endingLineNumber = "44"
+                  offsetFromSymbolStart = "3207">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "PRLoadBalancer/PRLoadBalancerApp.swift"
+            timestampString = "517853755.236938"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "51"
+            endingLineNumber = "51"
+            landmarkName = "parse(json:)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "PRLoadBalancer.PRLoadBalancerApp.(parse in _BFCDD6AB8CE6A0FB6D2C2EB321B54C54) (json : Swift.Dictionary&lt;Swift.String, Any&gt;) -&gt; ()"
+                  moduleName = "PRLoadBalancer"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/marcin.religa/projects/PRLoadBalancer/PRLoadBalancer/PRLoadBalancerApp.swift"
+                  timestampString = "517853759.500092"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "51"
+                  endingLineNumber = "51"
+                  offsetFromSymbolStart = "4218">
+               </Location>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "PRLoadBalancer.PRLoadBalancerApp.(parse in _BFCDD6AB8CE6A0FB6D2C2EB321B54C54) (json : Swift.Dictionary&lt;Swift.String, Any&gt;) -&gt; ()"
+                  moduleName = "PRLoadBalancer"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/marcin.religa/projects/PRLoadBalancer/PRLoadBalancer/PRLoadBalancerApp.swift"
+                  timestampString = "517853759.501989"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "51"
+                  endingLineNumber = "51"
+                  offsetFromSymbolStart = "4641">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+   </Breakpoints>
+</Bucket>

@@ -8,5 +8,5 @@
 
 import Foundation
 
-print("Hello, World!")
-
+let app = PRLoadBalancerApp()
+app.run()

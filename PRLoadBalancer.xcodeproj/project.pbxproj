@@ -8,6 +8,11 @@
 
 /* Begin PBXBuildFile section */
 		DA2394811ED5EB5900F8D325 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA2394801ED5EB5900F8D325 /* main.swift */; };
+		DA2394881ED5EB8400F8D325 /* PRLoadBalancerApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA2394871ED5EB8400F8D325 /* PRLoadBalancerApp.swift */; };
+		DA23948A1ED5EC0000F8D325 /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA2394891ED5EC0000F8D325 /* NetworkManager.swift */; };
+		DA23948F1ED5EF6800F8D325 /* Result.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA23948D1ED5EF6800F8D325 /* Result.swift */; };
+		DA2394901ED5EF6800F8D325 /* ResultProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA23948E1ED5EF6800F8D325 /* ResultProtocol.swift */; };
+		DA2394921ED5EFA700F8D325 /* AnyError.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA2394911ED5EFA700F8D325 /* AnyError.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -25,6 +30,11 @@
 /* Begin PBXFileReference section */
 		DA23947D1ED5EB5900F8D325 /* PRLoadBalancer */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = PRLoadBalancer; sourceTree = BUILT_PRODUCTS_DIR; };
 		DA2394801ED5EB5900F8D325 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
+		DA2394871ED5EB8400F8D325 /* PRLoadBalancerApp.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PRLoadBalancerApp.swift; sourceTree = "<group>"; };
+		DA2394891ED5EC0000F8D325 /* NetworkManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
+		DA23948D1ED5EF6800F8D325 /* Result.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Result.swift; path = libraries/Result.swift; sourceTree = "<group>"; };
+		DA23948E1ED5EF6800F8D325 /* ResultProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ResultProtocol.swift; path = libraries/ResultProtocol.swift; sourceTree = "<group>"; };
+		DA2394911ED5EFA700F8D325 /* AnyError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AnyError.swift; path = libraries/AnyError.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -57,9 +67,30 @@
 		DA23947F1ED5EB5900F8D325 /* PRLoadBalancer */ = {
 			isa = PBXGroup;
 			children = (
+				DA23948B1ED5EEF100F8D325 /* Libraries */,
 				DA2394801ED5EB5900F8D325 /* main.swift */,
+				DA2394871ED5EB8400F8D325 /* PRLoadBalancerApp.swift */,
+				DA2394891ED5EC0000F8D325 /* NetworkManager.swift */,
 			);
 			path = PRLoadBalancer;
+			sourceTree = "<group>";
+		};
+		DA23948B1ED5EEF100F8D325 /* Libraries */ = {
+			isa = PBXGroup;
+			children = (
+				DA23948C1ED5EF0100F8D325 /* ResultType */,
+			);
+			name = Libraries;
+			sourceTree = "<group>";
+		};
+		DA23948C1ED5EF0100F8D325 /* ResultType */ = {
+			isa = PBXGroup;
+			children = (
+				DA2394911ED5EFA700F8D325 /* AnyError.swift */,
+				DA23948D1ED5EF6800F8D325 /* Result.swift */,
+				DA23948E1ED5EF6800F8D325 /* ResultProtocol.swift */,
+			);
+			name = ResultType;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -120,7 +151,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DA2394901ED5EF6800F8D325 /* ResultProtocol.swift in Sources */,
+				DA23948A1ED5EC0000F8D325 /* NetworkManager.swift in Sources */,
 				DA2394811ED5EB5900F8D325 /* main.swift in Sources */,
+				DA2394921ED5EFA700F8D325 /* AnyError.swift in Sources */,
+				DA23948F1ED5EF6800F8D325 /* Result.swift in Sources */,
+				DA2394881ED5EB8400F8D325 /* PRLoadBalancerApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
