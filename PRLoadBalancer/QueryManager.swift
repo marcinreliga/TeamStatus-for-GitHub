@@ -1,5 +1,5 @@
 //
-//  ResponseParser.swift
+//  QueryManager.swift
 //  PRLoadBalancer
 //
 //  Created by Marcin Religa on 31/05/2017.
@@ -8,7 +8,9 @@
 
 import Foundation
 
-final class ResponseParser {
+final class QueryManager {
+	let query = "{\"query\": \"query { repository(owner: \\\"asosteam\\\", name: \\\"asos-native-ios\\\") {  pullRequests(last: 100, states: OPEN) { edges { node { id title updatedAt reviews(first: 100) { edges { node { id author { avatarUrl login resourcePath url } } } }, reviewRequests(first: 10) { edges { node { id reviewer { id name login } } } } } } }  }}\" }"
+	
 	func parseResponse(data: Data) -> [PullRequest]? {
 		do {
 			let json = try JSONSerialization.jsonObject(with: data, options: [])

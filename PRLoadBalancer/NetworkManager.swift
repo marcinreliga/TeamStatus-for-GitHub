@@ -13,24 +13,18 @@ enum NetworkError: Error {
 }
 
 final class NetworkManager {
-	private let remoteStorageURL: URL
+	private let apiBaseURL: URL
 
-	init(remoteStorageURL: URL) {
-		self.remoteStorageURL = remoteStorageURL
+	init(apiBaseURL: URL) {
+		self.apiBaseURL = apiBaseURL
 	}
 
 	func query(_ query: String, completion: @escaping (Result<Data, NetworkError>) -> Void) {
-		let semaphore = DispatchSemaphore(value: 0)
-
-		var request = URLRequest(url: remoteStorageURL)
+		var request = URLRequest(url: apiBaseURL)
 		request.httpMethod = "POST"
-
 		request.addValue(" bearer 5f7f4b7cdf3b22e63b7e18a42acb2c5086101ffa", forHTTPHeaderField: "Authorization")
-		//var data: [String: Any] = [:]
-
-
-		//let postString = formatPOSTString(data: data)
 		request.httpBody = query.data(using: .utf8)
+
 		let task = URLSession.shared.dataTask(with: request) { data, response, error in
 			guard let data = data, error == nil else {
 				completion(.failure(NetworkError.didFailToFetchData))
@@ -38,19 +32,7 @@ final class NetworkManager {
 			}
 
 			completion(.success(data))
-			semaphore.signal()
 		}
 		task.resume()
-		semaphore.wait();
 	}
-
-//	private func formatPOSTString(data: [String: Any]) -> String {
-//		var resultArr: [String] = []
-//
-//		for (key, value) in data {
-//			resultArr.append("\"\(key)\": \"\(value)\"")
-//		}
-//
-//		return "{ " + resultArr.joined(separator: ", ") + " }"
-//	}
 }
