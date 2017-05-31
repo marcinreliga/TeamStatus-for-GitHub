@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="12120" systemVersion="16C68" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+    <dependencies>
+        <deployment identifier="macosx"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="12120"/>
+    </dependencies>
+    <objects>
+        <customObject id="-2" userLabel="File's Owner" customClass="NSApplication">
+            <connections>
+                <outlet property="delegate" destination="qbY-0G-ynA" id="hmA-5R-oe7"/>
+            </connections>
+        </customObject>
+        <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
+        <customObject id="-3" userLabel="Application" customClass="NSObject"/>
+        <customObject id="YLy-65-1bz" customClass="NSFontManager"/>
+        <customObject id="qbY-0G-ynA" customClass="AppDelegate" customModule="TeamStatus" customModuleProvider="target">
+            <connections>
+                <outlet property="statusMenu" destination="FLe-an-MQR" id="ffU-aI-1SA"/>
+            </connections>
+        </customObject>
+        <menu id="FLe-an-MQR">
+            <items>
+                <menuItem title="Quit" id="1UW-Gv-hFX">
+                    <modifierMask key="keyEquivalentModifierMask"/>
+                    <connections>
+                        <action selector="quitClicked:" target="qbY-0G-ynA" id="nqe-Yj-X5L"/>
+                    </connections>
+                </menuItem>
+            </items>
+            <point key="canvasLocation" x="-27" y="-17"/>
+        </menu>
+    </objects>
+</document>

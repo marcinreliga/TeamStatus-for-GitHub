@@ -19,7 +19,21 @@
 		DA589A141EDF1D4A006BFB72 /* QueryManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA589A131EDF1D4A006BFB72 /* QueryManager.swift */; };
 		DA589A161EDF2550006BFB72 /* MainViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA589A151EDF2550006BFB72 /* MainViewModel.swift */; };
 		DA589A181EDF2583006BFB72 /* Configuration.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA589A171EDF2583006BFB72 /* Configuration.swift */; };
+		DA589A661EDF5647006BFB72 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA589A651EDF5647006BFB72 /* AppDelegate.swift */; };
+		DA589A6A1EDF5647006BFB72 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DA589A691EDF5647006BFB72 /* Assets.xcassets */; };
+		DA589A781EDF5648006BFB72 /* TeamStatusTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA589A771EDF5648006BFB72 /* TeamStatusTests.swift */; };
+		DAF5E8991EDF578D00CFAC81 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = DAF5E8981EDF578D00CFAC81 /* MainMenu.xib */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		DA589A741EDF5648006BFB72 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = DA2394751ED5EB5900F8D325 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = DA589A621EDF5647006BFB72;
+			remoteInfo = TeamStatus;
+		};
+/* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
 		DA23947B1ED5EB5900F8D325 /* CopyFiles */ = {
@@ -47,10 +61,32 @@
 		DA589A131EDF1D4A006BFB72 /* QueryManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QueryManager.swift; sourceTree = "<group>"; };
 		DA589A151EDF2550006BFB72 /* MainViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainViewModel.swift; sourceTree = "<group>"; };
 		DA589A171EDF2583006BFB72 /* Configuration.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Configuration.swift; sourceTree = "<group>"; };
+		DA589A631EDF5647006BFB72 /* TeamStatus.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TeamStatus.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		DA589A651EDF5647006BFB72 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		DA589A691EDF5647006BFB72 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		DA589A6E1EDF5647006BFB72 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		DA589A731EDF5648006BFB72 /* TeamStatusTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TeamStatusTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		DA589A771EDF5648006BFB72 /* TeamStatusTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeamStatusTests.swift; sourceTree = "<group>"; };
+		DA589A791EDF5648006BFB72 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		DAF5E8981EDF578D00CFAC81 /* MainMenu.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = MainMenu.xib; path = ../MainMenu.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
 		DA23947A1ED5EB5900F8D325 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		DA589A601EDF5647006BFB72 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		DA589A701EDF5648006BFB72 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -64,6 +100,8 @@
 			isa = PBXGroup;
 			children = (
 				DA23947F1ED5EB5900F8D325 /* PRLoadBalancer */,
+				DA589A641EDF5647006BFB72 /* TeamStatus */,
+				DA589A761EDF5648006BFB72 /* TeamStatusTests */,
 				DA23947E1ED5EB5900F8D325 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -72,6 +110,8 @@
 			isa = PBXGroup;
 			children = (
 				DA23947D1ED5EB5900F8D325 /* PRLoadBalancer */,
+				DA589A631EDF5647006BFB72 /* TeamStatus.app */,
+				DA589A731EDF5648006BFB72 /* TeamStatusTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -127,6 +167,26 @@
 			name = Extensions;
 			sourceTree = "<group>";
 		};
+		DA589A641EDF5647006BFB72 /* TeamStatus */ = {
+			isa = PBXGroup;
+			children = (
+				DA589A651EDF5647006BFB72 /* AppDelegate.swift */,
+				DA589A691EDF5647006BFB72 /* Assets.xcassets */,
+				DA589A6E1EDF5647006BFB72 /* Info.plist */,
+				DAF5E8981EDF578D00CFAC81 /* MainMenu.xib */,
+			);
+			path = TeamStatus;
+			sourceTree = "<group>";
+		};
+		DA589A761EDF5648006BFB72 /* TeamStatusTests */ = {
+			isa = PBXGroup;
+			children = (
+				DA589A771EDF5648006BFB72 /* TeamStatusTests.swift */,
+				DA589A791EDF5648006BFB72 /* Info.plist */,
+			);
+			path = TeamStatusTests;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -147,6 +207,41 @@
 			productReference = DA23947D1ED5EB5900F8D325 /* PRLoadBalancer */;
 			productType = "com.apple.product-type.tool";
 		};
+		DA589A621EDF5647006BFB72 /* TeamStatus */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = DA589A7E1EDF5648006BFB72 /* Build configuration list for PBXNativeTarget "TeamStatus" */;
+			buildPhases = (
+				DA589A5F1EDF5647006BFB72 /* Sources */,
+				DA589A601EDF5647006BFB72 /* Frameworks */,
+				DA589A611EDF5647006BFB72 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = TeamStatus;
+			productName = TeamStatus;
+			productReference = DA589A631EDF5647006BFB72 /* TeamStatus.app */;
+			productType = "com.apple.product-type.application";
+		};
+		DA589A721EDF5648006BFB72 /* TeamStatusTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = DA589A7F1EDF5648006BFB72 /* Build configuration list for PBXNativeTarget "TeamStatusTests" */;
+			buildPhases = (
+				DA589A6F1EDF5648006BFB72 /* Sources */,
+				DA589A701EDF5648006BFB72 /* Frameworks */,
+				DA589A711EDF5648006BFB72 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				DA589A751EDF5648006BFB72 /* PBXTargetDependency */,
+			);
+			name = TeamStatusTests;
+			productName = TeamStatusTests;
+			productReference = DA589A731EDF5648006BFB72 /* TeamStatusTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -161,6 +256,15 @@
 						CreatedOnToolsVersion = 8.3.2;
 						ProvisioningStyle = Automatic;
 					};
+					DA589A621EDF5647006BFB72 = {
+						CreatedOnToolsVersion = 8.3.2;
+						ProvisioningStyle = Automatic;
+					};
+					DA589A721EDF5648006BFB72 = {
+						CreatedOnToolsVersion = 8.3.2;
+						ProvisioningStyle = Automatic;
+						TestTargetID = DA589A621EDF5647006BFB72;
+					};
 				};
 			};
 			buildConfigurationList = DA2394781ED5EB5900F8D325 /* Build configuration list for PBXProject "PRLoadBalancer" */;
@@ -169,6 +273,7 @@
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
+				Base,
 			);
 			mainGroup = DA2394741ED5EB5900F8D325;
 			productRefGroup = DA23947E1ED5EB5900F8D325 /* Products */;
@@ -176,9 +281,30 @@
 			projectRoot = "";
 			targets = (
 				DA23947C1ED5EB5900F8D325 /* PRLoadBalancer */,
+				DA589A621EDF5647006BFB72 /* TeamStatus */,
+				DA589A721EDF5648006BFB72 /* TeamStatusTests */,
 			);
 		};
 /* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		DA589A611EDF5647006BFB72 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DA589A6A1EDF5647006BFB72 /* Assets.xcassets in Resources */,
+				DAF5E8991EDF578D00CFAC81 /* MainMenu.xib in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		DA589A711EDF5648006BFB72 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		DA2394791ED5EB5900F8D325 /* Sources */ = {
@@ -200,7 +326,31 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		DA589A5F1EDF5647006BFB72 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DA589A661EDF5647006BFB72 /* AppDelegate.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		DA589A6F1EDF5648006BFB72 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DA589A781EDF5648006BFB72 /* TeamStatusTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		DA589A751EDF5648006BFB72 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = DA589A621EDF5647006BFB72 /* TeamStatus */;
+			targetProxy = DA589A741EDF5648006BFB72 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		DA2394821ED5EB5900F8D325 /* Debug */ = {
@@ -309,6 +459,66 @@
 			};
 			name = Release;
 		};
+		DA589A7A1EDF5648006BFB72 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				COMBINE_HIDPI_IMAGES = YES;
+				INFOPLIST_FILE = TeamStatus/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = net.religa.TeamStatus;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_VERSION = 3.0;
+			};
+			name = Debug;
+		};
+		DA589A7B1EDF5648006BFB72 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				COMBINE_HIDPI_IMAGES = YES;
+				INFOPLIST_FILE = TeamStatus/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = net.religa.TeamStatus;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				SWIFT_VERSION = 3.0;
+			};
+			name = Release;
+		};
+		DA589A7C1EDF5648006BFB72 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				COMBINE_HIDPI_IMAGES = YES;
+				INFOPLIST_FILE = TeamStatusTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = net.religa.TeamStatusTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_VERSION = 3.0;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/TeamStatus.app/Contents/MacOS/TeamStatus";
+			};
+			name = Debug;
+		};
+		DA589A7D1EDF5648006BFB72 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				COMBINE_HIDPI_IMAGES = YES;
+				INFOPLIST_FILE = TeamStatusTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = net.religa.TeamStatusTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				SWIFT_VERSION = 3.0;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/TeamStatus.app/Contents/MacOS/TeamStatus";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -326,6 +536,24 @@
 			buildConfigurations = (
 				DA2394851ED5EB5900F8D325 /* Debug */,
 				DA2394861ED5EB5900F8D325 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		DA589A7E1EDF5648006BFB72 /* Build configuration list for PBXNativeTarget "TeamStatus" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				DA589A7A1EDF5648006BFB72 /* Debug */,
+				DA589A7B1EDF5648006BFB72 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		DA589A7F1EDF5648006BFB72 /* Build configuration list for PBXNativeTarget "TeamStatusTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				DA589A7C1EDF5648006BFB72 /* Debug */,
+				DA589A7D1EDF5648006BFB72 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

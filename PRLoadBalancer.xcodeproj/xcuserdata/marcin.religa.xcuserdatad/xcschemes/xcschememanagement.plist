@@ -9,10 +9,25 @@
 			<key>orderHint</key>
 			<integer>0</integer>
 		</dict>
+		<key>TeamStatus.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>1</integer>
+		</dict>
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
 		<key>DA23947C1ED5EB5900F8D325</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>DA589A621EDF5647006BFB72</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>DA589A721EDF5648006BFB72</key>
 		<dict>
 			<key>primary</key>
 			<true/>
