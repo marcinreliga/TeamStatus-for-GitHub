@@ -17,6 +17,8 @@
 		DA5898DB1EDE17EF006BFB72 /* Reviewer.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA5898DA1EDE17EF006BFB72 /* Reviewer.swift */; };
 		DA5898DE1EDE1810006BFB72 /* Sequence.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA5898DD1EDE1810006BFB72 /* Sequence.swift */; };
 		DA589A141EDF1D4A006BFB72 /* QueryManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA589A131EDF1D4A006BFB72 /* QueryManager.swift */; };
+		DA589A161EDF2550006BFB72 /* MainViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA589A151EDF2550006BFB72 /* MainViewModel.swift */; };
+		DA589A181EDF2583006BFB72 /* Configuration.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA589A171EDF2583006BFB72 /* Configuration.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -43,6 +45,8 @@
 		DA5898DA1EDE17EF006BFB72 /* Reviewer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Reviewer.swift; sourceTree = "<group>"; };
 		DA5898DD1EDE1810006BFB72 /* Sequence.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Sequence.swift; sourceTree = "<group>"; };
 		DA589A131EDF1D4A006BFB72 /* QueryManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QueryManager.swift; sourceTree = "<group>"; };
+		DA589A151EDF2550006BFB72 /* MainViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainViewModel.swift; sourceTree = "<group>"; };
+		DA589A171EDF2583006BFB72 /* Configuration.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Configuration.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -82,6 +86,8 @@
 				DA2394871ED5EB8400F8D325 /* PRLoadBalancerApp.swift */,
 				DA2394891ED5EC0000F8D325 /* NetworkManager.swift */,
 				DA589A131EDF1D4A006BFB72 /* QueryManager.swift */,
+				DA589A151EDF2550006BFB72 /* MainViewModel.swift */,
+				DA589A171EDF2583006BFB72 /* Configuration.swift */,
 			);
 			path = PRLoadBalancer;
 			sourceTree = "<group>";
@@ -185,10 +191,12 @@
 				DA5898DB1EDE17EF006BFB72 /* Reviewer.swift in Sources */,
 				DA5898D91EDE17DD006BFB72 /* PullRequest.swift in Sources */,
 				DA589A141EDF1D4A006BFB72 /* QueryManager.swift in Sources */,
+				DA589A181EDF2583006BFB72 /* Configuration.swift in Sources */,
 				DA2394811ED5EB5900F8D325 /* main.swift in Sources */,
 				DA2394921ED5EFA700F8D325 /* AnyError.swift in Sources */,
 				DA23948F1ED5EF6800F8D325 /* Result.swift in Sources */,
 				DA2394881ED5EB8400F8D325 /* PRLoadBalancerApp.swift in Sources */,
+				DA589A161EDF2550006BFB72 /* MainViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
