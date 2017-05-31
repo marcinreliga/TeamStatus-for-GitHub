@@ -3,6 +3,7 @@
     <dependencies>
         <deployment identifier="macosx"/>
         <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="12120"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="NSApplication">
@@ -13,21 +14,93 @@
         <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
         <customObject id="-3" userLabel="Application" customClass="NSObject"/>
         <customObject id="YLy-65-1bz" customClass="NSFontManager"/>
-        <customObject id="qbY-0G-ynA" customClass="AppDelegate" customModule="TeamStatus" customModuleProvider="target">
-            <connections>
-                <outlet property="statusMenu" destination="FLe-an-MQR" id="ffU-aI-1SA"/>
-            </connections>
-        </customObject>
+        <customObject id="qbY-0G-ynA" customClass="AppDelegate" customModule="TeamStatus" customModuleProvider="target"/>
         <menu id="FLe-an-MQR">
             <items>
+                <menuItem title="Reviewer" id="MKe-lf-e5b">
+                    <modifierMask key="keyEquivalentModifierMask"/>
+                </menuItem>
                 <menuItem title="Quit" id="1UW-Gv-hFX">
                     <modifierMask key="keyEquivalentModifierMask"/>
                     <connections>
-                        <action selector="quitClicked:" target="qbY-0G-ynA" id="nqe-Yj-X5L"/>
+                        <action selector="quitClickedWithSender:" target="7yV-y2-1gE" id="0h0-JO-rX0"/>
                     </connections>
                 </menuItem>
             </items>
             <point key="canvasLocation" x="-27" y="-17"/>
         </menu>
+        <customObject id="7yV-y2-1gE" customClass="StatusMenuController" customModule="TeamStatus" customModuleProvider="target">
+            <connections>
+                <outlet property="reviewerView" destination="w8f-mU-dtk" id="Zp1-0K-z7L"/>
+                <outlet property="statusMenu" destination="FLe-an-MQR" id="jQQ-ZP-oj7"/>
+                <outlet property="tableView" destination="Jfd-IC-BDz" id="q7l-xS-7iO"/>
+            </connections>
+        </customObject>
+        <customView id="w8f-mU-dtk" customClass="ReviewerView" customModule="TeamStatus" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="300" height="300"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+            <subviews>
+                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" allowsCharacterPickerTouchBarItem="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LYi-tv-Lcx">
+                    <rect key="frame" x="18" y="272" width="80" height="17"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Team Status" id="j3W-93-MHh">
+                        <font key="font" metaFont="system"/>
+                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+                <scrollView wantsLayer="YES" fixedFrame="YES" autohidesScrollers="YES" horizontalLineScroll="19" horizontalPageScroll="10" verticalLineScroll="19" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UCq-81-hwT">
+                    <rect key="frame" x="0.0" y="0.0" width="300" height="261"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    <clipView key="contentView" ambiguous="YES" id="zAP-HO-6wi">
+                        <rect key="frame" x="1" y="0.0" width="298" height="260"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" columnSelection="YES" multipleSelection="NO" autosaveColumns="NO" headerView="mnK-vW-SEK" id="Jfd-IC-BDz">
+                                <rect key="frame" x="0.0" y="0.0" width="298" height="237"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <size key="intercellSpacing" width="3" height="2"/>
+                                <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                <color key="gridColor" name="gridColor" catalog="System" colorSpace="catalog"/>
+                                <tableColumns>
+                                    <tableColumn width="295" minWidth="40" maxWidth="1000" id="BKp-fK-QVp">
+                                        <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border">
+                                            <font key="font" metaFont="smallSystem"/>
+                                            <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
+                                            <color key="backgroundColor" name="headerColor" catalog="System" colorSpace="catalog"/>
+                                        </tableHeaderCell>
+                                        <textFieldCell key="dataCell" lineBreakMode="truncatingTail" selectable="YES" editable="YES" title="Text Cell" id="V6D-7n-0X2">
+                                            <font key="font" metaFont="system"/>
+                                            <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                            <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                        </textFieldCell>
+                                        <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
+                                    </tableColumn>
+                                </tableColumns>
+                                <connections>
+                                    <outlet property="dataSource" destination="7yV-y2-1gE" id="Ob6-h7-tNC"/>
+                                </connections>
+                            </tableView>
+                        </subviews>
+                    </clipView>
+                    <scroller key="horizontalScroller" hidden="YES" verticalHuggingPriority="750" horizontal="YES" id="x5Y-n4-kTE">
+                        <rect key="frame" x="1" y="121" width="252" height="16"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </scroller>
+                    <scroller key="verticalScroller" hidden="YES" verticalHuggingPriority="750" doubleValue="1" horizontal="NO" id="Iva-od-TXO">
+                        <rect key="frame" x="224" y="17" width="15" height="102"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </scroller>
+                    <tableHeaderView key="headerView" id="mnK-vW-SEK">
+                        <rect key="frame" x="0.0" y="0.0" width="298" height="23"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </tableHeaderView>
+                </scrollView>
+            </subviews>
+            <connections>
+                <outlet property="reviewerLabel" destination="LYi-tv-Lcx" id="WJq-6j-5Zz"/>
+            </connections>
+            <point key="canvasLocation" x="-13" y="217"/>
+        </customView>
     </objects>
 </document>
