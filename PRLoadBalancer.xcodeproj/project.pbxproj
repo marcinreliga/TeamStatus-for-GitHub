@@ -13,6 +13,10 @@
 		DA23948F1ED5EF6800F8D325 /* Result.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA23948D1ED5EF6800F8D325 /* Result.swift */; };
 		DA2394901ED5EF6800F8D325 /* ResultProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA23948E1ED5EF6800F8D325 /* ResultProtocol.swift */; };
 		DA2394921ED5EFA700F8D325 /* AnyError.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA2394911ED5EFA700F8D325 /* AnyError.swift */; };
+		DA5898D91EDE17DD006BFB72 /* PullRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA5898D81EDE17DD006BFB72 /* PullRequest.swift */; };
+		DA5898DB1EDE17EF006BFB72 /* Reviewer.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA5898DA1EDE17EF006BFB72 /* Reviewer.swift */; };
+		DA5898DE1EDE1810006BFB72 /* Sequence.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA5898DD1EDE1810006BFB72 /* Sequence.swift */; };
+		DA589A141EDF1D4A006BFB72 /* ResponseParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA589A131EDF1D4A006BFB72 /* ResponseParser.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -35,6 +39,10 @@
 		DA23948D1ED5EF6800F8D325 /* Result.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Result.swift; path = libraries/Result.swift; sourceTree = "<group>"; };
 		DA23948E1ED5EF6800F8D325 /* ResultProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ResultProtocol.swift; path = libraries/ResultProtocol.swift; sourceTree = "<group>"; };
 		DA2394911ED5EFA700F8D325 /* AnyError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AnyError.swift; path = libraries/AnyError.swift; sourceTree = "<group>"; };
+		DA5898D81EDE17DD006BFB72 /* PullRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PullRequest.swift; sourceTree = "<group>"; };
+		DA5898DA1EDE17EF006BFB72 /* Reviewer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Reviewer.swift; sourceTree = "<group>"; };
+		DA5898DD1EDE1810006BFB72 /* Sequence.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Sequence.swift; sourceTree = "<group>"; };
+		DA589A131EDF1D4A006BFB72 /* ResponseParser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResponseParser.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -67,10 +75,13 @@
 		DA23947F1ED5EB5900F8D325 /* PRLoadBalancer */ = {
 			isa = PBXGroup;
 			children = (
+				DA5898DC1EDE17FC006BFB72 /* Extensions */,
+				DA5898D71EDE17C0006BFB72 /* Models */,
 				DA23948B1ED5EEF100F8D325 /* Libraries */,
 				DA2394801ED5EB5900F8D325 /* main.swift */,
 				DA2394871ED5EB8400F8D325 /* PRLoadBalancerApp.swift */,
 				DA2394891ED5EC0000F8D325 /* NetworkManager.swift */,
+				DA589A131EDF1D4A006BFB72 /* ResponseParser.swift */,
 			);
 			path = PRLoadBalancer;
 			sourceTree = "<group>";
@@ -91,6 +102,23 @@
 				DA23948E1ED5EF6800F8D325 /* ResultProtocol.swift */,
 			);
 			name = ResultType;
+			sourceTree = "<group>";
+		};
+		DA5898D71EDE17C0006BFB72 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				DA5898D81EDE17DD006BFB72 /* PullRequest.swift */,
+				DA5898DA1EDE17EF006BFB72 /* Reviewer.swift */,
+			);
+			name = Models;
+			sourceTree = "<group>";
+		};
+		DA5898DC1EDE17FC006BFB72 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				DA5898DD1EDE1810006BFB72 /* Sequence.swift */,
+			);
+			name = Extensions;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -153,6 +181,10 @@
 			files = (
 				DA2394901ED5EF6800F8D325 /* ResultProtocol.swift in Sources */,
 				DA23948A1ED5EC0000F8D325 /* NetworkManager.swift in Sources */,
+				DA5898DE1EDE1810006BFB72 /* Sequence.swift in Sources */,
+				DA5898DB1EDE17EF006BFB72 /* Reviewer.swift in Sources */,
+				DA5898D91EDE17DD006BFB72 /* PullRequest.swift in Sources */,
+				DA589A141EDF1D4A006BFB72 /* ResponseParser.swift in Sources */,
 				DA2394811ED5EB5900F8D325 /* main.swift in Sources */,
 				DA2394921ED5EFA700F8D325 /* AnyError.swift in Sources */,
 				DA23948F1ED5EF6800F8D325 /* Result.swift in Sources */,
@@ -288,6 +320,7 @@
 				DA2394861ED5EB5900F8D325 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
