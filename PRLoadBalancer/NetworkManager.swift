@@ -27,7 +27,14 @@ final class NetworkManager {
 		request.addValue("bearer \(token)", forHTTPHeaderField: "Authorization")
 		request.httpBody = query.data(using: .utf8)
 
-		let task = URLSession.shared.dataTask(with: request) { data, response, error in
+		// FIXME: This is workaround for GitHub API issues.
+		// https://platform.github.community/t/executing-a-request-again-results-in-412-precondition-failed/1456/9
+		let config = URLSessionConfiguration.default
+		config.requestCachePolicy = .reloadIgnoringLocalCacheData
+		config.urlCache = nil
+		let session = URLSession.init(configuration: config)
+
+		let task = session.dataTask(with: request) { data, response, error in
 			guard let data = data, error == nil else {
 				completion(.failure(NetworkError.didFailToFetchData))
 				return

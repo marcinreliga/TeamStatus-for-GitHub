@@ -57,25 +57,25 @@ extension StatusMenuController: MainViewProtocol {
 }
 
 extension StatusMenuController: NSTableViewDataSource {
-//	func tableView(_ tableView: NSTableView, objectValueFor tableColumn: NSTableColumn?, row: Int) -> Any? {
-//		if let reviewers = reviewers {
-//			let reviewer = reviewers[row]
-//			return reviewer.login
-//		} else {
-//			return nil
-//		}
-//	}
-
 	func numberOfRows(in tableView: NSTableView) -> Int {
-		return 5
-		//return reviewers?.count ?? 0
+		return reviewers?.count ?? 0
 	}
 }
 
 extension StatusMenuController: NSTableViewDelegate {
 	func tableView(_ tableView: NSTableView, viewFor tableColumn: NSTableColumn?, row: Int) -> NSView? {
-		let cell = tableView.make(withIdentifier: "ReviewerCell", owner: self) as? NSTableCellView
-		cell?.textField?.stringValue = "test"
+		guard let cell = tableView.make(withIdentifier: "ReviewerCellView", owner: self) as? ReviewerCellView else {
+			fatalError()
+		}
+
+		guard let reviewers = reviewers, let pullRequests = pullRequests else {
+			return nil
+		}
+
+		let reviewer = reviewers[row]
+
+		cell.loginLabel.stringValue = reviewer.login
+		cell.pullRequestsToReviewLabel.stringValue = "\(reviewer.PRsToReview(in: pullRequests).count)"
 		return cell
 	}
 
