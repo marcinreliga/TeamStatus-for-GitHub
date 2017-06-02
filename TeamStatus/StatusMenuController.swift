@@ -18,7 +18,8 @@ class StatusMenuController: NSObject {
 	let statusItem = NSStatusBar.system().statusItem(withLength: NSVariableStatusItemLength)
 
 	override func awakeFromNib() {
-		viewModel = MainViewModel(view: self)
+		let token = CommandLine.arguments[1]
+		viewModel = MainViewModel(view: self, token: token)
 		viewModel.run()
 
 		let icon = NSImage(named: "statusIcon")
@@ -56,16 +57,29 @@ extension StatusMenuController: MainViewProtocol {
 }
 
 extension StatusMenuController: NSTableViewDataSource {
-	func tableView(_ tableView: NSTableView, objectValueFor tableColumn: NSTableColumn?, row: Int) -> Any? {
-		if let reviewers = reviewers {
-			let reviewer = reviewers[row]
-			return reviewer.login
-		} else {
-			return nil
-		}
-	}
+//	func tableView(_ tableView: NSTableView, objectValueFor tableColumn: NSTableColumn?, row: Int) -> Any? {
+//		if let reviewers = reviewers {
+//			let reviewer = reviewers[row]
+//			return reviewer.login
+//		} else {
+//			return nil
+//		}
+//	}
 
 	func numberOfRows(in tableView: NSTableView) -> Int {
-		return reviewers?.count ?? 0
+		return 5
+		//return reviewers?.count ?? 0
 	}
+}
+
+extension StatusMenuController: NSTableViewDelegate {
+	func tableView(_ tableView: NSTableView, viewFor tableColumn: NSTableColumn?, row: Int) -> NSView? {
+		let cell = tableView.make(withIdentifier: "ReviewerCell", owner: self) as? NSTableCellView
+		cell?.textField?.stringValue = "test"
+		return cell
+	}
+
+//	func tableView(_ tableView: NSTableView, rowViewForRow row: Int) -> NSTableRowView? {
+//		return nil
+//	}
 }

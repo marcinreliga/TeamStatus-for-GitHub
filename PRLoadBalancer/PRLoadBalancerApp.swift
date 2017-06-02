@@ -13,10 +13,16 @@ final class PRLoadBalancerApp {
 	fileprivate var semaphore: DispatchSemaphore?
 
 	func run() {
-		viewModel = MainViewModel(view: self)
-		semaphore = DispatchSemaphore(value: 0)
-		viewModel.run()
-		semaphore?.wait()
+		switch CommandLine.arguments.count {
+		case 1:
+			print("Error: Authorization token is required.")
+		default:
+			let token = CommandLine.arguments[1]
+			viewModel = MainViewModel(view: self, token: token)
+			semaphore = DispatchSemaphore(value: 0)
+			viewModel.run()
+			semaphore?.wait()
+		}
 	}
 
 	fileprivate func finish() {
@@ -29,8 +35,8 @@ extension PRLoadBalancerApp: MainViewProtocol {
 		for reviewer in reviewers {
 			let pullRequestsReviewRequested = reviewer.PRsToReview(in: pullRequests)
 			let pullRequestsReviewed = reviewer.PRsReviewed(in: pullRequests)
-
-			print("\(reviewer.login), requested in: \(pullRequestsReviewRequested.count), reviewed: \(pullRequestsReviewed.count)")
+			let login = reviewer.login.padding(toLength: 20, withPad: " ", startingAt: 0)
+			print("\(login) requested in: \(pullRequestsReviewRequested.count), reviewed: \(pullRequestsReviewed.count)")
 		}
 		print("")
 

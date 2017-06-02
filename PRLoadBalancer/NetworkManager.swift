@@ -14,15 +14,17 @@ enum NetworkError: Error {
 
 final class NetworkManager {
 	private let apiBaseURL: URL
+	private let token: String
 
-	init(apiBaseURL: URL) {
+	init(apiBaseURL: URL, token: String) {
 		self.apiBaseURL = apiBaseURL
+		self.token = token
 	}
 
 	func query(_ query: String, completion: @escaping (Result<Data, NetworkError>) -> Void) {
 		var request = URLRequest(url: apiBaseURL)
 		request.httpMethod = "POST"
-		request.addValue(" bearer 5f7f4b7cdf3b22e63b7e18a42acb2c5086101ffa", forHTTPHeaderField: "Authorization")
+		request.addValue("bearer \(token)", forHTTPHeaderField: "Authorization")
 		request.httpBody = query.data(using: .utf8)
 
 		let task = URLSession.shared.dataTask(with: request) { data, response, error in

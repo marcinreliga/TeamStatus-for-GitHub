@@ -71,6 +71,12 @@
             ReferencedContainer = "container:PRLoadBalancer.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
+      <CommandLineArguments>
+         <CommandLineArgument
+            argument = "5f7f4b7cdf3b22e63b7e18a42acb2c5086101ffa"
+            isEnabled = "YES">
+         </CommandLineArgument>
+      </CommandLineArguments>
       <AdditionalOptions>
       </AdditionalOptions>
    </LaunchAction>
