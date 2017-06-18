@@ -25,6 +25,7 @@
 		DA589A781EDF5648006BFB72 /* TeamStatusTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA589A771EDF5648006BFB72 /* TeamStatusTests.swift */; };
 		DAABD7A51EF6DAED00E5355A /* RequestedInCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAABD7A41EF6DAED00E5355A /* RequestedInCellView.swift */; };
 		DAABD7A71EF6DE6E00E5355A /* ReviewedCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAABD7A61EF6DE6E00E5355A /* ReviewedCellView.swift */; };
+		DAABD7A91EF6DFD500E5355A /* AvatarCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAABD7A81EF6DFD500E5355A /* AvatarCellView.swift */; };
 		DAF5E8991EDF578D00CFAC81 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = DAF5E8981EDF578D00CFAC81 /* MainMenu.xib */; };
 		DAF5E89B1EDF5B4B00CFAC81 /* StatusMenuController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAF5E89A1EDF5B4B00CFAC81 /* StatusMenuController.swift */; };
 		DAF5E89D1EDF5D3100CFAC81 /* ReviewerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAF5E89C1EDF5D3100CFAC81 /* ReviewerView.swift */; };
@@ -86,6 +87,7 @@
 		DA589A791EDF5648006BFB72 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		DAABD7A41EF6DAED00E5355A /* RequestedInCellView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RequestedInCellView.swift; sourceTree = "<group>"; };
 		DAABD7A61EF6DE6E00E5355A /* ReviewedCellView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReviewedCellView.swift; sourceTree = "<group>"; };
+		DAABD7A81EF6DFD500E5355A /* AvatarCellView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AvatarCellView.swift; sourceTree = "<group>"; };
 		DAF5E8981EDF578D00CFAC81 /* MainMenu.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = MainMenu.xib; path = ../MainMenu.xib; sourceTree = "<group>"; };
 		DAF5E89A1EDF5B4B00CFAC81 /* StatusMenuController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StatusMenuController.swift; sourceTree = "<group>"; };
 		DAF5E89C1EDF5D3100CFAC81 /* ReviewerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReviewerView.swift; sourceTree = "<group>"; };
@@ -199,6 +201,7 @@
 				DA06BD011EE1C41100E9B261 /* ReviewerCellView.swift */,
 				DAABD7A41EF6DAED00E5355A /* RequestedInCellView.swift */,
 				DAABD7A61EF6DE6E00E5355A /* ReviewedCellView.swift */,
+				DAABD7A81EF6DFD500E5355A /* AvatarCellView.swift */,
 			);
 			path = TeamStatus;
 			sourceTree = "<group>";
@@ -362,6 +365,7 @@
 				DAF5E8A11EDF63DD00CFAC81 /* Configuration.swift in Sources */,
 				DAF5E8A21EDF63E400CFAC81 /* AnyError.swift in Sources */,
 				DAF5E8A71EDF63EC00CFAC81 /* Sequence.swift in Sources */,
+				DAABD7A91EF6DFD500E5355A /* AvatarCellView.swift in Sources */,
 				DAABD7A71EF6DE6E00E5355A /* ReviewedCellView.swift in Sources */,
 				DAF5E8A51EDF63E800CFAC81 /* PullRequest.swift in Sources */,
 				DAF5E89B1EDF5B4B00CFAC81 /* StatusMenuController.swift in Sources */,

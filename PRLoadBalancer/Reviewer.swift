@@ -10,9 +10,20 @@ import Foundation
 
 struct Reviewer: Hashable, Equatable {
 	let login: String
+	let avatarURL: URL?
 
-	init(login: String) {
+	init(login: String, avatarURL: URL? = nil) {
 		self.login = login
+		self.avatarURL = avatarURL
+	}
+
+	init(login: String, avatarURLString: String? = nil) {
+		self.login = login
+		if let avatarURLString = avatarURLString {
+			self.avatarURL = URL(string: avatarURLString)
+		} else {
+			self.avatarURL = nil
+		}
 	}
 
 	var hashValue: Int {

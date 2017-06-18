@@ -9,7 +9,7 @@
 import Foundation
 
 final class QueryManager {
-	let query = "{\"query\": \"query { rateLimit { cost limit remaining resetAt } viewer { login } repository(owner: \\\"asosteam\\\", name: \\\"asos-native-ios\\\") {  pullRequests(last: 15, states: OPEN) { edges { node { id title updatedAt reviews(first: 10) { edges { node { id author { avatarUrl login resourcePath url } } } }, reviewRequests(first: 10) { edges { node { id reviewer { id name login } } } } } } }  }}\" }"
+	let query = "{\"query\": \"query { rateLimit { cost limit remaining resetAt } viewer { login } repository(owner: \\\"asosteam\\\", name: \\\"asos-native-ios\\\") {  pullRequests(last: 15, states: OPEN) { edges { node { id title updatedAt reviews(first: 10) { edges { node { id author { avatarUrl login resourcePath url } } } }, reviewRequests(first: 10) { edges { node { id reviewer { avatarUrl name login } } } } } } }  }}\" }"
 	
 	func parseResponse(data: Data) -> [PullRequest]? {
 		do {
@@ -43,7 +43,13 @@ final class QueryManager {
 												if let node = edge["node"] as? [String: Any] {
 													if let reviewer = node["reviewer"] as? [String: Any] {
 														if let login = reviewer["login"] as? String {
-															pullRequestData.reviewersRequested.append(Reviewer(login: login))
+															let avatarURLString: String?
+															if let avatarURLStringParsed = reviewer["avatarUrl"] as? String {
+																avatarURLString = avatarURLStringParsed
+															} else {
+																avatarURLString = nil
+															}
+															pullRequestData.reviewersRequested.append(Reviewer(login: login, avatarURLString: avatarURLString))
 														}
 													}
 												}
@@ -58,7 +64,13 @@ final class QueryManager {
 
 													if let reviewer = node["author"] as? [String: Any] {
 														if let login = reviewer["login"] as? String {
-															pullRequestData.reviewersReviewed.append(Reviewer(login: login))
+															let avatarURLString: String?
+															if let avatarURLStringParsed = reviewer["avatarUrl"] as? String {
+																avatarURLString = avatarURLStringParsed
+															} else {
+																avatarURLString = nil
+															}
+															pullRequestData.reviewersReviewed.append(Reviewer(login: login, avatarURLString: avatarURLString))
 														}
 													}
 												}

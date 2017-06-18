@@ -108,6 +108,23 @@ extension StatusMenuController: NSTableViewDelegate {
 
 			cell.pullRequestsReviewedLabel.stringValue = "\(reviewer.PRsReviewed(in: pullRequests).count)"
 			return cell
+		case "AvatarTableColumn":
+			guard let cell = tableView.make(withIdentifier: "AvatarCellView", owner: self) as? AvatarCellView else {
+				fatalError()
+			}
+
+			guard let reviewers = reviewers else {
+				return nil
+			}
+
+			let reviewer = reviewers[row]
+
+			if let imageURL = reviewer.avatarURL {
+				//let image = NSImage(byReferencing: imageURL)
+				cell.imageView?.imageFromServerURL(urlString: imageURL.absoluteString)
+			}
+
+			return cell
 		default:
 			fatalError()
 		}
@@ -118,3 +135,20 @@ extension StatusMenuController: NSTableViewDelegate {
 //		return nil
 //	}
 }
+
+extension NSImageView {
+	public func imageFromServerURL(urlString: String) {
+
+		URLSession.shared.dataTask(with: NSURL(string: urlString)! as URL, completionHandler: { (data, response, error) -> Void in
+
+			if error != nil {
+				//print(error)
+				return
+			}
+			DispatchQueue.main.async(execute: { () -> Void in
+				let image = NSImage(data: data!)
+				self.image = image
+			})
+
+		}).resume()
+	}}
