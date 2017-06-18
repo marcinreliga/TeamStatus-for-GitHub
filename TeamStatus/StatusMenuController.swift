@@ -17,19 +17,34 @@ class StatusMenuController: NSObject {
 
 	let statusItem = NSStatusBar.system().statusItem(withLength: NSVariableStatusItemLength)
 
+	// TODO: How to do it properly?
+	var viewDidLoad = false
+
 	override func awakeFromNib() {
-		let token = CommandLine.arguments[1]
-		viewModel = MainViewModel(view: self, token: token)
-		viewModel.run()
+		if viewDidLoad == false {
+			let token = CommandLine.arguments[1]
+			viewModel = MainViewModel(view: self, token: token)
+			viewModel.run()
 
-		let icon = NSImage(named: "statusIcon")
-		icon?.isTemplate = true // best for dark mode
-		statusItem.image = icon
-		statusItem.menu = statusMenu
+			let icon = NSImage(named: "statusIcon")
+			icon?.isTemplate = true // best for dark mode
+			statusItem.image = icon
+			statusItem.menu = statusMenu
 
-		if let reviewerMenuItem = self.statusMenu.item(withTitle: "Reviewer") {
-			reviewerMenuItem.view = reviewerView
+			if let reviewerMenuItem = self.statusMenu.item(withTitle: "Reviewer") {
+				reviewerMenuItem.view = reviewerView
+			}
+
+			let timer = Timer.scheduledTimer(timeInterval: 60.0, target: self, selector: #selector(self.refresh), userInfo: nil, repeats: true)
+			RunLoop.main.add(timer, forMode: .commonModes)
+
+			viewDidLoad = true
 		}
+	}
+
+	func refresh() {
+		print("auto refresh")
+		viewModel.run()
 	}
 
 	@IBAction func quitClicked(sender: NSMenuItem) {
@@ -37,7 +52,7 @@ class StatusMenuController: NSObject {
 	}
 
 	@IBAction func refreshClicked(sender: NSButton) {
-		print("refreshing")
+		print("refresh")
 		viewModel.run()
 	}
 
@@ -156,4 +171,6 @@ extension NSImageView {
 			})
 
 		}).resume()
-	}}
+	}
+}
+
