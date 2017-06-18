@@ -9,9 +9,9 @@
 import Cocoa
 
 class StatusMenuController: NSObject {
-	@IBOutlet weak var statusMenu: NSMenu!
-	@IBOutlet weak var reviewerView: ReviewerView!
-	@IBOutlet weak var tableView: NSTableView!
+	@IBOutlet var statusMenu: NSMenu!
+	@IBOutlet var reviewerView: ReviewerView!
+	@IBOutlet var tableView: NSTableView!
 
 	private var viewModel: MainViewModel!
 
@@ -34,6 +34,11 @@ class StatusMenuController: NSObject {
 
 	@IBAction func quitClicked(sender: NSMenuItem) {
 		NSApplication.shared().terminate(self)
+	}
+
+	@IBAction func refreshClicked(sender: NSButton) {
+		print("refreshing")
+		viewModel.run()
 	}
 
 	fileprivate var reviewers: [Reviewer]?

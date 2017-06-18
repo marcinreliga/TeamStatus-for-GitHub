@@ -37,12 +37,11 @@
             </connections>
         </customObject>
         <customView id="w8f-mU-dtk" customClass="ReviewerView" customModule="TeamStatus" customModuleProvider="target">
-            <rect key="frame" x="0.0" y="0.0" width="400" height="700"/>
+            <rect key="frame" x="0.0" y="0.0" width="420" height="700"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
             <subviews>
-                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" allowsCharacterPickerTouchBarItem="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LYi-tv-Lcx">
-                    <rect key="frame" x="18" y="672" width="80" height="17"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" allowsCharacterPickerTouchBarItem="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LYi-tv-Lcx">
+                    <rect key="frame" x="14" y="675" width="80" height="17"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Team Status" id="j3W-93-MHh">
                         <font key="font" metaFont="system"/>
                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -50,21 +49,21 @@
                     </textFieldCell>
                 </textField>
                 <scrollView wantsLayer="YES" fixedFrame="YES" borderType="none" autohidesScrollers="YES" horizontalLineScroll="42" horizontalPageScroll="10" verticalLineScroll="42" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UCq-81-hwT">
-                    <rect key="frame" x="16" y="0.0" width="368" height="661"/>
+                    <rect key="frame" x="16" y="0.0" width="388" height="661"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <clipView key="contentView" ambiguous="YES" id="zAP-HO-6wi">
-                        <rect key="frame" x="0.0" y="0.0" width="368" height="661"/>
+                        <rect key="frame" x="0.0" y="0.0" width="388" height="661"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" columnReordering="NO" columnSelection="YES" columnResizing="NO" multipleSelection="NO" autosaveColumns="NO" rowHeight="40" rowSizeStyle="automatic" headerView="fvb-xQ-Gs5" viewBased="YES" id="Jfd-IC-BDz">
-                                <rect key="frame" x="0.0" y="0.0" width="368" height="638"/>
+                                <rect key="frame" x="0.0" y="0.0" width="388" height="638"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <size key="intercellSpacing" width="3" height="2"/>
                                 <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
                                 <color key="gridColor" name="gridColor" catalog="System" colorSpace="catalog"/>
                                 <tableColumns>
                                     <tableColumn identifier="AvatarTableColumn" width="40" minWidth="10" maxWidth="3.4028234663852886e+38" id="qEi-vw-fqP">
-                                        <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left" title="avatar">
+                                        <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left">
                                             <font key="font" metaFont="smallSystem"/>
                                             <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
@@ -99,7 +98,7 @@
                                             </tableCellView>
                                         </prototypeCellViews>
                                     </tableColumn>
-                                    <tableColumn identifier="UserLoginTableColumn" width="152" minWidth="10" maxWidth="3.4028234663852886e+38" id="lU8-og-Bt9">
+                                    <tableColumn identifier="UserLoginTableColumn" width="170" minWidth="10" maxWidth="3.4028234663852886e+38" id="lU8-og-Bt9">
                                         <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left" title="login">
                                             <font key="font" metaFont="smallSystem"/>
                                             <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
@@ -113,13 +112,13 @@
                                         <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
                                         <prototypeCellViews>
                                             <tableCellView identifier="ReviewerCellView" id="Izq-20-N3V" customClass="ReviewerCellView" customModule="TeamStatus" customModuleProvider="target">
-                                                <rect key="frame" x="44" y="1" width="152" height="40"/>
+                                                <rect key="frame" x="44" y="1" width="170" height="40"/>
                                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                 <subviews>
                                                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" allowsCharacterPickerTouchBarItem="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2BB-yr-IVI">
-                                                        <rect key="frame" x="14" y="12" width="124" height="17"/>
+                                                        <rect key="frame" x="14" y="12" width="144" height="17"/>
                                                         <constraints>
-                                                            <constraint firstAttribute="width" constant="120" id="ZUB-E8-nMS"/>
+                                                            <constraint firstAttribute="width" constant="140" id="ZUB-E8-nMS"/>
                                                         </constraints>
                                                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="user-login" id="sdw-Le-MXV">
                                                             <font key="font" metaFont="system"/>
@@ -152,7 +151,7 @@
                                         <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
                                         <prototypeCellViews>
                                             <tableCellView identifier="RequestedInCellView" id="nqM-NW-IvC" customClass="RequestedInCellView" customModule="TeamStatus" customModuleProvider="target">
-                                                <rect key="frame" x="199" y="1" width="80" height="40"/>
+                                                <rect key="frame" x="217" y="1" width="80" height="40"/>
                                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                 <subviews>
                                                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" allowsCharacterPickerTouchBarItem="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Xcw-gV-c7f">
@@ -177,7 +176,7 @@
                                             </tableCellView>
                                         </prototypeCellViews>
                                     </tableColumn>
-                                    <tableColumn identifier="ReviewedTableColumn" width="84" minWidth="10" maxWidth="3.4028234663852886e+38" id="rTN-qY-EMG">
+                                    <tableColumn identifier="ReviewedTableColumn" width="86" minWidth="10" maxWidth="3.4028234663852886e+38" id="rTN-qY-EMG">
                                         <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left" title="reviewed">
                                             <font key="font" metaFont="smallSystem"/>
                                             <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
@@ -191,7 +190,7 @@
                                         <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
                                         <prototypeCellViews>
                                             <tableCellView identifier="ReviewedCellView" id="oZS-jN-dpy" customClass="ReviewedCellView" customModule="TeamStatus" customModuleProvider="target">
-                                                <rect key="frame" x="282" y="1" width="84" height="40"/>
+                                                <rect key="frame" x="300" y="1" width="86" height="40"/>
                                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                 <subviews>
                                                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" allowsCharacterPickerTouchBarItem="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tC8-Oq-iFH">
@@ -224,7 +223,7 @@
                             </tableView>
                         </subviews>
                     </clipView>
-                    <scroller key="horizontalScroller" verticalHuggingPriority="750" horizontal="YES" id="x5Y-n4-kTE">
+                    <scroller key="horizontalScroller" hidden="YES" verticalHuggingPriority="750" horizontal="YES" id="x5Y-n4-kTE">
                         <rect key="frame" x="0.0" y="645" width="368" height="16"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </scroller>
@@ -233,11 +232,27 @@
                         <autoresizingMask key="autoresizingMask"/>
                     </scroller>
                     <tableHeaderView key="headerView" id="fvb-xQ-Gs5">
-                        <rect key="frame" x="0.0" y="0.0" width="368" height="23"/>
+                        <rect key="frame" x="0.0" y="0.0" width="388" height="23"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </tableHeaderView>
                 </scrollView>
+                <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="3bV-Fy-obC">
+                    <rect key="frame" x="323" y="664" width="87" height="32"/>
+                    <buttonCell key="cell" type="push" title="Refresh" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="xTM-pH-k4N">
+                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                        <font key="font" metaFont="system"/>
+                    </buttonCell>
+                    <connections>
+                        <action selector="refreshClickedWithSender:" target="7yV-y2-1gE" id="BT4-vY-Yn4"/>
+                    </connections>
+                </button>
             </subviews>
+            <constraints>
+                <constraint firstItem="3bV-Fy-obC" firstAttribute="top" secondItem="w8f-mU-dtk" secondAttribute="top" constant="8" id="8kI-jq-98I"/>
+                <constraint firstItem="LYi-tv-Lcx" firstAttribute="leading" secondItem="w8f-mU-dtk" secondAttribute="leading" constant="16" id="Fqp-oE-4zu"/>
+                <constraint firstItem="LYi-tv-Lcx" firstAttribute="top" secondItem="w8f-mU-dtk" secondAttribute="top" constant="8" id="Vm2-cZ-Wmi"/>
+                <constraint firstAttribute="trailing" secondItem="3bV-Fy-obC" secondAttribute="trailing" constant="16" id="rwN-fy-dtc"/>
+            </constraints>
             <connections>
                 <outlet property="reviewerLabel" destination="LYi-tv-Lcx" id="WJq-6j-5Zz"/>
             </connections>
