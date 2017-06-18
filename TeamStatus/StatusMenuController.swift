@@ -64,19 +64,54 @@ extension StatusMenuController: NSTableViewDataSource {
 
 extension StatusMenuController: NSTableViewDelegate {
 	func tableView(_ tableView: NSTableView, viewFor tableColumn: NSTableColumn?, row: Int) -> NSView? {
-		guard let cell = tableView.make(withIdentifier: "ReviewerCellView", owner: self) as? ReviewerCellView else {
+		guard let tableColumn = tableColumn else {
 			fatalError()
 		}
 
-		guard let reviewers = reviewers, let pullRequests = pullRequests else {
-			return nil
+		switch tableColumn.identifier {
+		case "UserLoginTableColumn":
+			guard let cell = tableView.make(withIdentifier: "ReviewerCellView", owner: self) as? ReviewerCellView else {
+				fatalError()
+			}
+
+			guard let reviewers = reviewers else {
+				return nil
+			}
+
+			let reviewer = reviewers[row]
+
+			cell.loginLabel.stringValue = reviewer.login
+			return cell
+		case "RequestedInTableColumn":
+			guard let cell = tableView.make(withIdentifier: "RequestedInCellView", owner: self) as? RequestedInCellView else {
+				fatalError()
+			}
+
+			guard let reviewers = reviewers, let pullRequests = pullRequests else {
+				return nil
+			}
+
+			let reviewer = reviewers[row]
+
+			cell.pullRequestsToReviewLabel.stringValue = "\(reviewer.PRsToReview(in: pullRequests).count)"
+			return cell
+		case "ReviewedTableColumn":
+			guard let cell = tableView.make(withIdentifier: "ReviewedCellView", owner: self) as? ReviewedCellView else {
+				fatalError()
+			}
+
+			guard let reviewers = reviewers, let pullRequests = pullRequests else {
+				return nil
+			}
+
+			let reviewer = reviewers[row]
+
+			cell.pullRequestsReviewedLabel.stringValue = "\(reviewer.PRsReviewed(in: pullRequests).count)"
+			return cell
+		default:
+			fatalError()
 		}
 
-		let reviewer = reviewers[row]
-
-		cell.loginLabel.stringValue = reviewer.login
-		cell.pullRequestsToReviewLabel.stringValue = "\(reviewer.PRsToReview(in: pullRequests).count)"
-		return cell
 	}
 
 //	func tableView(_ tableView: NSTableView, rowViewForRow row: Int) -> NSTableRowView? {

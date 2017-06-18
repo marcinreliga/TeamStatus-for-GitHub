@@ -11,7 +11,8 @@ import Cocoa
 
 final class ReviewerCellView: NSTableCellView {
 	@IBOutlet var loginLabel: NSTextField!
-	@IBOutlet var pullRequestsToReviewLabel: NSTextField!
+	//@IBOutlet var pullRequestsToReviewLabel: NSTextField!
+	//@IBOutlet var pullRequestsReviewedLabel: NSTextField!
 
 	override func awakeFromNib() {
 		super.awakeFromNib()
