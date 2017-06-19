@@ -9,7 +9,7 @@
 import Foundation
 
 final class QueryManager {
-	let query = "{\"query\": \"query { rateLimit { cost limit remaining resetAt } viewer { login } repository(owner: \\\"asosteam\\\", name: \\\"asos-native-ios\\\") {  pullRequests(last: 15, states: OPEN) { edges { node { id title updatedAt reviews(first: 10) { edges { node { id author { avatarUrl login resourcePath url } } } }, reviewRequests(first: 10) { edges { node { id reviewer { avatarUrl name login } } } } } } }  }}\" }"
+	let query = "{\"query\": \"query { rateLimit { cost limit remaining resetAt } viewer { login } repository(owner: \\\"asosteam\\\", name: \\\"asos-native-ios\\\") {  pullRequests(last: 30, states: OPEN) { edges { node { id title updatedAt reviews(first: 100) { edges { node { id author { avatarUrl login resourcePath url } } } }, reviewRequests(first: 100) { edges { node { id reviewer { avatarUrl name login } } } } } } }  }}\" }"
 	
 	func parseResponse(data: Data) -> [PullRequest]? {
 		do {

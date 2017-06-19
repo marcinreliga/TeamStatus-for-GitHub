@@ -39,7 +39,7 @@ final class MainViewModel {
 					_self.reviewers = (reviewersRequested + reviewersReviewed).uniqueElements
 
 					let reviewersSorted = _self.reviewers.sorted(by: { a, b in
-						a.PRsToReview(in: pullRequests).count > b.PRsToReview(in: pullRequests).count
+						a.PRsToReview(in: pullRequests).count < b.PRsToReview(in: pullRequests).count
 					})
 
 					_self.view.didFinishRunning(reviewers: reviewersSorted, pullRequests: pullRequests)

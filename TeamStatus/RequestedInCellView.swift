@@ -11,6 +11,7 @@ import Cocoa
 
 final class RequestedInCellView: NSTableCellView {
 	@IBOutlet var pullRequestsToReviewLabel: NSTextField!
+	@IBOutlet var levelIndicator: NSLevelIndicator!
 
 	override func awakeFromNib() {
 		super.awakeFromNib()

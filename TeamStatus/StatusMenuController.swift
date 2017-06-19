@@ -113,7 +113,14 @@ extension StatusMenuController: NSTableViewDelegate {
 
 			let reviewer = reviewers[row]
 
-			cell.pullRequestsToReviewLabel.stringValue = "\(reviewer.PRsToReview(in: pullRequests).count)"
+			let prsToReview = reviewer.PRsToReview(in: pullRequests).count
+			let prsReviewed = reviewer.PRsReviewed(in: pullRequests).count
+			let totalPRs = prsToReview + prsReviewed
+			cell.pullRequestsToReviewLabel.stringValue = ""
+			cell.levelIndicator.integerValue = prsReviewed
+			cell.levelIndicator.maxValue = Double(totalPRs)
+			cell.levelIndicator.warningValue = 0.5 * Double(totalPRs)
+			cell.levelIndicator.criticalValue = 0.25 * Double(totalPRs)
 			return cell
 		case "ReviewedTableColumn":
 			guard let cell = tableView.make(withIdentifier: "ReviewedCellView", owner: self) as? ReviewedCellView else {
@@ -126,7 +133,11 @@ extension StatusMenuController: NSTableViewDelegate {
 
 			let reviewer = reviewers[row]
 
-			cell.pullRequestsReviewedLabel.stringValue = "\(reviewer.PRsReviewed(in: pullRequests).count)"
+			let prsToReview = reviewer.PRsToReview(in: pullRequests).count
+			let prsReviewed = reviewer.PRsReviewed(in: pullRequests).count
+			let totalPRs = prsToReview + prsReviewed
+
+			cell.pullRequestsReviewedLabel.stringValue = "\(prsReviewed) of \(totalPRs)"
 			return cell
 		case "AvatarTableColumn":
 			guard let cell = tableView.make(withIdentifier: "AvatarCellView", owner: self) as? AvatarCellView else {
@@ -150,10 +161,6 @@ extension StatusMenuController: NSTableViewDelegate {
 		}
 
 	}
-
-//	func tableView(_ tableView: NSTableView, rowViewForRow row: Int) -> NSTableRowView? {
-//		return nil
-//	}
 }
 
 extension NSImageView {
