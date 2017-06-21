@@ -1,6 +1,6 @@
 //
-//  PRLoadBalancerApp.swift
-//  PRLoadBalancer
+//  TeamStatusApp.swift
+//  TeamStatus
 //
 //  Created by Marcin Religa on 24/05/2017.
 //  Copyright © 2017 Marcin Religa. All rights reserved.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-final class PRLoadBalancerApp {
+final class TeamStatusApp {
 	private var viewModel: MainViewModel!
 	fileprivate var semaphore: DispatchSemaphore?
 
@@ -30,7 +30,7 @@ final class PRLoadBalancerApp {
 	}
 }
 
-extension PRLoadBalancerApp: MainViewProtocol {
+extension TeamStatusApp: MainViewProtocol {
 	func didFinishRunning(reviewers: [Reviewer], pullRequests: [PullRequest]) {
 		for reviewer in reviewers {
 			let pullRequestsReviewRequested = reviewer.PRsToReview(in: pullRequests)

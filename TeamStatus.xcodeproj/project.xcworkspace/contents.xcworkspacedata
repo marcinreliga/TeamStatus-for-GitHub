@@ -2,6 +2,6 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "self:PRLoadBalancer.xcodeproj">
+      location = "self:/Users/marcin.religa/projects/PRLoadBalancer/TeamStatus.xcodeproj">
    </FileRef>
 </Workspace>
