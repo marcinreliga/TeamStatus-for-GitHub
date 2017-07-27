@@ -58,13 +58,15 @@ class StatusMenuController: NSObject {
 
 	fileprivate var reviewers: [Reviewer]?
 	fileprivate var pullRequests: [PullRequest]?
+	fileprivate var viewer: Viewer?
 }
 
 extension StatusMenuController: MainViewProtocol {
-	func didFinishRunning(reviewers: [Reviewer], pullRequests: [PullRequest]) {
+	func didFinishRunning(reviewers: [Reviewer], pullRequests: [PullRequest], viewer: Viewer?) {
 
 		self.reviewers = reviewers
 		self.pullRequests = pullRequests
+		self.viewer = viewer
 
 		DispatchQueue.main.async {
 			self.tableView.reloadData()
@@ -73,6 +75,10 @@ extension StatusMenuController: MainViewProtocol {
 
 	func didFailToRun() {
 
+	}
+
+	func updateStatusItem(title: String) {
+		statusItem.title = title
 	}
 }
 

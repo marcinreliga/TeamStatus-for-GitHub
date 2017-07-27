@@ -9,8 +9,9 @@
 import Foundation
 
 protocol MainViewProtocol {
-	func didFinishRunning(reviewers: [Reviewer], pullRequests: [PullRequest])
+	func didFinishRunning(reviewers: [Reviewer], pullRequests: [PullRequest], viewer: Viewer?)
 	func didFailToRun()
+	func updateStatusItem(title: String)
 }
 
 final class MainViewModel {
@@ -18,7 +19,7 @@ final class MainViewModel {
 	private let queryManager: QueryManager = QueryManager()
 	private let networkManager: NetworkManager
 
-	private var reviewers: [Reviewer] = []
+	//private var reviewers: [Reviewer] = []
 
 	init(view: MainViewProtocol, token: String) {
 		self.view = view
@@ -32,21 +33,36 @@ final class MainViewModel {
 			}
 			switch result {
 			case .success(let data):
-				if let pullRequests = _self.queryManager.parseResponse(data: data) {
-					let reviewersRequested = pullRequests.flatMap({ $0.reviewersRequested })
-					let reviewersReviewed = pullRequests.flatMap({ $0.reviewersReviewed })
+				if let apiResponse = _self.queryManager.parseResponse(data: data) {
+					let reviewersRequested = apiResponse.pullRequests.flatMap({ $0.reviewersRequested })
+					let reviewersReviewed = apiResponse.pullRequests.flatMap({ $0.reviewersReviewed })
 
-					_self.reviewers = (reviewersRequested + reviewersReviewed).uniqueElements
+					let reviewers = (reviewersRequested + reviewersReviewed).uniqueElements
 
-					let reviewersSorted = _self.reviewers.sorted(by: { a, b in
-						a.PRsToReview(in: pullRequests).count < b.PRsToReview(in: pullRequests).count
+					let reviewersSorted = reviewers.sorted(by: { a, b in
+						a.PRsToReview(in: apiResponse.pullRequests).count < b.PRsToReview(in: apiResponse.pullRequests).count
 					})
 
-					_self.view.didFinishRunning(reviewers: reviewersSorted, pullRequests: pullRequests)
+					if let viewer = apiResponse.viewer {
+						if let reviewer = _self.currentUserAsReviewer(viewer: viewer, in: reviewers) {
+							let pullRequestsCount = _self.pullRequestsToReviewCount(for: reviewer, in: apiResponse.pullRequests)
+							_self.view.updateStatusItem(title: "\(pullRequestsCount)")
+						}
+					}
+
+					_self.view.didFinishRunning(reviewers: reviewersSorted, pullRequests: apiResponse.pullRequests, viewer: apiResponse.viewer)
 				}
 			case .failure:
 				_self.view.didFailToRun()
 			}
 		}
+	}
+
+	func currentUserAsReviewer(viewer: Viewer, in reviewers: [Reviewer]) -> Reviewer? {
+		return reviewers.first(where: { $0.login == viewer.login})
+	}
+
+	func pullRequestsToReviewCount(for reviewer: Reviewer, in pullRequests: [PullRequest]) -> Int {
+		return reviewer.PRsToReview(in: pullRequests).count
 	}
 }

@@ -8,10 +8,24 @@
 
 import Foundation
 
+struct Viewer {
+	let login: String
+}
+
+struct APIResponse {
+	var viewer: Viewer?
+	var pullRequests: [PullRequest]
+
+	init() {
+		viewer = nil
+		pullRequests = []
+	}
+}
+
 final class QueryManager {
 	let query = "{\"query\": \"query { rateLimit { cost limit remaining resetAt } viewer { login } repository(owner: \\\"asosteam\\\", name: \\\"asos-native-ios\\\") {  pullRequests(last: 30, states: OPEN) { edges { node { id title updatedAt reviews(first: 100) { edges { node { id author { avatarUrl login resourcePath url } } } }, reviewRequests(first: 100) { edges { node { id reviewer { avatarUrl name login } } } } } } }  }}\" }"
 	
-	func parseResponse(data: Data) -> [PullRequest]? {
+	func parseResponse(data: Data) -> APIResponse? {
 		do {
 			let json = try JSONSerialization.jsonObject(with: data, options: [])
 
@@ -25,10 +39,15 @@ final class QueryManager {
 		return nil
 	}
 
-	private func parse(json: [String: Any]) -> [PullRequest] {
-		var allPullRequests: [PullRequest] = []
+	private func parse(json: [String: Any]) -> APIResponse {
+		var apiResponse = APIResponse()
 
 		if let data = json["data"] as? [String: Any] {
+			if let viewer = data["viewer"] as? [String: String] {
+				if let login = viewer["login"] {
+					apiResponse.viewer = Viewer(login: login)
+				}
+			}
 			if let repository = data["repository"] as? [String: Any] {
 				if let pullRequests = repository["pullRequests"] as? [String: Any] {
 					if let edges = pullRequests["edges"] as? [[String: Any]] {
@@ -78,7 +97,7 @@ final class QueryManager {
 										}
 									}
 									
-									allPullRequests.append(pullRequestData)
+									apiResponse.pullRequests.append(pullRequestData)
 								}
 							}
 						}
@@ -87,6 +106,6 @@ final class QueryManager {
 			}
 		}
 
-		return allPullRequests
+		return apiResponse
 	}
 }
