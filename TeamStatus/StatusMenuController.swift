@@ -12,6 +12,9 @@ class StatusMenuController: NSObject {
 	@IBOutlet var statusMenu: NSMenu!
 	@IBOutlet var reviewerView: ReviewerView!
 	@IBOutlet var tableView: NSTableView!
+	@IBOutlet var viewerImageView: NSImageView!
+	@IBOutlet var viewerLogin: NSTextField!
+	@IBOutlet var viewerStatus: NSTextField!
 
 	private var viewModel: MainViewModel!
 
@@ -79,6 +82,14 @@ extension StatusMenuController: MainViewProtocol {
 
 	func updateStatusItem(title: String) {
 		statusItem.title = title
+	}
+
+	func updateViewerView(with reviewer: Reviewer, pullRequestsToReviewCount: Int) {
+		viewerLogin.stringValue = reviewer.login
+		viewerStatus.stringValue = "requested in \(pullRequestsToReviewCount) pull request(s)"
+		if let imageURL = reviewer.avatarURL {
+			viewerImageView?.imageFromServerURL(urlString: imageURL.absoluteString)
+		}
 	}
 }
 

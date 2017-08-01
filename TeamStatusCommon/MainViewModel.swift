@@ -12,6 +12,7 @@ protocol MainViewProtocol {
 	func didFinishRunning(reviewers: [Reviewer], pullRequests: [PullRequest], viewer: Viewer?)
 	func didFailToRun()
 	func updateStatusItem(title: String)
+	func updateViewerView(with reviewer: Reviewer, pullRequestsToReviewCount: Int)
 }
 
 final class MainViewModel {
@@ -47,6 +48,7 @@ final class MainViewModel {
 						if let reviewer = _self.currentUserAsReviewer(viewer: viewer, in: reviewers) {
 							let pullRequestsCount = _self.pullRequestsToReviewCount(for: reviewer, in: apiResponse.pullRequests)
 							_self.view.updateStatusItem(title: "\(pullRequestsCount)")
+							_self.view.updateViewerView(with: reviewer, pullRequestsToReviewCount: pullRequestsCount)
 						}
 					}
 
