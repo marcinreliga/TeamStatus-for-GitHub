@@ -11,4 +11,12 @@ import Cocoa
 
 final class ReviewedCellView: NSTableCellView {
 	@IBOutlet var pullRequestsReviewedLabel: NSTextField!
+
+	func configure(with viewData: ViewData) {
+		pullRequestsReviewedLabel.stringValue = viewData.pullRequestsReviewedText
+	}
+
+	struct ViewData {
+		let pullRequestsReviewedText: String
+	}
 }

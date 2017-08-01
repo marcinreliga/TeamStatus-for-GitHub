@@ -20,6 +20,9 @@ final class MainViewModel {
 	private let queryManager: QueryManager = QueryManager()
 	private let networkManager: NetworkManager
 
+	private var reviewersSorted: [Reviewer] = []
+	private var pullRequests: [PullRequest] = []
+
 	//private var reviewers: [Reviewer] = []
 
 	init(view: MainViewProtocol, token: String) {
@@ -40,22 +43,30 @@ final class MainViewModel {
 
 					let reviewers = (reviewersRequested + reviewersReviewed).uniqueElements
 
-					let reviewersSorted = reviewers.sorted(by: { a, b in
+					_self.reviewersSorted = reviewers.sorted(by: { a, b in
 						a.PRsToReview(in: apiResponse.pullRequests).count < b.PRsToReview(in: apiResponse.pullRequests).count
 					})
+
+					_self.pullRequests = apiResponse.pullRequests
 
 					if let viewer = apiResponse.viewer {
 						if let reviewer = _self.currentUserAsReviewer(viewer: viewer, in: reviewers) {
 							let pullRequestsCount = _self.pullRequestsToReviewCount(for: reviewer, in: apiResponse.pullRequests)
-							_self.view.updateStatusItem(title: "\(pullRequestsCount)")
-							_self.view.updateViewerView(with: reviewer, pullRequestsToReviewCount: pullRequestsCount)
+							DispatchQueue.main.async {
+								_self.view.updateStatusItem(title: "\(pullRequestsCount)")
+								_self.view.updateViewerView(with: reviewer, pullRequestsToReviewCount: pullRequestsCount)
+							}
 						}
 					}
 
-					_self.view.didFinishRunning(reviewers: reviewersSorted, pullRequests: apiResponse.pullRequests, viewer: apiResponse.viewer)
+					DispatchQueue.main.async {
+						_self.view.didFinishRunning(reviewers: _self.reviewersSorted, pullRequests: apiResponse.pullRequests, viewer: apiResponse.viewer)
+					}
 				}
 			case .failure:
-				_self.view.didFailToRun()
+				DispatchQueue.main.async {
+					_self.view.didFailToRun()
+				}
 			}
 		}
 	}
@@ -66,5 +77,21 @@ final class MainViewModel {
 
 	func pullRequestsToReviewCount(for reviewer: Reviewer, in pullRequests: [PullRequest]) -> Int {
 		return reviewer.PRsToReview(in: pullRequests).count
+	}
+
+	// FIXME: Should not use UIKit subclasses.
+	func viewDataForUserLoginCell(at rowIndex: Int) -> ReviewerCellView.ViewData {
+		let reviewer = reviewersSorted[rowIndex]
+		return .init(login: reviewer.login)
+	}
+
+	func viewDataForReviewedCell(at rowIndex: Int) -> ReviewedCellView.ViewData {
+		let reviewer = reviewersSorted[rowIndex]
+
+		let prsToReview = reviewer.PRsToReview(in: pullRequests).count
+		let prsReviewed = reviewer.PRsReviewed(in: pullRequests).count
+		let totalPRs = prsToReview + prsReviewed
+
+		return .init(pullRequestsReviewedText: "\(prsReviewed) of \(totalPRs)")
 	}
 }

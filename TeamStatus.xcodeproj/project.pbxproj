@@ -8,6 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		DA06BD021EE1C41100E9B261 /* ReviewerCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA06BD011EE1C41100E9B261 /* ReviewerCellView.swift */; };
+		DA569E0C1F3127B400C9A8A7 /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA569E0A1F31275C00C9A8A7 /* Logger.swift */; };
+		DA569E0D1F3127B500C9A8A7 /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA569E0A1F31275C00C9A8A7 /* Logger.swift */; };
+		DA569E0F1F31284300C9A8A7 /* NSImageView+URL.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA569E0E1F31284300C9A8A7 /* NSImageView+URL.swift */; };
 		DA589A661EDF5647006BFB72 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA589A651EDF5647006BFB72 /* AppDelegate.swift */; };
 		DA589A6A1EDF5647006BFB72 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DA589A691EDF5647006BFB72 /* Assets.xcassets */; };
 		DA589A781EDF5648006BFB72 /* TeamStatusTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA589A771EDF5648006BFB72 /* TeamStatusTests.swift */; };
@@ -18,7 +21,7 @@
 		DAF5E89B1EDF5B4B00CFAC81 /* StatusMenuController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAF5E89A1EDF5B4B00CFAC81 /* StatusMenuController.swift */; };
 		DAF5E89D1EDF5D3100CFAC81 /* ReviewerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAF5E89C1EDF5D3100CFAC81 /* ReviewerView.swift */; };
 		DAF7BAE01EFB259500B71AF0 /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAF7BADF1EFB259500B71AF0 /* NetworkManager.swift */; };
-		DAF7BAE31EFB25D100B71AF0 /* Sequence.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAF7BAE21EFB25D100B71AF0 /* Sequence.swift */; };
+		DAF7BAE31EFB25D100B71AF0 /* Sequence+uniqueElements.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAF7BAE21EFB25D100B71AF0 /* Sequence+uniqueElements.swift */; };
 		DAF7BAE71EFB25DE00B71AF0 /* PullRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAF7BAE51EFB25DE00B71AF0 /* PullRequest.swift */; };
 		DAF7BAE91EFB25DE00B71AF0 /* Reviewer.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAF7BAE61EFB25DE00B71AF0 /* Reviewer.swift */; };
 		DAF7BAEE1EFB260000B71AF0 /* Configuration.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAF7BAEB1EFB260000B71AF0 /* Configuration.swift */; };
@@ -28,7 +31,7 @@
 		DAF7BAF91EFB266700B71AF0 /* Result.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAF7BAF51EFB266700B71AF0 /* Result.swift */; };
 		DAF7BAFB1EFB266700B71AF0 /* ResultProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAF7BAF61EFB266700B71AF0 /* ResultProtocol.swift */; };
 		DAF7BB011EFB26C300B71AF0 /* TeamStatusApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAF7BB001EFB26C300B71AF0 /* TeamStatusApp.swift */; };
-		DAF7BB021EFB26E900B71AF0 /* Sequence.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAF7BAE21EFB25D100B71AF0 /* Sequence.swift */; };
+		DAF7BB021EFB26E900B71AF0 /* Sequence+uniqueElements.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAF7BAE21EFB25D100B71AF0 /* Sequence+uniqueElements.swift */; };
 		DAF7BB031EFB26E900B71AF0 /* PullRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAF7BAE51EFB25DE00B71AF0 /* PullRequest.swift */; };
 		DAF7BB041EFB26E900B71AF0 /* Reviewer.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAF7BAE61EFB25DE00B71AF0 /* Reviewer.swift */; };
 		DAF7BB051EFB26E900B71AF0 /* AnyError.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAF7BAF41EFB266700B71AF0 /* AnyError.swift */; };
@@ -66,6 +69,8 @@
 /* Begin PBXFileReference section */
 		DA06BD011EE1C41100E9B261 /* ReviewerCellView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReviewerCellView.swift; sourceTree = "<group>"; };
 		DA23947D1ED5EB5900F8D325 /* TeamStatusConsole */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = TeamStatusConsole; sourceTree = BUILT_PRODUCTS_DIR; };
+		DA569E0A1F31275C00C9A8A7 /* Logger.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Logger.swift; path = TeamStatus/Logger.swift; sourceTree = SOURCE_ROOT; };
+		DA569E0E1F31284300C9A8A7 /* NSImageView+URL.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSImageView+URL.swift"; sourceTree = SOURCE_ROOT; };
 		DA589A631EDF5647006BFB72 /* TeamStatus.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TeamStatus.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DA589A651EDF5647006BFB72 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		DA589A691EDF5647006BFB72 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -80,7 +85,7 @@
 		DAF5E89A1EDF5B4B00CFAC81 /* StatusMenuController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StatusMenuController.swift; sourceTree = "<group>"; };
 		DAF5E89C1EDF5D3100CFAC81 /* ReviewerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReviewerView.swift; sourceTree = "<group>"; };
 		DAF7BADF1EFB259500B71AF0 /* NetworkManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NetworkManager.swift; path = TeamStatusCommon/NetworkManager.swift; sourceTree = SOURCE_ROOT; };
-		DAF7BAE21EFB25D100B71AF0 /* Sequence.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Sequence.swift; path = TeamStatusCommon/Sequence.swift; sourceTree = SOURCE_ROOT; };
+		DAF7BAE21EFB25D100B71AF0 /* Sequence+uniqueElements.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "Sequence+uniqueElements.swift"; path = "TeamStatusCommon/Sequence+uniqueElements.swift"; sourceTree = SOURCE_ROOT; };
 		DAF7BAE51EFB25DE00B71AF0 /* PullRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PullRequest.swift; path = TeamStatusCommon/PullRequest.swift; sourceTree = SOURCE_ROOT; };
 		DAF7BAE61EFB25DE00B71AF0 /* Reviewer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Reviewer.swift; path = TeamStatusCommon/Reviewer.swift; sourceTree = SOURCE_ROOT; };
 		DAF7BAEB1EFB260000B71AF0 /* Configuration.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Configuration.swift; path = TeamStatusCommon/Configuration.swift; sourceTree = SOURCE_ROOT; };
@@ -150,6 +155,7 @@
 				DAF7BAEB1EFB260000B71AF0 /* Configuration.swift */,
 				DAF7BAEC1EFB260000B71AF0 /* MainViewModel.swift */,
 				DAF7BAED1EFB260000B71AF0 /* QueryManager.swift */,
+				DA569E0A1F31275C00C9A8A7 /* Logger.swift */,
 			);
 			name = TeamStatusCommon;
 			path = PRLoadBalancer;
@@ -173,6 +179,17 @@
 			name = ResultType;
 			sourceTree = "<group>";
 		};
+		DA569E101F312F8C00C9A8A7 /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				DA06BD011EE1C41100E9B261 /* ReviewerCellView.swift */,
+				DAABD7A41EF6DAED00E5355A /* RequestedInCellView.swift */,
+				DAABD7A61EF6DE6E00E5355A /* ReviewedCellView.swift */,
+				DAABD7A81EF6DFD500E5355A /* AvatarCellView.swift */,
+			);
+			name = Cells;
+			sourceTree = "<group>";
+		};
 		DA5898D71EDE17C0006BFB72 /* Models */ = {
 			isa = PBXGroup;
 			children = (
@@ -185,7 +202,8 @@
 		DA5898DC1EDE17FC006BFB72 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
-				DAF7BAE21EFB25D100B71AF0 /* Sequence.swift */,
+				DAF7BAE21EFB25D100B71AF0 /* Sequence+uniqueElements.swift */,
+				DA569E0E1F31284300C9A8A7 /* NSImageView+URL.swift */,
 			);
 			name = Extensions;
 			sourceTree = "<group>";
@@ -193,16 +211,13 @@
 		DA589A641EDF5647006BFB72 /* TeamStatus */ = {
 			isa = PBXGroup;
 			children = (
+				DA569E101F312F8C00C9A8A7 /* Cells */,
 				DA589A651EDF5647006BFB72 /* AppDelegate.swift */,
 				DA589A691EDF5647006BFB72 /* Assets.xcassets */,
 				DA589A6E1EDF5647006BFB72 /* Info.plist */,
 				DAF5E8981EDF578D00CFAC81 /* MainMenu.xib */,
 				DAF5E89A1EDF5B4B00CFAC81 /* StatusMenuController.swift */,
 				DAF5E89C1EDF5D3100CFAC81 /* ReviewerView.swift */,
-				DA06BD011EE1C41100E9B261 /* ReviewerCellView.swift */,
-				DAABD7A41EF6DAED00E5355A /* RequestedInCellView.swift */,
-				DAABD7A61EF6DE6E00E5355A /* ReviewedCellView.swift */,
-				DAABD7A81EF6DFD500E5355A /* AvatarCellView.swift */,
 			);
 			path = TeamStatus;
 			sourceTree = "<group>";
@@ -346,10 +361,11 @@
 				DAF7BB0C1EFB26ED00B71AF0 /* main.swift in Sources */,
 				DAF7BB031EFB26E900B71AF0 /* PullRequest.swift in Sources */,
 				DAF7BB091EFB26E900B71AF0 /* Configuration.swift in Sources */,
-				DAF7BB021EFB26E900B71AF0 /* Sequence.swift in Sources */,
+				DAF7BB021EFB26E900B71AF0 /* Sequence+uniqueElements.swift in Sources */,
 				DAF7BB0A1EFB26E900B71AF0 /* MainViewModel.swift in Sources */,
 				DAF7BB081EFB26E900B71AF0 /* NetworkManager.swift in Sources */,
 				DAF7BB071EFB26E900B71AF0 /* ResultProtocol.swift in Sources */,
+				DA569E0D1F3127B500C9A8A7 /* Logger.swift in Sources */,
 				DAF7BB041EFB26E900B71AF0 /* Reviewer.swift in Sources */,
 				DAF7BB0B1EFB26E900B71AF0 /* QueryManager.swift in Sources */,
 				DAF7BB011EFB26C300B71AF0 /* TeamStatusApp.swift in Sources */,
@@ -361,7 +377,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				DAF7BAF71EFB266700B71AF0 /* AnyError.swift in Sources */,
-				DAF7BAE31EFB25D100B71AF0 /* Sequence.swift in Sources */,
+				DAF7BAE31EFB25D100B71AF0 /* Sequence+uniqueElements.swift in Sources */,
 				DAF7BAE71EFB25DE00B71AF0 /* PullRequest.swift in Sources */,
 				DAABD7A91EF6DFD500E5355A /* AvatarCellView.swift in Sources */,
 				DAABD7A71EF6DE6E00E5355A /* ReviewedCellView.swift in Sources */,
@@ -373,7 +389,9 @@
 				DAF5E89B1EDF5B4B00CFAC81 /* StatusMenuController.swift in Sources */,
 				DA589A661EDF5647006BFB72 /* AppDelegate.swift in Sources */,
 				DAF5E89D1EDF5D3100CFAC81 /* ReviewerView.swift in Sources */,
+				DA569E0C1F3127B400C9A8A7 /* Logger.swift in Sources */,
 				DA06BD021EE1C41100E9B261 /* ReviewerCellView.swift in Sources */,
+				DA569E0F1F31284300C9A8A7 /* NSImageView+URL.swift in Sources */,
 				DAF7BAE01EFB259500B71AF0 /* NetworkManager.swift in Sources */,
 				DAABD7A51EF6DAED00E5355A /* RequestedInCellView.swift in Sources */,
 				DAF7BAF01EFB260000B71AF0 /* MainViewModel.swift in Sources */,
