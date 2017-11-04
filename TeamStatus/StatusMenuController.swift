@@ -18,7 +18,7 @@ class StatusMenuController: NSObject {
 
 	fileprivate var viewModel: MainViewModel!
 
-	let statusItem = NSStatusBar.system().statusItem(withLength: NSVariableStatusItemLength)
+	let statusItem = NSStatusBar.system.statusItem(withLength: NSStatusItem.variableLength)
 
 	// TODO: How to do it properly?
 	var viewDidLoad = false
@@ -55,7 +55,7 @@ class StatusMenuController: NSObject {
 	}
 
 	private func updateStatusIcon() {
-		let icon = NSImage(named: "statusIcon")
+		let icon = NSImage(named: NSImage.Name(rawValue: "statusIcon"))
 		icon?.isTemplate = true // best for dark mode
 		statusItem.image = icon
 		statusItem.menu = statusMenu
@@ -66,7 +66,7 @@ class StatusMenuController: NSObject {
 	}
 
 	@IBAction func quitClicked(sender: NSMenuItem) {
-		NSApplication.shared().terminate(self)
+		NSApplication.shared.terminate(self)
 	}
 
 	@IBAction func refreshClicked(sender: NSButton) {
@@ -114,16 +114,16 @@ extension StatusMenuController: NSTableViewDelegate {
 		}
 
 		switch tableColumn.identifier {
-		case "UserLoginTableColumn":
-			guard let cell = tableView.make(withIdentifier: "ReviewerCellView", owner: self) as? ReviewerCellView else {
+		case NSUserInterfaceItemIdentifier("UserLoginTableColumn"):
+			guard let cell = tableView.makeView(withIdentifier: NSUserInterfaceItemIdentifier(rawValue: "ReviewerCellView"), owner: self) as? ReviewerCellView else {
 				fatalError()
 			}
 
 			let viewData = viewModel.viewDataForUserLoginCell(at: row)
 			cell.configure(with: viewData)
 			return cell
-		case "RequestedInTableColumn":
-			guard let cell = tableView.make(withIdentifier: "RequestedInCellView", owner: self) as? RequestedInCellView else {
+		case NSUserInterfaceItemIdentifier("RequestedInTableColumn"):
+			guard let cell = tableView.makeView(withIdentifier: NSUserInterfaceItemIdentifier(rawValue: "RequestedInCellView"), owner: self) as? RequestedInCellView else {
 				fatalError()
 			}
 
@@ -142,16 +142,16 @@ extension StatusMenuController: NSTableViewDelegate {
 			cell.levelIndicator.warningValue = 0.5 * Double(totalPRs)
 			cell.levelIndicator.criticalValue = 0.25 * Double(totalPRs)
 			return cell
-		case "ReviewedTableColumn":
-			guard let cell = tableView.make(withIdentifier: "ReviewedCellView", owner: self) as? ReviewedCellView else {
+		case NSUserInterfaceItemIdentifier("ReviewedTableColumn"):
+			guard let cell = tableView.makeView(withIdentifier: NSUserInterfaceItemIdentifier(rawValue: "ReviewedCellView"), owner: self) as? ReviewedCellView else {
 				fatalError()
 			}
 
 			let viewData = viewModel.viewDataForReviewedCell(at: row)
 			cell.configure(with: viewData)
 			return cell
-		case "AvatarTableColumn":
-			guard let cell = tableView.make(withIdentifier: "AvatarCellView", owner: self) as? AvatarCellView else {
+		case NSUserInterfaceItemIdentifier("AvatarTableColumn"):
+			guard let cell = tableView.makeView(withIdentifier: NSUserInterfaceItemIdentifier(rawValue: "AvatarCellView"), owner: self) as? AvatarCellView else {
 				fatalError()
 			}
 
