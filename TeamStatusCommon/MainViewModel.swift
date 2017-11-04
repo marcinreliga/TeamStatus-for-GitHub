@@ -12,7 +12,7 @@ protocol MainViewProtocol {
 	func didFinishRunning(reviewers: [Reviewer], pullRequests: [PullRequest], viewer: Viewer?)
 	func didFailToRun()
 	func updateStatusItem(title: String, isAttentionNeeded: Bool)
-	func updateViewerView(with reviewer: Reviewer, pullRequestsToReviewCount: Int)
+	func updateViewerView(with reviewer: Reviewer, ownPullRequestsCount: Int, pullRequestsToReviewCount: Int, pullRequestsReviewed: Int)
 }
 
 final class MainViewModel {
@@ -22,16 +22,23 @@ final class MainViewModel {
 
 	private var reviewersSorted: [Reviewer] = []
 	private var pullRequests: [PullRequest] = []
+	private var viewer: Viewer?
+	private var repositoryURL: URL
 
 	//private var reviewers: [Reviewer] = []
 
-	init(view: MainViewProtocol, token: String) {
+	init(view: MainViewProtocol, repositoryURL: URL, token: String) {
 		self.view = view
+		self.repositoryURL = repositoryURL
 		self.networkManager = NetworkManager(apiBaseURL: Configuration.apiBaseURL, token: token)
 	}
 
 	func run() {
-		networkManager.query(queryManager.query) { [weak self] result in
+		guard let query = queryManager.query else {
+			return Logger.log("Query is empty.")
+		}
+
+		networkManager.query(query) { [weak self] result in
 			guard let _self = self else {
 				return
 			}
@@ -49,15 +56,19 @@ final class MainViewModel {
 
 					_self.pullRequests = apiResponse.pullRequests
 
-					if let viewer = apiResponse.viewer {
+					_self.viewer = apiResponse.viewer
+
+					if let viewer = _self.viewer {
 						if let reviewer = _self.currentUserAsReviewer(viewer: viewer, in: reviewers) {
 							let pullRequestsCount = _self.pullRequestsToReviewCount(for: reviewer, in: apiResponse.pullRequests)
-							let isAttentionNeeded = _self.hasAnyConflictsFor(viewer: viewer, in: apiResponse.pullRequests)
+							let isAttentionNeeded = _self.hasAnyConflicts(for: viewer, in: apiResponse.pullRequests)
+							let ownPullRequestsCount = _self.numberOfPullRequests(for: viewer, in: apiResponse.pullRequests)
+							let pullRequestsReviewedCount = _self.numberOfPullRequestsReviewed(by: viewer, in: apiResponse.pullRequests)
 
 							DispatchQueue.main.async {
 								// TODO: This can be merged into single call.
 								_self.view.updateStatusItem(title: "\(pullRequestsCount)", isAttentionNeeded: isAttentionNeeded)
-								_self.view.updateViewerView(with: reviewer, pullRequestsToReviewCount: pullRequestsCount)
+								_self.view.updateViewerView(with: reviewer, ownPullRequestsCount: ownPullRequestsCount, pullRequestsToReviewCount: pullRequestsCount, pullRequestsReviewed: pullRequestsReviewedCount)
 							}
 						}
 					}
@@ -82,8 +93,16 @@ final class MainViewModel {
 		return reviewer.PRsToReview(in: pullRequests).count
 	}
 
-	func hasAnyConflictsFor(viewer: Viewer, in pullRequests: [PullRequest]) -> Bool {
+	func hasAnyConflicts(for viewer: Viewer, in pullRequests: [PullRequest]) -> Bool {
 		return pullRequests.first(where: { $0.mergeable == "CONFLICTING" && $0.authorLogin == viewer.login }) != nil
+	}
+
+	func numberOfPullRequests(for viewer: Viewer, in pullRequests: [PullRequest]) -> Int {
+		return pullRequests.filter({ $0.authorLogin == viewer.login }).count
+	}
+
+	func numberOfPullRequestsReviewed(by viewer: Viewer, in pullRequests: [PullRequest]) -> Int {
+		return pullRequests.filter({ $0.reviewersReviewed.contains(where: { $0.login == viewer.login }) }).count
 	}
 
 	// FIXME: Should not use UIKit subclasses.
@@ -100,5 +119,48 @@ final class MainViewModel {
 		let totalPRs = prsToReview + prsReviewed
 
 		return .init(pullRequestsReviewedText: "\(prsReviewed) of \(totalPRs)")
+	}
+
+	func openMyPullRequests() {
+		guard
+			let viewer = viewer,
+			let url = URL(string: "\(repositoryURL.absoluteString)/pulls?q=is%3Apr+is%3Aopen+sort%3Aupdated-desc+author%3A\(viewer.login)")
+		else {
+			return
+		}
+
+		openBrowser(with: url)
+	}
+
+	func openAwaitingReviewPullRequests() {
+		guard
+			let viewer = viewer,
+			let url = URL(string: "\(repositoryURL.absoluteString)/pulls?q=is%3Apr+is%3Aopen+sort%3Aupdated-desc+review-requested%3A\(viewer.login)")
+		else {
+			return
+		}
+
+		openBrowser(with: url)
+	}
+
+	func openReviewedPullRequests() {
+		guard
+			let viewer = viewer,
+			let url = URL(string: "\(repositoryURL.absoluteString)/pulls?q=is%3Apr+is%3Aopen+sort%3Aupdated-desc+reviewed-by%3A\(viewer.login)")
+		else {
+			return
+		}
+
+		openBrowser(with: url)
+	}
+
+	func openAllPullRequests() {
+		openMyPullRequests()
+		openAwaitingReviewPullRequests()
+		openReviewedPullRequests()
+	}
+
+	private func openBrowser(with url: URL) {
+		Process.launchedProcess(launchPath: "/usr/bin/open", arguments: [url.absoluteString])
 	}
 }

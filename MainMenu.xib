@@ -31,12 +31,14 @@
         </menu>
         <customObject id="7yV-y2-1gE" customClass="StatusMenuController" customModule="TeamStatus" customModuleProvider="target">
             <connections>
+                <outlet property="awaitingReviewButton" destination="ODp-RN-QNm" id="nEW-DP-Qwf"/>
+                <outlet property="myPullRequestsButton" destination="3Xc-lA-GTd" id="1Bf-bj-Soa"/>
+                <outlet property="reviewedButton" destination="f1t-Bj-573" id="RMe-Yu-BD6"/>
                 <outlet property="reviewerView" destination="w8f-mU-dtk" id="Zp1-0K-z7L"/>
                 <outlet property="statusMenu" destination="FLe-an-MQR" id="jQQ-ZP-oj7"/>
                 <outlet property="tableView" destination="Jfd-IC-BDz" id="q7l-xS-7iO"/>
                 <outlet property="viewerImageView" destination="FEh-0c-RRr" id="CAe-gy-BKv"/>
                 <outlet property="viewerLogin" destination="JJJ-63-XId" id="qZO-tR-e0v"/>
-                <outlet property="viewerStatus" destination="wI3-y4-7Yv" id="7Ow-Uh-wPV"/>
             </connections>
         </customObject>
         <customView id="w8f-mU-dtk" customClass="ReviewerView" customModule="TeamStatus" customModuleProvider="target">
@@ -240,7 +242,7 @@
                     </tableHeaderView>
                 </scrollView>
                 <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="3bV-Fy-obC">
-                    <rect key="frame" x="423" y="714" width="87" height="32"/>
+                    <rect key="frame" x="10" y="714" width="87" height="32"/>
                     <buttonCell key="cell" type="push" title="Refresh" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="xTM-pH-k4N">
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                         <font key="font" metaFont="system"/>
@@ -268,26 +270,63 @@
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
-                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="wI3-y4-7Yv">
-                    <rect key="frame" x="238" y="688" width="268" height="17"/>
-                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="[status]" id="EcO-Hf-ONY">
+                <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="3Xc-lA-GTd">
+                    <rect key="frame" x="164" y="714" width="58" height="32"/>
+                    <buttonCell key="cell" type="push" title="my" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="LA0-Gd-GgB">
+                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                         <font key="font" metaFont="system"/>
-                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
-                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                    </textFieldCell>
-                </textField>
+                    </buttonCell>
+                    <connections>
+                        <action selector="openMyPullRequestsClickedWithSender:" target="7yV-y2-1gE" id="Ezq-GM-mDA"/>
+                    </connections>
+                </button>
+                <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="ODp-RN-QNm">
+                    <rect key="frame" x="218" y="714" width="133" height="32"/>
+                    <buttonCell key="cell" type="push" title="awaiting review" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="BmA-ON-pZY">
+                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                        <font key="font" metaFont="system"/>
+                    </buttonCell>
+                    <connections>
+                        <action selector="openAwaitingReviewPullRequestsClickedWithSender:" target="7yV-y2-1gE" id="afb-vv-yOa"/>
+                    </connections>
+                </button>
+                <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="qOg-KW-x4s">
+                    <rect key="frame" x="438" y="714" width="72" height="32"/>
+                    <buttonCell key="cell" type="push" title="&lt;- all" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="zRa-A9-nKO">
+                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                        <font key="font" metaFont="system"/>
+                    </buttonCell>
+                    <connections>
+                        <action selector="openAllPullRequestsClickedWithSender:" target="7yV-y2-1gE" id="a7I-7q-VMv"/>
+                    </connections>
+                </button>
+                <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="f1t-Bj-573">
+                    <rect key="frame" x="347" y="714" width="95" height="32"/>
+                    <buttonCell key="cell" type="push" title="reviewed" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="Tmu-JV-UWh">
+                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                        <font key="font" metaFont="system"/>
+                    </buttonCell>
+                    <connections>
+                        <action selector="openReviewedPullRequestsClickedWithSender:" target="7yV-y2-1gE" id="HQ2-1M-ega"/>
+                    </connections>
+                </button>
             </subviews>
             <constraints>
-                <constraint firstItem="wI3-y4-7Yv" firstAttribute="leading" secondItem="JJJ-63-XId" secondAttribute="trailing" constant="16" id="312-q1-aZW"/>
                 <constraint firstItem="JJJ-63-XId" firstAttribute="top" secondItem="3bV-Fy-obC" secondAttribute="bottom" constant="16" id="3S1-qc-Xn0"/>
                 <constraint firstItem="3bV-Fy-obC" firstAttribute="top" secondItem="w8f-mU-dtk" secondAttribute="top" constant="8" id="8kI-jq-98I"/>
-                <constraint firstItem="wI3-y4-7Yv" firstAttribute="centerY" secondItem="JJJ-63-XId" secondAttribute="centerY" id="Ie6-2H-zrC"/>
-                <constraint firstAttribute="trailing" secondItem="wI3-y4-7Yv" secondAttribute="trailing" constant="16" id="ZDr-hi-j3D"/>
+                <constraint firstItem="3Xc-lA-GTd" firstAttribute="top" secondItem="w8f-mU-dtk" secondAttribute="top" constant="8" id="Ez6-ip-RR4"/>
+                <constraint firstItem="ODp-RN-QNm" firstAttribute="leading" secondItem="3Xc-lA-GTd" secondAttribute="trailing" constant="8" id="Gau-X8-BA9"/>
+                <constraint firstItem="ODp-RN-QNm" firstAttribute="top" secondItem="w8f-mU-dtk" secondAttribute="top" constant="8" id="HRF-8m-L5R"/>
+                <constraint firstItem="qOg-KW-x4s" firstAttribute="leading" secondItem="f1t-Bj-573" secondAttribute="trailing" constant="8" id="L0i-Lr-noC"/>
+                <constraint firstItem="3bV-Fy-obC" firstAttribute="leading" secondItem="w8f-mU-dtk" secondAttribute="leading" constant="16" id="VzL-M7-0BK"/>
+                <constraint firstItem="qOg-KW-x4s" firstAttribute="top" secondItem="w8f-mU-dtk" secondAttribute="top" constant="8" id="Ztt-9b-b5x"/>
+                <constraint firstAttribute="trailing" secondItem="qOg-KW-x4s" secondAttribute="trailing" constant="16" id="aDV-UR-cmv"/>
                 <constraint firstItem="FEh-0c-RRr" firstAttribute="leading" secondItem="w8f-mU-dtk" secondAttribute="leading" constant="16" id="cLu-3U-Tel"/>
                 <constraint firstItem="FEh-0c-RRr" firstAttribute="top" secondItem="w8f-mU-dtk" secondAttribute="top" constant="37" id="cSY-Gi-9wa"/>
+                <constraint firstItem="f1t-Bj-573" firstAttribute="top" secondItem="w8f-mU-dtk" secondAttribute="top" constant="8" id="fKo-5W-SFu"/>
+                <constraint firstItem="f1t-Bj-573" firstAttribute="leading" secondItem="ODp-RN-QNm" secondAttribute="trailing" constant="8" id="kEH-Ln-BBN"/>
                 <constraint firstItem="JJJ-63-XId" firstAttribute="leading" secondItem="FEh-0c-RRr" secondAttribute="trailing" constant="16" id="kxW-bR-Ad4"/>
                 <constraint firstItem="JJJ-63-XId" firstAttribute="leading" secondItem="FEh-0c-RRr" secondAttribute="trailing" constant="16" id="mSN-lk-9gg"/>
-                <constraint firstAttribute="trailing" secondItem="3bV-Fy-obC" secondAttribute="trailing" constant="16" id="rwN-fy-dtc"/>
             </constraints>
             <point key="canvasLocation" x="-13" y="217"/>
         </customView>

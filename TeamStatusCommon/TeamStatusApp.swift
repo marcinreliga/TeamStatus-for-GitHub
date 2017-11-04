@@ -17,8 +17,10 @@ final class TeamStatusApp {
 		case 1:
 			print("Error: Authorization token is required.")
 		default:
-			let token = CommandLine.arguments[1]
-			viewModel = MainViewModel(view: self, token: token)
+			guard let input = CommandLineInput() else {
+				return
+			}
+			viewModel = MainViewModel(view: self, repositoryURL: input.repositoryURL, token: input.token)
 			semaphore = DispatchSemaphore(value: 0)
 			viewModel.run()
 			semaphore?.wait()
@@ -31,7 +33,7 @@ final class TeamStatusApp {
 }
 
 extension TeamStatusApp: MainViewProtocol {
-	func didFinishRunning(reviewers: [Reviewer], pullRequests: [PullRequest]) {
+	func didFinishRunning(reviewers: [Reviewer], pullRequests: [PullRequest], viewer: Viewer?) {
 		for reviewer in reviewers {
 			let pullRequestsReviewRequested = reviewer.PRsToReview(in: pullRequests)
 			let pullRequestsReviewed = reviewer.PRsReviewed(in: pullRequests)
@@ -46,4 +48,9 @@ extension TeamStatusApp: MainViewProtocol {
 	func didFailToRun() {
 		finish()
 	}
+
+	// TODO: This needs to be decoupled with view model used by Mac UI app.
+	func updateStatusItem(title: String, isAttentionNeeded: Bool) {}
+
+	func updateViewerView(with reviewer: Reviewer, ownPullRequestsCount: Int, pullRequestsToReviewCount: Int, pullRequestsReviewed: Int) {}
 }

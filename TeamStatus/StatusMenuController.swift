@@ -14,7 +14,9 @@ class StatusMenuController: NSObject {
 	@IBOutlet var tableView: NSTableView!
 	@IBOutlet var viewerImageView: NSImageView!
 	@IBOutlet var viewerLogin: NSTextField!
-	@IBOutlet var viewerStatus: NSTextField!
+	@IBOutlet var myPullRequestsButton: NSButton!
+	@IBOutlet var awaitingReviewButton: NSButton!
+	@IBOutlet var reviewedButton: NSButton!
 
 	fileprivate var viewModel: MainViewModel!
 
@@ -34,10 +36,14 @@ class StatusMenuController: NSObject {
 
 		updateStatusIcon()
 		updateMainView()
+
+		guard let input = CommandLineInput() else {
+			return
+		}
+
 		scheduleRefreshing()
 
-		let token = CommandLine.arguments[1]
-		viewModel = MainViewModel(view: self, token: token)
+		viewModel = MainViewModel(view: self, repositoryURL: input.repositoryURL, token: input.token)
 		viewModel.run()
 
 		viewDidLoad = true
@@ -73,6 +79,26 @@ class StatusMenuController: NSObject {
 		print("refresh")
 		viewModel.run()
 	}
+
+	@IBAction func openMyPullRequestsClicked(sender: NSButton) {
+		viewModel.openMyPullRequests()
+		statusMenu.cancelTracking()
+	}
+
+	@IBAction func openAwaitingReviewPullRequestsClicked(sender: NSButton) {
+		viewModel.openAwaitingReviewPullRequests()
+		statusMenu.cancelTracking()
+	}
+
+	@IBAction func openReviewedPullRequestsClicked(sender: NSButton) {
+		viewModel.openReviewedPullRequests()
+		statusMenu.cancelTracking()
+	}
+
+	@IBAction func openAllPullRequestsClicked(sender: NSButton) {
+		viewModel.openAllPullRequests()
+		statusMenu.cancelTracking()
+	}
 }
 
 extension StatusMenuController: MainViewProtocol {
@@ -99,12 +125,15 @@ extension StatusMenuController: MainViewProtocol {
 		statusItem.title = titleToSet
 	}
 
-	func updateViewerView(with reviewer: Reviewer, pullRequestsToReviewCount: Int) {
+	func updateViewerView(with reviewer: Reviewer, ownPullRequestsCount: Int, pullRequestsToReviewCount: Int, pullRequestsReviewed: Int) {
 		viewerLogin.stringValue = reviewer.login
-		viewerStatus.stringValue = "requested in \(pullRequestsToReviewCount) pull request(s)"
 		if let imageURL = reviewer.avatarURL {
 			viewerImageView?.loadImageFromURL(urlString: imageURL.absoluteString)
 		}
+
+		myPullRequestsButton.title = "my (\(ownPullRequestsCount))"
+		awaitingReviewButton.title = "awaiting review (\(pullRequestsToReviewCount))"
+		reviewedButton.title = "reviewed (\(pullRequestsReviewed))"
 	}
 }
 

@@ -14,16 +14,30 @@ struct Viewer {
 
 struct APIResponse {
 	var viewer: Viewer?
-	var pullRequests: [PullRequest]
-
-	init() {
-		viewer = nil
-		pullRequests = []
-	}
+	var repositoryURL: URL?
+	var pullRequests: [PullRequest] = []
 }
 
 final class QueryManager {
-	let query = "{\"query\": \"query { rateLimit { cost limit remaining resetAt } viewer { login } repository(owner: \\\"asosteam\\\", name: \\\"asos-native-ios\\\") {  pullRequests(last: 30, states: OPEN) { edges { node { id title author { login } updatedAt mergeable reviews(first: 100) { edges { node { id author { avatarUrl login resourcePath url } } } }, reviewRequests(first: 100) { edges { node { id reviewer { avatarUrl name login } } } } } } }  }}\" }"
+	var query: String? {
+		guard
+			let input = CommandLineInput(),
+			let path = URLComponents(url: input.repositoryURL, resolvingAgainstBaseURL: false)?.path
+		else {
+			return nil
+		}
+
+		let pathComponents = path.split(separator: "/")
+
+		guard
+			let team = pathComponents.first,
+			let repositoryName = pathComponents.last
+		else {
+			return nil
+		}
+
+		return "{\"query\": \"query { rateLimit { cost limit remaining resetAt } viewer { login } repository(owner: \\\"\(team)\\\", name: \\\"\(repositoryName)\\\") { url  pullRequests(last: 30, states: OPEN) { edges { node { id title author { login } updatedAt mergeable reviews(first: 100) { edges { node { id author { avatarUrl login resourcePath url } } } }, reviewRequests(first: 100) { edges { node { id reviewer { avatarUrl name login } } } } } } }  }}\" }"
+	}
 	
 	func parseResponse(data: Data) -> APIResponse? {
 		do {
@@ -49,6 +63,9 @@ final class QueryManager {
 				}
 			}
 			if let repository = data["repository"] as? [String: Any] {
+				if let url = repository["url"] as? String {
+					apiResponse.repositoryURL = URL(string: url)
+				}
 				if let pullRequests = repository["pullRequests"] as? [String: Any] {
 					if let edges = pullRequests["edges"] as? [[String: Any]] {
 						for edge in edges {
