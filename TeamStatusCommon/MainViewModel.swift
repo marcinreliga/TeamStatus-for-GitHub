@@ -11,7 +11,7 @@ import Foundation
 protocol MainViewProtocol {
 	func didFinishRunning(reviewers: [Reviewer], pullRequests: [PullRequest], viewer: Viewer?)
 	func didFailToRun()
-	func updateStatusItem(title: String)
+	func updateStatusItem(title: String, isAttentionNeeded: Bool)
 	func updateViewerView(with reviewer: Reviewer, pullRequestsToReviewCount: Int)
 }
 
@@ -52,8 +52,11 @@ final class MainViewModel {
 					if let viewer = apiResponse.viewer {
 						if let reviewer = _self.currentUserAsReviewer(viewer: viewer, in: reviewers) {
 							let pullRequestsCount = _self.pullRequestsToReviewCount(for: reviewer, in: apiResponse.pullRequests)
+							let isAttentionNeeded = _self.hasAnyConflictsFor(viewer: viewer, in: apiResponse.pullRequests)
+
 							DispatchQueue.main.async {
-								_self.view.updateStatusItem(title: "\(pullRequestsCount)")
+								// TODO: This can be merged into single call.
+								_self.view.updateStatusItem(title: "\(pullRequestsCount)", isAttentionNeeded: isAttentionNeeded)
 								_self.view.updateViewerView(with: reviewer, pullRequestsToReviewCount: pullRequestsCount)
 							}
 						}
@@ -77,6 +80,10 @@ final class MainViewModel {
 
 	func pullRequestsToReviewCount(for reviewer: Reviewer, in pullRequests: [PullRequest]) -> Int {
 		return reviewer.PRsToReview(in: pullRequests).count
+	}
+
+	func hasAnyConflictsFor(viewer: Viewer, in pullRequests: [PullRequest]) -> Bool {
+		return pullRequests.first(where: { $0.mergeable == "CONFLICTING" && $0.authorLogin == viewer.login }) != nil
 	}
 
 	// FIXME: Should not use UIKit subclasses.

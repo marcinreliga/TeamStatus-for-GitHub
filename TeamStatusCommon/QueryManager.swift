@@ -23,7 +23,7 @@ struct APIResponse {
 }
 
 final class QueryManager {
-	let query = "{\"query\": \"query { rateLimit { cost limit remaining resetAt } viewer { login } repository(owner: \\\"asosteam\\\", name: \\\"asos-native-ios\\\") {  pullRequests(last: 30, states: OPEN) { edges { node { id title updatedAt reviews(first: 100) { edges { node { id author { avatarUrl login resourcePath url } } } }, reviewRequests(first: 100) { edges { node { id reviewer { avatarUrl name login } } } } } } }  }}\" }"
+	let query = "{\"query\": \"query { rateLimit { cost limit remaining resetAt } viewer { login } repository(owner: \\\"asosteam\\\", name: \\\"asos-native-ios\\\") {  pullRequests(last: 30, states: OPEN) { edges { node { id title author { login } updatedAt mergeable reviews(first: 100) { edges { node { id author { avatarUrl login resourcePath url } } } }, reviewRequests(first: 100) { edges { node { id reviewer { avatarUrl name login } } } } } } }  }}\" }"
 	
 	func parseResponse(data: Data) -> APIResponse? {
 		do {
@@ -53,8 +53,14 @@ final class QueryManager {
 					if let edges = pullRequests["edges"] as? [[String: Any]] {
 						for edge in edges {
 							if let node = edge["node"] as? [String: Any] {
-								if let id = node["id"] as? String, let title = node["title"] as? String {
-									var pullRequestData = PullRequest(id: id, title: title)
+								if
+									let id = node["id"] as? String,
+									let title = node["title"] as? String,
+									let mergeable = node["mergeable"] as? String,
+									let author = node["author"] as? [String: Any],
+									let authorLogin = author["login"] as? String
+								{
+									var pullRequestData = PullRequest(id: id, title: title, authorLogin: authorLogin, mergeable: mergeable)
 
 									if let reviewRequests = node["reviewRequests"] as? [String: Any] {
 										if let edges = reviewRequests["edges"] as? [[String: Any]] {

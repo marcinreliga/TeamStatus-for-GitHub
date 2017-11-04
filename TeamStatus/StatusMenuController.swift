@@ -88,8 +88,15 @@ extension StatusMenuController: MainViewProtocol {
 		Logger.log("Did fail to run")
 	}
 
-	func updateStatusItem(title: String) {
-		statusItem.title = title
+	func updateStatusItem(title: String, isAttentionNeeded: Bool) {
+		let titleToSet: String
+		if isAttentionNeeded {
+			titleToSet = "\(title) ✋"
+		} else {
+			titleToSet = title
+		}
+
+		statusItem.title = titleToSet
 	}
 
 	func updateViewerView(with reviewer: Reviewer, pullRequestsToReviewCount: Int) {
