@@ -163,20 +163,8 @@ extension StatusMenuController: NSTableViewDelegate {
 				fatalError()
 			}
 
-			guard let reviewers = reviewers, let pullRequests = pullRequests else {
-				return nil
-			}
-
-			let reviewer = reviewers[row]
-
-			let prsToReview = reviewer.PRsToReview(in: pullRequests).count
-			let prsReviewed = reviewer.PRsReviewed(in: pullRequests).count
-			let totalPRs = prsToReview + prsReviewed
-			cell.pullRequestsToReviewLabel.stringValue = ""
-			cell.levelIndicator.integerValue = prsReviewed
-			cell.levelIndicator.maxValue = Double(totalPRs)
-			cell.levelIndicator.warningValue = 0.5 * Double(totalPRs)
-			cell.levelIndicator.criticalValue = 0.25 * Double(totalPRs)
+			let viewData = viewModel.viewDataForRequestedInCell(at: row)
+			cell.configure(with: viewData)
 			return cell
 		case NSUserInterfaceItemIdentifier("ReviewedTableColumn"):
 			guard let cell = tableView.makeView(withIdentifier: NSUserInterfaceItemIdentifier(rawValue: "ReviewedCellView"), owner: self) as? ReviewedCellView else {

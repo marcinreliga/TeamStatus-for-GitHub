@@ -10,12 +10,14 @@ import Foundation
 import Cocoa
 
 final class ReviewerCellView: NSTableCellView {
-	@IBOutlet var loginLabel: NSTextField!
+	@IBOutlet private var loginLabel: NSTextField!
 
 	func configure(with viewData: ViewData) {
 		loginLabel.stringValue = viewData.login
 	}
+}
 
+extension ReviewerCellView {
 	struct ViewData {
 		let login: String
 	}

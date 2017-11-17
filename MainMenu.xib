@@ -151,32 +151,18 @@
                                                 <rect key="frame" x="217" y="1" width="160" height="40"/>
                                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                 <subviews>
-                                                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Xcw-gV-c7f">
-                                                        <rect key="frame" x="14" y="12" width="64" height="17"/>
-                                                        <constraints>
-                                                            <constraint firstAttribute="width" constant="60" id="Kum-Er-Sye"/>
-                                                        </constraints>
-                                                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="4" id="6lR-ve-Cs4">
-                                                            <font key="font" metaFont="system"/>
-                                                            <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
-                                                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                                                        </textFieldCell>
-                                                    </textField>
                                                     <levelIndicator verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="yEa-wm-nNx">
-                                                        <rect key="frame" x="40" y="13" width="104" height="16"/>
+                                                        <rect key="frame" x="16" y="12" width="129" height="16"/>
                                                         <levelIndicatorCell key="cell" alignment="left" doubleValue="2" maxValue="6" warningValue="2" criticalValue="2" levelIndicatorStyle="continuousCapacity" id="bQP-TA-gXg"/>
                                                     </levelIndicator>
                                                 </subviews>
                                                 <constraints>
-                                                    <constraint firstItem="Xcw-gV-c7f" firstAttribute="leading" secondItem="nqM-NW-IvC" secondAttribute="leading" constant="16" id="0Ub-RJ-e7r"/>
-                                                    <constraint firstItem="yEa-wm-nNx" firstAttribute="centerY" secondItem="Xcw-gV-c7f" secondAttribute="centerY" id="H2s-q8-lVl"/>
-                                                    <constraint firstItem="Xcw-gV-c7f" firstAttribute="centerY" secondItem="nqM-NW-IvC" secondAttribute="centerY" id="JhV-Ow-Bat"/>
+                                                    <constraint firstItem="yEa-wm-nNx" firstAttribute="leading" secondItem="nqM-NW-IvC" secondAttribute="leading" constant="16" id="Mba-3W-f6w"/>
+                                                    <constraint firstItem="yEa-wm-nNx" firstAttribute="centerY" secondItem="nqM-NW-IvC" secondAttribute="centerY" id="WiL-UZ-w7T"/>
                                                     <constraint firstAttribute="trailing" secondItem="yEa-wm-nNx" secondAttribute="trailing" constant="16" id="gF7-OL-jE7"/>
-                                                    <constraint firstItem="yEa-wm-nNx" firstAttribute="leading" secondItem="Xcw-gV-c7f" secondAttribute="trailing" constant="-36" id="zcd-CI-6xb"/>
                                                 </constraints>
                                                 <connections>
                                                     <outlet property="levelIndicator" destination="yEa-wm-nNx" id="WBC-H2-w7R"/>
-                                                    <outlet property="pullRequestsToReviewLabel" destination="Xcw-gV-c7f" id="NwV-Lx-OAA"/>
                                                 </connections>
                                             </tableCellView>
                                         </prototypeCellViews>
@@ -229,7 +215,7 @@
                         </subviews>
                     </clipView>
                     <scroller key="horizontalScroller" hidden="YES" verticalHuggingPriority="750" horizontal="YES" id="x5Y-n4-kTE">
-                        <rect key="frame" x="0.0" y="-16" width="0.0" height="16"/>
+                        <rect key="frame" x="0.0" y="7" width="0.0" height="16"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </scroller>
                     <scroller key="verticalScroller" hidden="YES" verticalHuggingPriority="750" horizontal="NO" id="Iva-od-TXO">
