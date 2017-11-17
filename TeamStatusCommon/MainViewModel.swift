@@ -47,34 +47,40 @@ final class MainViewModel {
 				if let apiResponse = _self.queryManager.parseResponse(data: data) {
 					let reviewersRequested = apiResponse.pullRequests.flatMap({ $0.reviewersRequested })
 					let reviewersReviewed = apiResponse.pullRequests.flatMap({ $0.reviewersReviewed })
-
 					let reviewers = (reviewersRequested + reviewersReviewed).uniqueElements
 
+					let openPullRequests = apiResponse.pullRequests.filter({ $0.state == "OPEN" })
+
 					_self.reviewersSorted = reviewers.sorted(by: { a, b in
-						a.PRsToReview(in: apiResponse.pullRequests).count < b.PRsToReview(in: apiResponse.pullRequests).count
+						a.PRsToReview(in: openPullRequests).count < b.PRsToReview(in: openPullRequests).count
 					})
 
-					_self.pullRequests = apiResponse.pullRequests
+					_self.pullRequests = openPullRequests
 
 					_self.viewer = apiResponse.viewer
 
 					if let viewer = _self.viewer {
 						if let reviewer = _self.currentUserAsReviewer(viewer: viewer, in: reviewers) {
-							let pullRequestsCount = _self.pullRequestsToReviewCount(for: reviewer, in: apiResponse.pullRequests)
-							let isAttentionNeeded = _self.hasAnyConflicts(for: viewer, in: apiResponse.pullRequests)
-							let ownPullRequestsCount = _self.numberOfPullRequests(for: viewer, in: apiResponse.pullRequests)
-							let pullRequestsReviewedCount = _self.numberOfPullRequestsReviewed(by: viewer, in: apiResponse.pullRequests)
+							let pullRequestsCount = _self.pullRequestsToReviewCount(for: reviewer, in: openPullRequests)
+							let isAttentionNeeded = _self.hasAnyConflicts(for: viewer, in: openPullRequests)
+							let ownPullRequestsCount = _self.numberOfPullRequests(for: viewer, in: openPullRequests)
+							let pullRequestsReviewedCount = _self.numberOfPullRequestsReviewed(by: viewer, in: openPullRequests)
 
 							DispatchQueue.main.async {
 								// TODO: This can be merged into single call.
 								_self.view.updateStatusItem(title: "\(pullRequestsCount)", isAttentionNeeded: isAttentionNeeded)
-								_self.view.updateViewerView(with: reviewer, ownPullRequestsCount: ownPullRequestsCount, pullRequestsToReviewCount: pullRequestsCount, pullRequestsReviewed: pullRequestsReviewedCount)
+								_self.view.updateViewerView(
+									with: reviewer,
+									ownPullRequestsCount: ownPullRequestsCount,
+									pullRequestsToReviewCount: pullRequestsCount,
+									pullRequestsReviewed: pullRequestsReviewedCount
+								)
 							}
 						}
 					}
 
 					DispatchQueue.main.async {
-						_self.view.didFinishRunning(reviewers: _self.reviewersSorted, pullRequests: apiResponse.pullRequests, viewer: apiResponse.viewer)
+						_self.view.didFinishRunning(reviewers: _self.reviewersSorted, pullRequests: openPullRequests, viewer: apiResponse.viewer)
 					}
 				}
 			case .failure:
