@@ -56,86 +56,99 @@ final class QueryManager {
 	private func parse(json: [String: Any]) -> APIResponse {
 		var apiResponse = APIResponse()
 
-		if let data = json["data"] as? [String: Any] {
-			if let viewer = data["viewer"] as? [String: String] {
-				if let login = viewer["login"] {
-					apiResponse.viewer = Viewer(login: login)
-				}
+		guard let data = json["data"] as? [String: Any] else {
+			return apiResponse
+		}
+
+		if let viewer = data["viewer"] as? [String: String] {
+			apiResponse.viewer = parseViewer(from: viewer)
+		}
+
+		if let repository = data["repository"] as? [String: Any] {
+			if let url = repository["url"] as? String {
+				apiResponse.repositoryURL = URL(string: url)
 			}
-			if let repository = data["repository"] as? [String: Any] {
-				if let url = repository["url"] as? String {
-					apiResponse.repositoryURL = URL(string: url)
-				}
-				if let pullRequests = repository["pullRequests"] as? [String: Any] {
-					if let edges = pullRequests["edges"] as? [[String: Any]] {
-						for edge in edges {
-							if let node = edge["node"] as? [String: Any] {
-								if
-									let id = node["id"] as? String,
-									let title = node["title"] as? String,
-									let mergeable = node["mergeable"] as? String,
-									let state = node["state"] as? String,
-									let author = node["author"] as? [String: Any],
-									let authorLogin = author["login"] as? String
-								{
-									var pullRequestData = PullRequest(
-										id: id,
-										title: title,
-										authorLogin: authorLogin,
-										mergeable: mergeable,
-										state: state
-									)
-
-									if let reviewRequests = node["reviewRequests"] as? [String: Any] {
-										if let edges = reviewRequests["edges"] as? [[String: Any]] {
-											for edge in edges {
-												if let node = edge["node"] as? [String: Any] {
-													if let reviewer = node["reviewer"] as? [String: Any] {
-														if let login = reviewer["login"] as? String {
-															let avatarURLString: String?
-															if let avatarURLStringParsed = reviewer["avatarUrl"] as? String {
-																avatarURLString = avatarURLStringParsed
-															} else {
-																avatarURLString = nil
-															}
-															pullRequestData.reviewersRequested.append(Reviewer(login: login, avatarURLString: avatarURLString))
-														}
-													}
-												}
-											}
-										}
-									}
-
-									if let reviews = node["reviews"] as? [String: Any] {
-										if let edges = reviews["edges"] as? [[String: Any]] {
-											for edge in edges {
-												if let node = edge["node"] as? [String: Any] {
-
-													if let reviewer = node["author"] as? [String: Any] {
-														if let login = reviewer["login"] as? String {
-															let avatarURLString: String?
-															if let avatarURLStringParsed = reviewer["avatarUrl"] as? String {
-																avatarURLString = avatarURLStringParsed
-															} else {
-																avatarURLString = nil
-															}
-															pullRequestData.reviewersReviewed.append(Reviewer(login: login, avatarURLString: avatarURLString))
-														}
-													}
-												}
-											}
-										}
-									}
-									
-									apiResponse.pullRequests.append(pullRequestData)
-								}
-							}
-						}
-					}
-				}
+			if let pullRequests = repository["pullRequests"] as? [String: Any] {
+				apiResponse.pullRequests = parsePullRequests(from: pullRequests)
 			}
 		}
 
 		return apiResponse
+	}
+
+	private func parsePullRequests(from input: [String: Any]) -> [PullRequest] {
+		guard let edges = input["edges"] as? [[String: Any]] else {
+			return []
+		}
+
+		return edges.flatMap({
+			guard let node = $0["node"] as? [String: Any] else {
+				return nil
+			}
+
+			guard
+				let id = node["id"] as? String,
+				let title = node["title"] as? String,
+				let mergeable = node["mergeable"] as? String,
+				let state = node["state"] as? String,
+				let author = node["author"] as? [String: Any],
+				let authorLogin = author["login"] as? String
+			else {
+				return nil
+			}
+
+			var pullRequestData = PullRequest(
+				id: id,
+				title: title,
+				authorLogin: authorLogin,
+				mergeable: mergeable,
+				state: state
+			)
+
+			if let reviewRequests = node["reviewRequests"] as? [String: Any] {
+				pullRequestData.reviewersRequested = parseReviewers(from: reviewRequests, reviewerKey: "reviewer")
+			}
+
+			if let reviews = node["reviews"] as? [String: Any] {
+				pullRequestData.reviewersReviewed = parseReviewers(from: reviews, reviewerKey: "author")
+			}
+
+			return pullRequestData
+		})
+	}
+
+	private func parseReviewers(from input: [String: Any], reviewerKey: String) -> [Reviewer] {
+		guard let edges = input["edges"] as? [[String: Any]] else {
+			return []
+		}
+
+		return edges.flatMap({
+			guard
+				let node = $0["node"] as? [String: Any],
+				let reviewer = node[reviewerKey] as? [String: Any],
+				let login = reviewer["login"] as? String
+			else {
+				return nil
+			}
+
+			let avatarURLString = parseAvatar(from: reviewer)
+			return Reviewer(login: login, avatarURLString: avatarURLString)
+		})
+	}
+
+	private func parseViewer(from input: [String: String]) -> Viewer? {
+		guard let login = input["login"] else {
+			return nil
+		}
+
+		return Viewer(login: login)
+	}
+
+	private func parseAvatar(from input: [String: Any]) -> String? {
+		guard let avatarURLString = input["avatarUrl"] as? String else {
+			return nil
+		}
+
+		return avatarURLString
 	}
 }
