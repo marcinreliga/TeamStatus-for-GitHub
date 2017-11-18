@@ -34,7 +34,34 @@ final class MainViewModel {
 	}
 
 	func run() {
-		guard let query = queryManager.query else {
+		guard let query = queryManager.allPullRequestsQuery else {
+			return Logger.log("Query is empty.")
+		}
+
+		networkManager.query(query) { [weak self] result in
+			guard let _self = self else {
+				return
+			}
+
+			switch result {
+			case .success(let data):
+				guard let apiResponse = _self.queryManager.parseResponse(data: data) else {
+					return
+				}
+
+				let reviewersRequested = apiResponse.pullRequests.flatMap({ $0.reviewersRequested })
+				let reviewersReviewed = apiResponse.pullRequests.flatMap({ $0.reviewersReviewed })
+				let reviewers = (reviewersRequested + reviewersReviewed).uniqueElements
+				
+				_self.queryOpenPullRequests(involving: reviewers)
+			case .failure:
+				print("Failed to get all pull requests data.")
+			}
+		}
+	}
+
+	private func queryOpenPullRequests(involving reviewers: [Reviewer]) {
+		guard let query = queryManager.openPullRequestsQuery else {
 			return Logger.log("Query is empty.")
 		}
 
@@ -45,22 +72,16 @@ final class MainViewModel {
 			switch result {
 			case .success(let data):
 				if let apiResponse = _self.queryManager.parseResponse(data: data) {
-					let reviewersRequested = apiResponse.pullRequests.flatMap({ $0.reviewersRequested })
-					let reviewersReviewed = apiResponse.pullRequests.flatMap({ $0.reviewersReviewed })
-					let reviewers = (reviewersRequested + reviewersReviewed).uniqueElements
-
-					let openPullRequests = apiResponse.pullRequests.filter({ $0.state == "OPEN" })
-
 					_self.reviewersSorted = reviewers.sorted(by: { a, b in
-						a.PRsToReview(in: openPullRequests).count < b.PRsToReview(in: openPullRequests).count
+						a.PRsToReview(in: apiResponse.pullRequests).count < b.PRsToReview(in: apiResponse.pullRequests).count
 					})
 
+					let openPullRequests = apiResponse.pullRequests
 					_self.pullRequests = openPullRequests
-
 					_self.viewer = apiResponse.viewer
 
 					if let viewer = _self.viewer {
-						if let reviewer = _self.currentUserAsReviewer(viewer: viewer, in: reviewers) {
+						if let reviewer = _self.currentUserAsReviewer(viewer: viewer, in: _self.reviewersSorted) {
 							let pullRequestsCount = _self.pullRequestsToReviewCount(for: reviewer, in: openPullRequests)
 							let isAttentionNeeded = _self.hasAnyConflicts(for: viewer, in: openPullRequests)
 							let ownPullRequestsCount = _self.numberOfPullRequests(for: viewer, in: openPullRequests)

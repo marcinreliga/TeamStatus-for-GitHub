@@ -13,7 +13,6 @@ struct PullRequest {
 	let title: String
 	let authorLogin: String
 	let mergeable: String
-	let state: String
 	var reviewersRequested: [Reviewer]
 	var reviewersReviewed: [Reviewer]
 
@@ -22,7 +21,6 @@ struct PullRequest {
 		title: String,
 		authorLogin: String,
 		mergeable: String,
-		state: String,
 		reviewersRequested: [Reviewer] = [],
 		reviewersReviewed: [Reviewer] = []
 	) {
@@ -30,7 +28,6 @@ struct PullRequest {
 		self.title = title
 		self.authorLogin = authorLogin
 		self.mergeable = mergeable
-		self.state = state
 		self.reviewersRequested = reviewersRequested
 		self.reviewersReviewed = reviewersReviewed
 	}

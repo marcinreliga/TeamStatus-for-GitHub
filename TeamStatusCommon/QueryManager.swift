@@ -19,7 +19,7 @@ struct APIResponse {
 }
 
 final class QueryManager {
-	var query: String? {
+	private var repositoryPathComponents: [String]? {
 		guard
 			let input = CommandLineInput(),
 			let path = URLComponents(url: input.repositoryURL, resolvingAgainstBaseURL: false)?.path
@@ -27,16 +27,51 @@ final class QueryManager {
 			return nil
 		}
 
-		let pathComponents = path.split(separator: "/")
+		return path.split(separator: "/").map({ String($0) })
+	}
 
+	private var repositoryName: String? {
 		guard
-			let team = pathComponents.first,
+			let pathComponents = repositoryPathComponents,
 			let repositoryName = pathComponents.last
 		else {
 			return nil
 		}
 
-		return "{\"query\": \"query { rateLimit { cost limit remaining resetAt } viewer { login } repository(owner: \\\"\(team)\\\", name: \\\"\(repositoryName)\\\") { url  pullRequests(last: 100, states: [OPEN, MERGED]) { edges { node { id title author { login } updatedAt mergeable state reviews(first: 100) { edges { node { id author { avatarUrl login resourcePath url } } } }, reviewRequests(first: 100) { edges { node { id reviewer { avatarUrl name login } } } } } } }  }}\" }"
+		return String(repositoryName)
+	}
+
+	private var teamName: String? {
+		guard
+			let pathComponents = repositoryPathComponents,
+			let teamName = pathComponents.first
+		else {
+			return nil
+		}
+
+		return String(teamName)
+	}
+
+	var openPullRequestsQuery: String? {
+		guard
+			let repositoryName = repositoryName,
+			let teamName = teamName
+		else {
+			return nil
+		}
+
+		return "{\"query\": \"query { rateLimit { cost limit remaining resetAt } viewer { login } repository(owner: \\\"\(teamName)\\\", name: \\\"\(repositoryName)\\\") { url  pullRequests(last: 30, states: OPEN) { edges { node { id title author { login } updatedAt mergeable reviews(first: 100) { edges { node { id author { avatarUrl login resourcePath url } } } }, reviewRequests(first: 100) { edges { node { id reviewer { avatarUrl name login } } } } } } }  }}\" }"
+	}
+
+	var allPullRequestsQuery: String? {
+		guard
+			let repositoryName = repositoryName,
+			let teamName = teamName
+		else {
+			return nil
+		}
+
+		return "{\"query\": \"query { rateLimit { cost limit remaining resetAt } viewer { login } repository(owner: \\\"\(teamName)\\\", name: \\\"\(repositoryName)\\\") { url  pullRequests(last: 100, states: [OPEN, MERGED]) { edges { node { id title author { login } updatedAt mergeable reviews(first: 100) { edges { node { id author { avatarUrl login resourcePath url } } } }, reviewRequests(first: 100) { edges { node { id reviewer { avatarUrl name login } } } } } } }  }}\" }"
 	}
 	
 	func parseResponse(data: Data) -> APIResponse? {
@@ -90,7 +125,6 @@ final class QueryManager {
 				let id = node["id"] as? String,
 				let title = node["title"] as? String,
 				let mergeable = node["mergeable"] as? String,
-				let state = node["state"] as? String,
 				let author = node["author"] as? [String: Any],
 				let authorLogin = author["login"] as? String
 			else {
@@ -101,8 +135,7 @@ final class QueryManager {
 				id: id,
 				title: title,
 				authorLogin: authorLogin,
-				mergeable: mergeable,
-				state: state
+				mergeable: mergeable
 			)
 
 			if let reviewRequests = node["reviewRequests"] as? [String: Any] {
