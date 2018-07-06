@@ -135,34 +135,51 @@ final class MainViewModel {
 	// FIXME: Should not use UIKit subclasses.
 	func viewDataForUserLoginCell(at rowIndex: Int) -> ReviewerCellView.ViewData {
 		let reviewer = reviewersSorted[rowIndex]
-		return .init(login: reviewer.login)
-	}
-
-	func viewDataForReviewedCell(at rowIndex: Int) -> ReviewedCellView.ViewData {
-		let reviewer = reviewersSorted[rowIndex]
-
-		let prsToReview = reviewer.PRsToReview(in: pullRequests).count
-		let prsReviewed = reviewer.PRsReviewed(in: pullRequests).count
-		let totalPRs = prsToReview + prsReviewed
-
-		return .init(pullRequestsReviewedText: "\(prsReviewed) of \(totalPRs)")
-	}
-
-	func viewDataForRequestedInCell(at rowIndex: Int) -> RequestedInCellView.ViewData {
-		let reviewer = reviewersSorted[rowIndex]
 
 		let prsToReview = reviewer.PRsToReview(in: pullRequests).count
 		let prsReviewed = reviewer.PRsReviewed(in: pullRequests).count
 		let totalPRs = prsToReview + prsReviewed
 
 		// If total is 0 then set both integer and max to 1 so the bar is full green.
-		return .init(
+		let levelIndicatorViewData = ReviewerCellView.ViewData.LevelIndicator(
 			integerValue: totalPRs == 0 ? 1 : prsReviewed,
 			maxValue: totalPRs == 0 ? 1 : Double(totalPRs),
 			warningValue: 0.5 * Double(totalPRs),
 			criticalValue: 0.25 * Double(totalPRs)
 		)
+
+		return .init(
+			login: reviewer.login,
+			levelIndicator: levelIndicatorViewData,
+			pullRequestsReviewedText: "\(prsReviewed) of \(totalPRs)"
+		)
 	}
+
+//	func viewDataForReviewedCell(at rowIndex: Int) -> ReviewedCellView.ViewData {
+//		let reviewer = reviewersSorted[rowIndex]
+//
+//		let prsToReview = reviewer.PRsToReview(in: pullRequests).count
+//		let prsReviewed = reviewer.PRsReviewed(in: pullRequests).count
+//		let totalPRs = prsToReview + prsReviewed
+//
+//		return .init(pullRequestsReviewedText: "\(prsReviewed) of \(totalPRs)")
+//	}
+
+//	func viewDataForRequestedInCell(at rowIndex: Int) -> RequestedInCellView.ViewData {
+////		let reviewer = reviewersSorted[rowIndex]
+////
+////		let prsToReview = reviewer.PRsToReview(in: pullRequests).count
+////		let prsReviewed = reviewer.PRsReviewed(in: pullRequests).count
+////		let totalPRs = prsToReview + prsReviewed
+////
+////		// If total is 0 then set both integer and max to 1 so the bar is full green.
+////		return .init(
+////			integerValue: totalPRs == 0 ? 1 : prsReviewed,
+////			maxValue: totalPRs == 0 ? 1 : Double(totalPRs),
+////			warningValue: 0.5 * Double(totalPRs),
+////			criticalValue: 0.25 * Double(totalPRs)
+////		)
+//	}
 
 	func openMyPullRequests() {
 		guard
