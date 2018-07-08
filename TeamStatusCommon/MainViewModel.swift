@@ -151,7 +151,8 @@ final class MainViewModel {
 		return .init(
 			login: reviewer.login,
 			levelIndicator: levelIndicatorViewData,
-			pullRequestsReviewedText: "\(prsReviewed) of \(totalPRs)"
+			numberOfReviewedPRs: prsReviewed,
+			totalNumberOfPRs: totalPRs
 		)
 	}
 
