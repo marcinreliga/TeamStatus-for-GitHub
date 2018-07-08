@@ -11,6 +11,7 @@ import Cocoa
 
 final class ReviewerCellView: NSTableCellView {
 	@IBOutlet private var containerView: NSView!
+	@IBOutlet private var imageContainerView: NSView!
 	@IBOutlet private var loginLabel: NSTextField!
 	@IBOutlet var pullRequestsReviewedLabel: NSTextField!
 	@IBOutlet var levelIndicatorContainerView: NSView!
@@ -18,20 +19,23 @@ final class ReviewerCellView: NSTableCellView {
 	@IBOutlet var levelIndicatorLevelViewWidthConstraint: NSLayoutConstraint!
 
 	func configure(with viewData: ViewData) {
+//		imageContainerView.wantsLayer = true
+//		imageContainerView.layer?.backgroundColor = NSColor(calibratedRed: 0/255.0, green: 0/255.0, blue: 0/255.0, alpha: 0.3).cgColor
+
 		loginLabel.stringValue = viewData.login
 		containerView.wantsLayer = true
 		containerView.layer?.backgroundColor = NSColor.white.cgColor
 
-		if viewData.levelIndicator.integerValue == Int(viewData.levelIndicator.maxValue) {
-			levelIndicatorContainerView.wantsLayer = false
-			levelIndicatorContainerView.isHidden = true
-
-			levelIndicatorLevelView.wantsLayer = false
-			levelIndicatorLevelView.isHidden = true
-
-//			levelIndicatorContainerView.layer?.masksToBounds = false
-//			levelIndicatorContainerView.layer?.cornerRadius = 0
-		} else {
+//		if viewData.levelIndicator.integerValue == Int(viewData.levelIndicator.maxValue) {
+//			levelIndicatorContainerView.wantsLayer = false
+//			levelIndicatorContainerView.isHidden = true
+//
+//			levelIndicatorLevelView.wantsLayer = false
+//			levelIndicatorLevelView.isHidden = true
+//
+////			levelIndicatorContainerView.layer?.masksToBounds = false
+////			levelIndicatorContainerView.layer?.cornerRadius = 0
+//		} else {
 			levelIndicatorContainerView.isHidden = false
 			levelIndicatorContainerView.wantsLayer = true
 			levelIndicatorContainerView.layer?.backgroundColor = NSColor.gray.cgColor //NSColor(calibratedRed: 234/255.0, green: 208/255.0, blue: 139/255.0, alpha: 1).cgColor
@@ -44,10 +48,10 @@ final class ReviewerCellView: NSTableCellView {
 //			levelIndicatorContainerView.layer?.masksToBounds = true
 //			levelIndicatorContainerView.layer?.cornerRadius = 4
 
-			let level = 160 * (Double(viewData.levelIndicator.integerValue) / viewData.levelIndicator.maxValue)
+			let level = 238 * (Double(viewData.levelIndicator.integerValue) / viewData.levelIndicator.maxValue)
 
 			levelIndicatorLevelViewWidthConstraint.constant = CGFloat(level)
-		}
+		//}
 
 //		levelIndicator.maxValue = viewData.levelIndicator.maxValue
 //		levelIndicator.warningValue = viewData.levelIndicator.warningValue

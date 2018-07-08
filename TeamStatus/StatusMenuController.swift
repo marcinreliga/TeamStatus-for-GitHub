@@ -132,7 +132,7 @@ extension StatusMenuController: MainViewProtocol {
 		}
 
 		myPullRequestsButton.title = "my (\(ownPullRequestsCount))"
-		awaitingReviewButton.title = "awaiting review (\(pullRequestsToReviewCount))"
+		awaitingReviewButton.title = "awaiting (\(pullRequestsToReviewCount))"
 		reviewedButton.title = "reviewed (\(pullRequestsReviewed))"
 	}
 }
