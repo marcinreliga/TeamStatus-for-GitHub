@@ -132,7 +132,7 @@ extension StatusMenuController: MainViewProtocol {
 		}
 
 		myPullRequestsButton.title = "my (\(ownPullRequestsCount))"
-		awaitingReviewButton.title = "awaiting review (\(pullRequestsToReviewCount))"
+		awaitingReviewButton.title = "awaiting (\(pullRequestsToReviewCount))"
 		reviewedButton.title = "reviewed (\(pullRequestsReviewed))"
 	}
 }
@@ -157,28 +157,7 @@ extension StatusMenuController: NSTableViewDelegate {
 
 			let viewData = viewModel.viewDataForUserLoginCell(at: row)
 			cell.configure(with: viewData)
-			return cell
-		case NSUserInterfaceItemIdentifier("RequestedInTableColumn"):
-			guard let cell = tableView.makeView(withIdentifier: NSUserInterfaceItemIdentifier(rawValue: "RequestedInCellView"), owner: self) as? RequestedInCellView else {
-				fatalError()
-			}
-
-			let viewData = viewModel.viewDataForRequestedInCell(at: row)
-			cell.configure(with: viewData)
-			return cell
-		case NSUserInterfaceItemIdentifier("ReviewedTableColumn"):
-			guard let cell = tableView.makeView(withIdentifier: NSUserInterfaceItemIdentifier(rawValue: "ReviewedCellView"), owner: self) as? ReviewedCellView else {
-				fatalError()
-			}
-
-			let viewData = viewModel.viewDataForReviewedCell(at: row)
-			cell.configure(with: viewData)
-			return cell
-		case NSUserInterfaceItemIdentifier("AvatarTableColumn"):
-			guard let cell = tableView.makeView(withIdentifier: NSUserInterfaceItemIdentifier(rawValue: "AvatarCellView"), owner: self) as? AvatarCellView else {
-				fatalError()
-			}
-
+			
 			guard let reviewers = reviewers else {
 				return nil
 			}
@@ -188,7 +167,6 @@ extension StatusMenuController: NSTableViewDelegate {
 			if let imageURL = reviewer.avatarURL {
 				cell.imageView?.loadImageFromURL(urlString: imageURL.absoluteString)
 			}
-
 			return cell
 		default:
 			fatalError()
