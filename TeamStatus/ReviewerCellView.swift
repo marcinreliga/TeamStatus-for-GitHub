@@ -10,12 +10,14 @@ import Foundation
 import Cocoa
 
 final class ReviewerCellView: NSTableCellView {
+	@IBOutlet private var backgroundContainerView: NSView!
 	@IBOutlet private var containerView: NSView!
 	@IBOutlet private var imageContainerView: NSView!
 	@IBOutlet private var loginLabel: NSTextField!
 	@IBOutlet var pullRequestsReviewedLabel: NSTextField!
 	@IBOutlet var levelIndicatorContainerView: NSView!
 	@IBOutlet var levelIndicatorLevelView: NSView!
+	@IBOutlet var levelIndicatorEmptyView: NSView!
 	@IBOutlet var levelIndicatorLevelViewWidthConstraint: NSLayoutConstraint!
 
 	func configure(with viewData: ViewData) {
@@ -25,6 +27,10 @@ final class ReviewerCellView: NSTableCellView {
 		loginLabel.stringValue = viewData.login
 		containerView.wantsLayer = true
 		containerView.layer?.backgroundColor = NSColor.white.cgColor
+
+//		backgroundContainerView.wantsLayer = true
+//		backgroundContainerView.layer?.backgroundColor = NSColor.lightGray.cgColor
+
 
 //		if viewData.levelIndicator.integerValue == Int(viewData.levelIndicator.maxValue) {
 //			levelIndicatorContainerView.wantsLayer = false
@@ -38,12 +44,19 @@ final class ReviewerCellView: NSTableCellView {
 //		} else {
 			levelIndicatorContainerView.isHidden = false
 			levelIndicatorContainerView.wantsLayer = true
-			levelIndicatorContainerView.layer?.backgroundColor = NSColor.gray.cgColor //NSColor(calibratedRed: 234/255.0, green: 208/255.0, blue: 139/255.0, alpha: 1).cgColor
+			//levelIndicatorContainerView.layer?.backgroundColor = NSColor.gray.cgColor //NSColor(calibratedRed: 234/255.0, green: 208/255.0, blue: 139/255.0, alpha: 1).cgColor
+
+			levelIndicatorContainerView.layer?.backgroundColor = NSColor.lightGray.cgColor
 
 			levelIndicatorLevelView.wantsLayer = true
 			levelIndicatorLevelView.isHidden = false
 
 			levelIndicatorLevelView.layer?.backgroundColor = NSColor(calibratedRed: 126/255.0, green: 200/255.0, blue: 107/255.0, alpha: 1).cgColor
+
+			levelIndicatorEmptyView.wantsLayer = true
+			levelIndicatorEmptyView.isHidden = false
+
+			levelIndicatorEmptyView.layer?.backgroundColor = NSColor.gray.cgColor
 
 //			levelIndicatorContainerView.layer?.masksToBounds = true
 //			levelIndicatorContainerView.layer?.cornerRadius = 4
