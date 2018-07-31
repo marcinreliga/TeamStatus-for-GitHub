@@ -36,6 +36,13 @@ struct Reviewer: Hashable, Equatable {
 }
 
 extension Reviewer {
+	init(viewer: Viewer) {
+		self.login = viewer.login
+		self.avatarURL = viewer.avatarURL
+	}
+}
+
+extension Reviewer {
 	func PRsToReview(in pullRequests: [PullRequest]) -> [PullRequest] {
 		return pullRequests.filter({
 			$0.reviewersRequested.contains(where: { $0.login == login })

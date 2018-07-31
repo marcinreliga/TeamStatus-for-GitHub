@@ -81,22 +81,21 @@ final class MainViewModel {
 					_self.viewer = apiResponse.viewer
 
 					if let viewer = _self.viewer {
-						if let reviewer = _self.currentUserAsReviewer(viewer: viewer, in: _self.reviewersSorted) {
-							let pullRequestsCount = _self.pullRequestsToReviewCount(for: reviewer, in: openPullRequests)
-							let isAttentionNeeded = _self.hasAnyConflicts(for: viewer, in: openPullRequests)
-							let ownPullRequestsCount = _self.numberOfPullRequests(for: viewer, in: openPullRequests)
-							let pullRequestsReviewedCount = _self.numberOfPullRequestsReviewed(by: viewer, in: openPullRequests)
+						let reviewer = Reviewer(viewer: viewer)
+						let pullRequestsCount = _self.pullRequestsToReviewCount(for: reviewer, in: openPullRequests)
+						let isAttentionNeeded = _self.hasAnyConflicts(for: viewer, in: openPullRequests)
+						let ownPullRequestsCount = _self.numberOfPullRequests(for: viewer, in: openPullRequests)
+						let pullRequestsReviewedCount = _self.numberOfPullRequestsReviewed(by: viewer, in: openPullRequests)
 
-							DispatchQueue.main.async {
-								// TODO: This can be merged into single call.
-								_self.view.updateStatusItem(title: "\(pullRequestsCount)", isAttentionNeeded: isAttentionNeeded)
-								_self.view.updateViewerView(
-									with: reviewer,
-									ownPullRequestsCount: ownPullRequestsCount,
-									pullRequestsToReviewCount: pullRequestsCount,
-									pullRequestsReviewed: pullRequestsReviewedCount
-								)
-							}
+						DispatchQueue.main.async {
+							// TODO: This can be merged into single call.
+							_self.view.updateStatusItem(title: "\(pullRequestsCount)", isAttentionNeeded: isAttentionNeeded)
+							_self.view.updateViewerView(
+								with: reviewer,
+								ownPullRequestsCount: ownPullRequestsCount,
+								pullRequestsToReviewCount: pullRequestsCount,
+								pullRequestsReviewed: pullRequestsReviewedCount
+							)
 						}
 					}
 
@@ -110,10 +109,6 @@ final class MainViewModel {
 				}
 			}
 		}
-	}
-
-	func currentUserAsReviewer(viewer: Viewer, in reviewers: [Reviewer]) -> Reviewer? {
-		return reviewers.first(where: { $0.login == viewer.login})
 	}
 
 	func pullRequestsToReviewCount(for reviewer: Reviewer, in pullRequests: [PullRequest]) -> Int {

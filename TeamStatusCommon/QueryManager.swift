@@ -10,6 +10,7 @@ import Foundation
 
 struct Viewer {
 	let login: String
+	let avatarURL: URL
 }
 
 struct APIResponse {
@@ -60,7 +61,7 @@ final class QueryManager {
 			return nil
 		}
 
-		return "{\"query\": \"query { rateLimit { cost limit remaining resetAt } viewer { login } repository(owner: \\\"\(teamName)\\\", name: \\\"\(repositoryName)\\\") { url  pullRequests(last: 30, states: OPEN) { edges { node { id title author { login } updatedAt mergeable reviews(first: 100) { edges { node { id author { avatarUrl login resourcePath url } } } }, reviewRequests(first: 100) { edges { node { id requestedReviewer { ... on User { avatarUrl name login } } } } } } } }  }}\" }"
+		return "{\"query\": \"query { rateLimit { cost limit remaining resetAt } viewer { login avatarUrl } repository(owner: \\\"\(teamName)\\\", name: \\\"\(repositoryName)\\\") { url  pullRequests(last: 30, states: OPEN) { edges { node { id title author { login } updatedAt mergeable reviews(first: 100) { edges { node { id author { avatarUrl login resourcePath url } } } }, reviewRequests(first: 100) { edges { node { id requestedReviewer { ... on User { avatarUrl name login } } } } } } } }  }}\" }"
 	}
 
 	var allPullRequestsQuery: String? {
@@ -71,7 +72,7 @@ final class QueryManager {
 			return nil
 		}
 
-		return "{\"query\": \"query { rateLimit { cost limit remaining resetAt } viewer { login } repository(owner: \\\"\(teamName)\\\", name: \\\"\(repositoryName)\\\") { url  pullRequests(last: 100, states: [OPEN, MERGED]) { edges { node { id title author { login } updatedAt mergeable reviews(first: 100) { edges { node { id author { avatarUrl login resourcePath url } } } }, reviewRequests(first: 100) { edges { node { id requestedReviewer { ... on User { avatarUrl name login } } } } } } } }  }}\" }"
+		return "{\"query\": \"query { rateLimit { cost limit remaining resetAt } viewer { login avatarUrl } repository(owner: \\\"\(teamName)\\\", name: \\\"\(repositoryName)\\\") { url  pullRequests(last: 100, states: [OPEN, MERGED]) { edges { node { id title author { login } updatedAt mergeable reviews(first: 100) { edges { node { id author { avatarUrl login resourcePath url } } } }, reviewRequests(first: 100) { edges { node { id requestedReviewer { ... on User { avatarUrl name login } } } } } } } }  }}\" }"
 	}
 	
 	func parseResponse(data: Data) -> APIResponse? {
@@ -170,11 +171,15 @@ final class QueryManager {
 	}
 
 	private func parseViewer(from input: [String: String]) -> Viewer? {
-		guard let login = input["login"] else {
+		guard
+			let login = input["login"],
+			let avatarURLString = input["avatarUrl"],
+			let avatarURL = URL(string: avatarURLString)
+		else {
 			return nil
 		}
 
-		return Viewer(login: login)
+		return Viewer(login: login, avatarURL: avatarURL)
 	}
 
 	private func parseAvatar(from input: [String: Any]) -> String? {
