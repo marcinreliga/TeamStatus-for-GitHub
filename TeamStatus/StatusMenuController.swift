@@ -25,8 +25,6 @@ class StatusMenuController: NSObject {
 	// TODO: How to do it properly?
 	var viewDidLoad = false
 
-	fileprivate var reviewers: [Reviewer]?
-	fileprivate var pullRequests: [PullRequest]?
 	fileprivate var viewer: Viewer?
 
 	override func awakeFromNib() {
@@ -103,8 +101,6 @@ class StatusMenuController: NSObject {
 
 extension StatusMenuController: MainViewProtocol {
 	func didFinishRunning(reviewers: [Reviewer], pullRequests: [PullRequest], viewer: Viewer?) {
-		self.reviewers = reviewers
-		self.pullRequests = pullRequests
 		self.viewer = viewer
 
 		self.tableView.reloadData()
@@ -139,7 +135,7 @@ extension StatusMenuController: MainViewProtocol {
 
 extension StatusMenuController: NSTableViewDataSource {
 	func numberOfRows(in tableView: NSTableView) -> Int {
-		return reviewers?.count ?? 0
+		return viewModel.reviewersSorted.count
 	}
 }
 
@@ -151,20 +147,24 @@ extension StatusMenuController: NSTableViewDelegate {
 
 		switch tableColumn.identifier {
 		case NSUserInterfaceItemIdentifier("UserLoginTableColumn"):
+			guard viewModel.isSeparator(at: row) == false else {
+				guard let cell = tableView.makeView(withIdentifier: NSUserInterfaceItemIdentifier(rawValue: "SeparatorCellView"), owner: self) as? SeparatorCellView else {
+					fatalError()
+				}
+
+				let viewData = viewModel.viewDataForSeparator(at: row)
+				cell.configure(with: viewData)
+				return cell
+			}
+
 			guard let cell = tableView.makeView(withIdentifier: NSUserInterfaceItemIdentifier(rawValue: "ReviewerCellView"), owner: self) as? ReviewerCellView else {
 				fatalError()
 			}
 
 			let viewData = viewModel.viewDataForUserLoginCell(at: row)
 			cell.configure(with: viewData)
-			
-			guard let reviewers = reviewers else {
-				return nil
-			}
 
-			let reviewer = reviewers[row]
-
-			if let imageURL = reviewer.avatarURL {
+			if let imageURL = viewData.avatarURL {
 				cell.imageView?.loadImageFromURL(urlString: imageURL.absoluteString)
 			}
 			return cell

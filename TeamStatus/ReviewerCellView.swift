@@ -19,59 +19,6 @@ final class ReviewerCellView: NSTableCellView {
 	@IBOutlet var levelIndicatorLevelView: NSView!
 	@IBOutlet var levelIndicatorEmptyView: NSView!
 	@IBOutlet var levelIndicatorLevelViewWidthConstraint: NSLayoutConstraint!
-
-	func configure(with viewData: ViewData) {
-//		imageContainerView.wantsLayer = true
-//		imageContainerView.layer?.backgroundColor = NSColor(calibratedRed: 0/255.0, green: 0/255.0, blue: 0/255.0, alpha: 0.3).cgColor
-
-		loginLabel.stringValue = viewData.login
-		containerView.wantsLayer = true
-		containerView.layer?.backgroundColor = NSColor.white.cgColor
-
-//		backgroundContainerView.wantsLayer = true
-//		backgroundContainerView.layer?.backgroundColor = NSColor.lightGray.cgColor
-
-
-//		if viewData.levelIndicator.integerValue == Int(viewData.levelIndicator.maxValue) {
-//			levelIndicatorContainerView.wantsLayer = false
-//			levelIndicatorContainerView.isHidden = true
-//
-//			levelIndicatorLevelView.wantsLayer = false
-//			levelIndicatorLevelView.isHidden = true
-//
-////			levelIndicatorContainerView.layer?.masksToBounds = false
-////			levelIndicatorContainerView.layer?.cornerRadius = 0
-//		} else {
-			levelIndicatorContainerView.isHidden = false
-			levelIndicatorContainerView.wantsLayer = true
-			//levelIndicatorContainerView.layer?.backgroundColor = NSColor.gray.cgColor //NSColor(calibratedRed: 234/255.0, green: 208/255.0, blue: 139/255.0, alpha: 1).cgColor
-
-			levelIndicatorContainerView.layer?.backgroundColor = NSColor.lightGray.cgColor
-
-			levelIndicatorLevelView.wantsLayer = true
-			levelIndicatorLevelView.isHidden = false
-
-			levelIndicatorLevelView.layer?.backgroundColor = NSColor(calibratedRed: 126/255.0, green: 200/255.0, blue: 107/255.0, alpha: 1).cgColor
-
-			levelIndicatorEmptyView.wantsLayer = true
-			levelIndicatorEmptyView.isHidden = false
-
-			levelIndicatorEmptyView.layer?.backgroundColor = NSColor.gray.cgColor
-
-//			levelIndicatorContainerView.layer?.masksToBounds = true
-//			levelIndicatorContainerView.layer?.cornerRadius = 4
-
-			let level = 238 * (Double(viewData.levelIndicator.integerValue) / viewData.levelIndicator.maxValue)
-
-			levelIndicatorLevelViewWidthConstraint.constant = CGFloat(level)
-		//}
-
-//		levelIndicator.maxValue = viewData.levelIndicator.maxValue
-//		levelIndicator.warningValue = viewData.levelIndicator.warningValue
-//		levelIndicator.criticalValue = viewData.levelIndicator.criticalValue
-
-		pullRequestsReviewedLabel.stringValue = "\(viewData.numberOfReviewedPRs) of \(viewData.totalNumberOfPRs)"
-	}
 }
 
 extension ReviewerCellView {
@@ -80,12 +27,42 @@ extension ReviewerCellView {
 		let levelIndicator: LevelIndicator
 		let numberOfReviewedPRs: Int
 		let totalNumberOfPRs: Int
+		let avatarURL: URL?
 
 		struct LevelIndicator {
 			let integerValue: Int
 			let maxValue: Double
-			let warningValue: Double
-			let criticalValue: Double
 		}
+	}
+
+	func configure(with viewData: ViewData) {
+		loginLabel.stringValue = viewData.login
+		containerView.wantsLayer = true
+		containerView.layer?.backgroundColor = NSColor.white.cgColor
+
+		levelIndicatorContainerView.isHidden = false
+		levelIndicatorContainerView.wantsLayer = true
+
+		levelIndicatorContainerView.layer?.backgroundColor = NSColor.lightGray.cgColor
+
+		levelIndicatorLevelView.wantsLayer = true
+		levelIndicatorLevelView.isHidden = false
+
+		levelIndicatorLevelView.layer?.backgroundColor = NSColor(calibratedRed: 126/255.0, green: 200/255.0, blue: 107/255.0, alpha: 1).cgColor
+
+		levelIndicatorEmptyView.wantsLayer = true
+		levelIndicatorEmptyView.isHidden = false
+
+		levelIndicatorEmptyView.layer?.backgroundColor = NSColor.gray.cgColor
+
+		//	levelIndicatorContainerView.layer?.masksToBounds = true
+		//	levelIndicatorContainerView.layer?.cornerRadius = 4
+
+		let range = Double(levelIndicatorEmptyView.frame.width)
+		let level = range * (Double(viewData.levelIndicator.integerValue) / viewData.levelIndicator.maxValue)
+
+		levelIndicatorLevelViewWidthConstraint.constant = CGFloat(level)
+
+		pullRequestsReviewedLabel.stringValue = "\(viewData.numberOfReviewedPRs) of \(viewData.totalNumberOfPRs)"
 	}
 }

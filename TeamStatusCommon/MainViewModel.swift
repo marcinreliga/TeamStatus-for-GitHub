@@ -20,12 +20,10 @@ final class MainViewModel {
 	private let queryManager: QueryManager = QueryManager()
 	private let networkManager: NetworkManager
 
-	private var reviewersSorted: [Reviewer] = []
+	var reviewersSorted: [Reviewer] = []
 	private var pullRequests: [PullRequest] = []
 	private var viewer: Viewer?
 	private var repositoryURL: URL
-
-	//private var reviewers: [Reviewer] = []
 
 	init(view: MainViewProtocol, repositoryURL: URL, token: String) {
 		self.view = view
@@ -127,10 +125,13 @@ final class MainViewModel {
 		return pullRequests.filter({ $0.reviewersReviewed.contains(where: { $0.login == viewer.login }) }).count
 	}
 
-	// FIXME: Should not use UIKit subclasses.
-	func viewDataForUserLoginCell(at rowIndex: Int) -> ReviewerCellView.ViewData {
-		let reviewer = reviewersSorted[rowIndex]
+	private var viewDataForReviewer: [ReviewerCellView.ViewData] {
+		return reviewersSorted.map({
+			viewData(for: $0)
+		})
+	}
 
+	func viewData(for reviewer: Reviewer) -> ReviewerCellView.ViewData {
 		let prsToReview = reviewer.PRsToReview(in: pullRequests).count
 		let prsReviewed = reviewer.PRsReviewed(in: pullRequests).count
 		let totalPRs = prsToReview + prsReviewed
@@ -138,44 +139,48 @@ final class MainViewModel {
 		// If total is 0 then set both integer and max to 1 so the bar is full green.
 		let levelIndicatorViewData = ReviewerCellView.ViewData.LevelIndicator(
 			integerValue: totalPRs == 0 ? 1 : prsReviewed,
-			maxValue: totalPRs == 0 ? 1 : Double(totalPRs),
-			warningValue: 0.5 * Double(totalPRs),
-			criticalValue: 0.25 * Double(totalPRs)
+			maxValue: totalPRs == 0 ? 1 : Double(totalPRs)
 		)
 
-		return .init(
+		return ReviewerCellView.ViewData(
 			login: reviewer.login,
 			levelIndicator: levelIndicatorViewData,
 			numberOfReviewedPRs: prsReviewed,
-			totalNumberOfPRs: totalPRs
+			totalNumberOfPRs: totalPRs,
+			avatarURL: reviewer.avatarURL
 		)
 	}
 
-//	func viewDataForReviewedCell(at rowIndex: Int) -> ReviewedCellView.ViewData {
-//		let reviewer = reviewersSorted[rowIndex]
-//
-//		let prsToReview = reviewer.PRsToReview(in: pullRequests).count
-//		let prsReviewed = reviewer.PRsReviewed(in: pullRequests).count
-//		let totalPRs = prsToReview + prsReviewed
-//
-//		return .init(pullRequestsReviewedText: "\(prsReviewed) of \(totalPRs)")
-//	}
+	// FIXME: Should not use UIKit subclasses.
+	func viewDataForUserLoginCell(at rowIndex: Int) -> ReviewerCellView.ViewData {
+		return viewDataForReviewer[reviewerIndexFor(row: rowIndex)]
+	}
 
-//	func viewDataForRequestedInCell(at rowIndex: Int) -> RequestedInCellView.ViewData {
-////		let reviewer = reviewersSorted[rowIndex]
-////
-////		let prsToReview = reviewer.PRsToReview(in: pullRequests).count
-////		let prsReviewed = reviewer.PRsReviewed(in: pullRequests).count
-////		let totalPRs = prsToReview + prsReviewed
-////
-////		// If total is 0 then set both integer and max to 1 so the bar is full green.
-////		return .init(
-////			integerValue: totalPRs == 0 ? 1 : prsReviewed,
-////			maxValue: totalPRs == 0 ? 1 : Double(totalPRs),
-////			warningValue: 0.5 * Double(totalPRs),
-////			criticalValue: 0.25 * Double(totalPRs)
-////		)
-//	}
+	func viewDataForSeparator(at rowIndex: Int) -> SeparatorCellView.ViewData {
+		if rowIndex == 0 {
+			return SeparatorCellView.ViewData(title: "available for review")
+		} else if rowIndex == numberOfAvailableReviewers + 1 {
+			return SeparatorCellView.ViewData(title: "others")
+		} else {
+			fatalError()
+		}
+	}
+
+	private func reviewerIndexFor(row: Int) -> Int {
+		if row <= numberOfAvailableReviewers {
+			return row - 1
+		} else {
+			return row - 2
+		}
+	}
+
+	func isSeparator(at rowIndex: Int) -> Bool {
+		return rowIndex == 0 || rowIndex == numberOfAvailableReviewers + 1
+	}
+
+	private var numberOfAvailableReviewers: Int {
+		return viewDataForReviewer.filter({ $0.numberOfReviewedPRs == $0.totalNumberOfPRs }).count
+	}
 
 	func openMyPullRequests() {
 		guard

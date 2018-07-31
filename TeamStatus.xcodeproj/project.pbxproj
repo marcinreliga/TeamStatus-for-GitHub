@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		DA06BD021EE1C41100E9B261 /* ReviewerCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA06BD011EE1C41100E9B261 /* ReviewerCellView.swift */; };
+		DA2C73AF2106766D00DCA1A4 /* SeparatorCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA2C73AE2106766D00DCA1A4 /* SeparatorCellView.swift */; };
 		DA46DE071FAE5C32002A202F /* CommandLineInput.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA46DE061FAE5C32002A202F /* CommandLineInput.swift */; };
 		DA46DE081FAE5C32002A202F /* CommandLineInput.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA46DE061FAE5C32002A202F /* CommandLineInput.swift */; };
 		DA569E0C1F3127B400C9A8A7 /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA569E0A1F31275C00C9A8A7 /* Logger.swift */; };
@@ -68,6 +69,7 @@
 /* Begin PBXFileReference section */
 		DA06BD011EE1C41100E9B261 /* ReviewerCellView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReviewerCellView.swift; sourceTree = "<group>"; };
 		DA23947D1ED5EB5900F8D325 /* TeamStatusConsole */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = TeamStatusConsole; sourceTree = BUILT_PRODUCTS_DIR; };
+		DA2C73AE2106766D00DCA1A4 /* SeparatorCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeparatorCellView.swift; sourceTree = "<group>"; };
 		DA46DE061FAE5C32002A202F /* CommandLineInput.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommandLineInput.swift; sourceTree = "<group>"; };
 		DA569E0A1F31275C00C9A8A7 /* Logger.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Logger.swift; path = TeamStatus/Logger.swift; sourceTree = SOURCE_ROOT; };
 		DA569E0E1F31284300C9A8A7 /* NSImageView+URL.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSImageView+URL.swift"; sourceTree = SOURCE_ROOT; };
@@ -180,6 +182,7 @@
 			isa = PBXGroup;
 			children = (
 				DA06BD011EE1C41100E9B261 /* ReviewerCellView.swift */,
+				DA2C73AE2106766D00DCA1A4 /* SeparatorCellView.swift */,
 			);
 			name = Cells;
 			sourceTree = "<group>";
@@ -389,6 +392,7 @@
 				DA06BD021EE1C41100E9B261 /* ReviewerCellView.swift in Sources */,
 				DA569E0F1F31284300C9A8A7 /* NSImageView+URL.swift in Sources */,
 				DAF7BAE01EFB259500B71AF0 /* NetworkManager.swift in Sources */,
+				DA2C73AF2106766D00DCA1A4 /* SeparatorCellView.swift in Sources */,
 				DAF7BAF01EFB260000B71AF0 /* MainViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
