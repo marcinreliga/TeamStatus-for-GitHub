@@ -117,7 +117,7 @@ extension StatusMenuController: MainViewProtocol {
 	func updateStatusItem(title: String, isAttentionNeeded: Bool) {
 		let titleToSet: String
 		if isAttentionNeeded {
-			titleToSet = "\(title) ✋"
+			titleToSet = "\(title) ⚠️"
 		} else {
 			titleToSet = title
 		}
