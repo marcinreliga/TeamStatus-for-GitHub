@@ -38,7 +38,6 @@ extension ReviewerCellView {
 	func configure(with viewData: ViewData) {
 		loginLabel.stringValue = viewData.login
 		containerView.wantsLayer = true
-		containerView.layer?.backgroundColor = NSColor.white.cgColor
 
 		levelIndicatorContainerView.isHidden = false
 		levelIndicatorContainerView.wantsLayer = true
