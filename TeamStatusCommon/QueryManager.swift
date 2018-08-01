@@ -117,7 +117,7 @@ final class QueryManager {
 			return []
 		}
 
-		return edges.flatMap({
+		return edges.compactMap({
 			guard let node = $0["node"] as? [String: Any] else {
 				return nil
 			}
@@ -156,7 +156,7 @@ final class QueryManager {
 			return []
 		}
 
-		return edges.flatMap({
+		return edges.compactMap({
 			guard
 				let node = $0["node"] as? [String: Any],
 				let reviewer = node[reviewerKey] as? [String: Any],
