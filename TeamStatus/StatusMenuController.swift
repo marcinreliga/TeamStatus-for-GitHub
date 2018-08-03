@@ -135,7 +135,9 @@ extension StatusMenuController: MainViewProtocol {
 
 extension StatusMenuController: NSTableViewDataSource {
 	func numberOfRows(in tableView: NSTableView) -> Int {
-		return viewModel.reviewersSorted.count
+		// Because of separators.
+		// TODO: define sections (row types) properly.
+		return viewModel.reviewersSorted.count + 2
 	}
 }
 
