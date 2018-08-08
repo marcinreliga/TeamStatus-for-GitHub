@@ -9,7 +9,7 @@
 import Foundation
 
 protocol MainViewProtocol {
-	func didFinishRunning(reviewers: [Reviewer], pullRequests: [PullRequest], viewer: Viewer?)
+	func didFinishRunning(reviewers: [Reviewer], pullRequests: [GraphAPIResponse.Data.Repository.PullRequest], viewer: GraphAPIResponse.Data.Viewer?)
 	func didFailToRun()
 	func updateStatusItem(title: String, isAttentionNeeded: Bool)
 	func updateViewerView(with reviewer: Reviewer, ownPullRequestsCount: Int, pullRequestsToReviewCount: Int, pullRequestsReviewed: Int)
@@ -21,8 +21,8 @@ final class MainViewModel {
 	private let networkManager: NetworkManager
 
 	var reviewersSorted: [Reviewer] = []
-	private var pullRequests: [PullRequest] = []
-	private var viewer: Viewer?
+	private var pullRequests: [GraphAPIResponse.Data.Repository.PullRequest] = []
+	private var viewer: GraphAPIResponse.Data.Viewer?
 	private var repositoryURL: URL
 
 	init(view: MainViewProtocol, repositoryURL: URL, token: String) {
@@ -109,19 +109,19 @@ final class MainViewModel {
 		}
 	}
 
-	func pullRequestsToReviewCount(for reviewer: Reviewer, in pullRequests: [PullRequest]) -> Int {
+	func pullRequestsToReviewCount(for reviewer: Reviewer, in pullRequests: [GraphAPIResponse.Data.Repository.PullRequest]) -> Int {
 		return reviewer.PRsToReview(in: pullRequests).count
 	}
 
-	func hasAnyConflicts(for viewer: Viewer, in pullRequests: [PullRequest]) -> Bool {
+	func hasAnyConflicts(for viewer: GraphAPIResponse.Data.Viewer, in pullRequests: [GraphAPIResponse.Data.Repository.PullRequest]) -> Bool {
 		return pullRequests.first(where: { $0.mergeable == "CONFLICTING" && $0.authorLogin == viewer.login }) != nil
 	}
 
-	func numberOfPullRequests(for viewer: Viewer, in pullRequests: [PullRequest]) -> Int {
+	func numberOfPullRequests(for viewer: GraphAPIResponse.Data.Viewer, in pullRequests: [GraphAPIResponse.Data.Repository.PullRequest]) -> Int {
 		return pullRequests.filter({ $0.authorLogin == viewer.login }).count
 	}
 
-	func numberOfPullRequestsReviewed(by viewer: Viewer, in pullRequests: [PullRequest]) -> Int {
+	func numberOfPullRequestsReviewed(by viewer: GraphAPIResponse.Data.Viewer, in pullRequests: [GraphAPIResponse.Data.Repository.PullRequest]) -> Int {
 		return pullRequests.filter({ $0.reviewersReviewed.contains(where: { $0.login == viewer.login }) }).count
 	}
 

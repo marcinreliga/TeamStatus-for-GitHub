@@ -8,15 +8,102 @@
 
 import Foundation
 
-struct Viewer {
-	let login: String
-	let avatarURL: URL
+struct GraphAPIResponse: Decodable {
+	let data: Data
+}
+
+extension GraphAPIResponse {
+	struct Data: Decodable {
+		let viewer: Viewer
+		let repository: Repository
+	}
+}
+
+extension GraphAPIResponse.Data {
+	struct Viewer: Decodable {
+		private enum CodingKeys: String, CodingKey {
+			case login
+			case avatarURL = "avatarUrl"
+		}
+
+		let login: String
+		let avatarURL: URL
+	}
+
+	struct Repository: Decodable {
+		//let url: URL
+		let pullRequests: PullRequests
+	}
+}
+
+extension GraphAPIResponse.Data.Repository {
+	struct PullRequests: Decodable {
+		let edges: [Edge]
+	}
+}
+
+extension GraphAPIResponse.Data.Repository.PullRequests {
+	struct Edge: Decodable {
+		let node: Node
+	}
+}
+
+extension GraphAPIResponse.Data.Repository.PullRequests.Edge {
+	struct Node: Decodable {
+		let title: String
+	}
+}
+
+extension GraphAPIResponse.Data.Repository {
+	struct PullRequest: Decodable {
+		private enum CodingKeys: String, CodingKey {
+			case id
+			case title
+			case authorLogin
+			case mergeable
+			case reviewersRequested
+			case reviewersReviewed
+		}
+
+		let id: String
+		let title: String
+		let authorLogin: String
+		let mergeable: String
+		var reviewersRequested: [Reviewer]
+		var reviewersReviewed: [Reviewer]
+
+		init(from decoder: Decoder) throws {
+			let container = try decoder.container(keyedBy: CodingKeys.self)
+			let id: String = try container.decode(String.self, forKey: .id)
+			let title: String = try container.decode(String.self, forKey: .title)
+			let authorLogin: String = try container.decode(String.self, forKey: .authorLogin)
+			let mergeable: String = try container.decode(String.self, forKey: .mergeable)
+
+			self.init(id: id, title: title, authorLogin: authorLogin, mergeable: mergeable, reviewersRequested: [], reviewersReviewed: [])
+		}
+
+		init(
+			id: String,
+			title: String,
+			authorLogin: String,
+			mergeable: String,
+			reviewersRequested: [Reviewer] = [],
+			reviewersReviewed: [Reviewer] = []
+		) {
+			self.id = id
+			self.title = title
+			self.authorLogin = authorLogin
+			self.mergeable = mergeable
+			self.reviewersRequested = reviewersRequested
+			self.reviewersReviewed = reviewersReviewed
+		}
+	}
 }
 
 struct APIResponse {
-	var viewer: Viewer?
+	var viewer: GraphAPIResponse.Data.Viewer?
 	var repositoryURL: URL?
-	var pullRequests: [PullRequest] = []
+	var pullRequests: [GraphAPIResponse.Data.Repository.PullRequest] = []
 }
 
 final class QueryManager {
@@ -61,7 +148,7 @@ final class QueryManager {
 			return nil
 		}
 
-		return "{\"query\": \"query { rateLimit { cost limit remaining resetAt } viewer { login avatarUrl } repository(owner: \\\"\(teamName)\\\", name: \\\"\(repositoryName)\\\") { url  pullRequests(last: 30, states: OPEN) { edges { node { id title author { login } updatedAt mergeable reviews(first: 100) { edges { node { id author { avatarUrl login } } } }, reviewRequests(first: 100) { edges { node { id requestedReviewer { ... on User { avatarUrl name login } } } } } } } }  }}\" }"
+		return "{\"query\": \"query { rateLimit { cost limit remaining resetAt } viewer { login avatarUrl } repository(owner: \\\"\(teamName)\\\", name: \\\"\(repositoryName)\\\") { url  pullRequests(last: 30, states: OPEN) { edges { node { id title author { login avatarUrl } updatedAt mergeable reviews(first: 100) { edges { node { id author { login avatarUrl } } } }, reviewRequests(first: 100) { edges { node { id requestedReviewer { ... on User { name login avatarUrl } } } } } } } }  }}\" }"
 	}
 
 	var allPullRequestsQuery: String? {
@@ -72,10 +159,25 @@ final class QueryManager {
 			return nil
 		}
 
-		return "{\"query\": \"query { rateLimit { cost limit remaining resetAt } viewer { login avatarUrl } repository(owner: \\\"\(teamName)\\\", name: \\\"\(repositoryName)\\\") { url  pullRequests(last: 100, states: [OPEN, MERGED]) { edges { node { id title author { login } updatedAt mergeable reviews(first: 100) { edges { node { id author { avatarUrl login } } } }, reviewRequests(first: 100) { edges { node { id requestedReviewer { ... on User { avatarUrl name login } } } } } } } }  }}\" }"
+		return "{\"query\": \"query { rateLimit { cost limit remaining resetAt } viewer { login avatarUrl } repository(owner: \\\"\(teamName)\\\", name: \\\"\(repositoryName)\\\") { url  pullRequests(last: 100, states: [OPEN, MERGED]) { edges { node { id title author { login avatarUrl } updatedAt mergeable reviews(first: 100) { edges { node { id author { login avatarUrl } } } }, reviewRequests(first: 100) { edges { node { id requestedReviewer { ... on User { name login avatarUrl } } } } } } } }  }}\" }"
 	}
 	
 	func parseResponse(data: Data) -> APIResponse? {
+
+		do {
+			let graphAPIResponse = try JSONDecoder().decode(GraphAPIResponse.self, from: data)
+
+			print("parsed")
+
+//			if let responseData = json as? [String: Any] {
+//				return parse(json: responseData)
+//			}
+		} catch {
+			print("JSON parsing error: \(error)")
+		}
+
+		print("decoded")
+
 		do {
 			let json = try JSONSerialization.jsonObject(with: data, options: [])
 
@@ -112,7 +214,7 @@ final class QueryManager {
 		return apiResponse
 	}
 
-	private func parsePullRequests(from input: [String: Any]) -> [PullRequest] {
+	private func parsePullRequests(from input: [String: Any]) -> [GraphAPIResponse.Data.Repository.PullRequest] {
 		guard let edges = input["edges"] as? [[String: Any]] else {
 			return []
 		}
@@ -132,7 +234,7 @@ final class QueryManager {
 				return nil
 			}
 
-			var pullRequestData = PullRequest(
+			var pullRequestData = GraphAPIResponse.Data.Repository.PullRequest(
 				id: id,
 				title: title,
 				authorLogin: authorLogin,
@@ -160,17 +262,18 @@ final class QueryManager {
 			guard
 				let node = $0["node"] as? [String: Any],
 				let reviewer = node[reviewerKey] as? [String: Any],
-				let login = reviewer["login"] as? String
+				let login = reviewer["login"] as? String,
+				let avatarURLString = reviewer["avatarUrl"] as? String,
+				let avatarURL = URL(string: avatarURLString)
 			else {
 				return nil
 			}
 
-			let avatarURLString = parseAvatar(from: reviewer)
-			return Reviewer(login: login, avatarURLString: avatarURLString)
+			return Reviewer(login: login, avatarURL: avatarURL)
 		})
 	}
 
-	private func parseViewer(from input: [String: String]) -> Viewer? {
+	private func parseViewer(from input: [String: String]) -> GraphAPIResponse.Data.Viewer? {
 		guard
 			let login = input["login"],
 			let avatarURLString = input["avatarUrl"],
@@ -179,14 +282,6 @@ final class QueryManager {
 			return nil
 		}
 
-		return Viewer(login: login, avatarURL: avatarURL)
-	}
-
-	private func parseAvatar(from input: [String: Any]) -> String? {
-		guard let avatarURLString = input["avatarUrl"] as? String else {
-			return nil
-		}
-
-		return avatarURLString
+		return GraphAPIResponse.Data.Viewer(login: login, avatarURL: avatarURL)
 	}
 }

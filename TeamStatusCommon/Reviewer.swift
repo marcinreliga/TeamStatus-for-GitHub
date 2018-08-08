@@ -8,23 +8,9 @@
 
 import Foundation
 
-struct Reviewer: Hashable, Equatable {
+struct Reviewer: Hashable, Equatable, Decodable {
 	let login: String
-	let avatarURL: URL?
-
-	init(login: String, avatarURL: URL? = nil) {
-		self.login = login
-		self.avatarURL = avatarURL
-	}
-
-	init(login: String, avatarURLString: String? = nil) {
-		self.login = login
-		if let avatarURLString = avatarURLString {
-			self.avatarURL = URL(string: avatarURLString)
-		} else {
-			self.avatarURL = nil
-		}
-	}
+	let avatarURL: URL
 
 	var hashValue: Int {
 		return login.hashValue
@@ -36,20 +22,20 @@ struct Reviewer: Hashable, Equatable {
 }
 
 extension Reviewer {
-	init(viewer: Viewer) {
+	init(viewer: GraphAPIResponse.Data.Viewer) {
 		self.login = viewer.login
 		self.avatarURL = viewer.avatarURL
 	}
 }
 
 extension Reviewer {
-	func PRsToReview(in pullRequests: [PullRequest]) -> [PullRequest] {
+	func PRsToReview(in pullRequests: [GraphAPIResponse.Data.Repository.PullRequest]) -> [GraphAPIResponse.Data.Repository.PullRequest] {
 		return pullRequests.filter({
 			$0.reviewersRequested.contains(where: { $0.login == login })
 		})
 	}
 
-	func PRsReviewed(in pullRequests: [PullRequest]) -> [PullRequest] {
+	func PRsReviewed(in pullRequests: [GraphAPIResponse.Data.Repository.PullRequest]) -> [GraphAPIResponse.Data.Repository.PullRequest] {
 		return pullRequests.filter({
 			$0.reviewersReviewed.contains(where: { $0.login == login })
 		})

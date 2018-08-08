@@ -33,7 +33,7 @@ final class TeamStatusApp {
 }
 
 extension TeamStatusApp: MainViewProtocol {
-	func didFinishRunning(reviewers: [Reviewer], pullRequests: [PullRequest], viewer: Viewer?) {
+	func didFinishRunning(reviewers: [Reviewer], pullRequests: [PullRequest], viewer: GraphAPIResponse.Data.Viewer?) {
 		for reviewer in reviewers {
 			let pullRequestsReviewRequested = reviewer.PRsToReview(in: pullRequests)
 			let pullRequestsReviewed = reviewer.PRsReviewed(in: pullRequests)

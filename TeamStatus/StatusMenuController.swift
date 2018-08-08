@@ -25,7 +25,7 @@ class StatusMenuController: NSObject {
 	// TODO: How to do it properly?
 	var viewDidLoad = false
 
-	fileprivate var viewer: Viewer?
+	fileprivate var viewer: GraphAPIResponse.Data.Viewer?
 
 	override func awakeFromNib() {
 		guard viewDidLoad == false else {
@@ -100,7 +100,7 @@ class StatusMenuController: NSObject {
 }
 
 extension StatusMenuController: MainViewProtocol {
-	func didFinishRunning(reviewers: [Reviewer], pullRequests: [PullRequest], viewer: Viewer?) {
+	func didFinishRunning(reviewers: [Reviewer], pullRequests: [GraphAPIResponse.Data.Repository.PullRequest], viewer: GraphAPIResponse.Data.Viewer?) {
 		self.viewer = viewer
 
 		self.tableView.reloadData()
@@ -123,9 +123,7 @@ extension StatusMenuController: MainViewProtocol {
 
 	func updateViewerView(with reviewer: Reviewer, ownPullRequestsCount: Int, pullRequestsToReviewCount: Int, pullRequestsReviewed: Int) {
 		viewerLogin.stringValue = reviewer.login
-		if let imageURL = reviewer.avatarURL {
-			viewerImageView?.loadImageFromURL(urlString: imageURL.absoluteString)
-		}
+		viewerImageView?.loadImageFromURL(urlString: reviewer.avatarURL.absoluteString)
 
 		myPullRequestsButton.title = "my (\(ownPullRequestsCount))"
 		awaitingReviewButton.title = "awaiting (\(pullRequestsToReviewCount))"
@@ -150,7 +148,7 @@ extension StatusMenuController: NSTableViewDelegate {
 		switch tableColumn.identifier {
 		case NSUserInterfaceItemIdentifier("UserLoginTableColumn"):
 			guard viewModel.isSeparator(at: row) == false else {
-				guard let cell = tableView.makeView(withIdentifier: NSUserInterfaceItemIdentifier(rawValue: "SeparatorCellView"), owner: self) as? SeparatorCellView else {
+				guard let cell = tableView.makeView(withIdentifier: NSUserInterfaceItemIdentifier(rawValue: String(describing: SeparatorCellView.self)), owner: self) as? SeparatorCellView else {
 					fatalError()
 				}
 
@@ -159,7 +157,7 @@ extension StatusMenuController: NSTableViewDelegate {
 				return cell
 			}
 
-			guard let cell = tableView.makeView(withIdentifier: NSUserInterfaceItemIdentifier(rawValue: "ReviewerCellView"), owner: self) as? ReviewerCellView else {
+			guard let cell = tableView.makeView(withIdentifier: NSUserInterfaceItemIdentifier(rawValue: String(describing: ReviewerCellView.self)), owner: self) as? ReviewerCellView else {
 				fatalError()
 			}
 
