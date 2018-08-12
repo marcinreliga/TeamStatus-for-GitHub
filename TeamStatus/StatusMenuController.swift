@@ -100,7 +100,7 @@ class StatusMenuController: NSObject {
 }
 
 extension StatusMenuController: MainViewProtocol {
-	func didFinishRunning(reviewers: [Reviewer], pullRequests: [GraphAPIResponse.Data.Repository.PullRequest], viewer: GraphAPIResponse.Data.Viewer?) {
+	func didFinishRunning(reviewers: [Engineer], pullRequests: [GraphAPIResponse.Data.Repository.PullRequest], viewer: GraphAPIResponse.Data.Viewer?) {
 		self.viewer = viewer
 
 		self.tableView.reloadData()
@@ -121,9 +121,9 @@ extension StatusMenuController: MainViewProtocol {
 		statusItem.title = titleToSet
 	}
 
-	func updateViewerView(with reviewer: Reviewer, ownPullRequestsCount: Int, pullRequestsToReviewCount: Int, pullRequestsReviewed: Int) {
-		viewerLogin.stringValue = reviewer.login
-		viewerImageView?.loadImageFromURL(urlString: reviewer.avatarURL.absoluteString)
+	func updateViewerView(with engineer: Engineer, ownPullRequestsCount: Int, pullRequestsToReviewCount: Int, pullRequestsReviewed: Int) {
+		viewerLogin.stringValue = engineer.login
+		viewerImageView?.loadImageFromURL(urlString: engineer.avatarURL.absoluteString)
 
 		myPullRequestsButton.title = "my (\(ownPullRequestsCount))"
 		awaitingReviewButton.title = "awaiting (\(pullRequestsToReviewCount))"

@@ -33,7 +33,7 @@ final class TeamStatusApp {
 }
 
 extension TeamStatusApp: MainViewProtocol {
-	func didFinishRunning(reviewers: [Reviewer], pullRequests: [PullRequest], viewer: GraphAPIResponse.Data.Viewer?) {
+	func didFinishRunning(reviewers: [Engineer], pullRequests: [PullRequest], viewer: GraphAPIResponse.Data.Viewer?) {
 		for reviewer in reviewers {
 			let pullRequestsReviewRequested = reviewer.PRsToReview(in: pullRequests)
 			let pullRequestsReviewed = reviewer.PRsReviewed(in: pullRequests)
@@ -52,5 +52,5 @@ extension TeamStatusApp: MainViewProtocol {
 	// TODO: This needs to be decoupled with view model used by Mac UI app.
 	func updateStatusItem(title: String, isAttentionNeeded: Bool) {}
 
-	func updateViewerView(with reviewer: Reviewer, ownPullRequestsCount: Int, pullRequestsToReviewCount: Int, pullRequestsReviewed: Int) {}
+	func updateViewerView(with engineer: Engineer, ownPullRequestsCount: Int, pullRequestsToReviewCount: Int, pullRequestsReviewed: Int) {}
 }

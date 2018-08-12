@@ -8,6 +8,41 @@
 
 import Foundation
 
+struct Engineer: Decodable, Hashable {
+	let login: String
+	let avatarURL: URL
+}
+
+extension Engineer {
+	init(viewer: GraphAPIResponse.Data.Viewer) {
+		self.login = viewer.login
+		self.avatarURL = viewer.avatarURL
+	}
+}
+
+extension Engineer {
+	init(author: GraphAPIResponse.Data.Repository.PullRequests.Edge.Node.Author) {
+		self.login = author.login
+		self.avatarURL = author.avatarURL
+	}
+}
+
+extension Engineer {
+	init(author: GraphAPIResponse.Data.Repository.PullRequests.Edge.Node.Reviews.Edge.Node.Author) {
+		self.login = author.login
+		self.avatarURL = author.avatarURL
+	}
+}
+
+extension Engineer {
+	init(requestedReviewer: GraphAPIResponse.Data.Repository.PullRequests.Edge.Node.ReviewRequests.Edge.Node.RequestedReviewer) {
+		self.login = requestedReviewer.login
+		self.avatarURL = requestedReviewer.avatarURL
+	}
+}
+
+
+
 struct GraphAPIResponse: Decodable {
 	let data: Data
 }
@@ -50,14 +85,94 @@ extension GraphAPIResponse.Data.Repository.PullRequests {
 
 extension GraphAPIResponse.Data.Repository.PullRequests.Edge {
 	struct Node: Decodable {
+		//let id: String
 		let title: String
+		let author: Author
+		let mergeable: String
+		//var reviewersRequested: [Reviewer]
+		//var reviewersReviewed: [Reviewer]
+		let reviewRequests: ReviewRequests
+		let reviews: Reviews
 	}
 }
 
+extension GraphAPIResponse.Data.Repository.PullRequests.Edge.Node {
+	struct Author: Decodable {
+		private enum CodingKeys: String, CodingKey {
+			case login
+			case avatarURL = "avatarUrl"
+		}
+
+		let login: String
+		let avatarURL: URL
+	}
+}
+
+extension GraphAPIResponse.Data.Repository.PullRequests.Edge.Node {
+	struct ReviewRequests: Decodable {
+		let edges: [Edge]
+	}
+}
+
+extension GraphAPIResponse.Data.Repository.PullRequests.Edge.Node.ReviewRequests {
+	struct Edge: Decodable {
+		let node: Node
+	}
+}
+
+extension GraphAPIResponse.Data.Repository.PullRequests.Edge.Node.ReviewRequests.Edge {
+	struct Node: Decodable {
+		let requestedReviewer: RequestedReviewer
+	}
+}
+
+extension GraphAPIResponse.Data.Repository.PullRequests.Edge.Node {
+	struct Reviews: Decodable {
+		let edges: [Edge]
+	}
+}
+
+extension GraphAPIResponse.Data.Repository.PullRequests.Edge.Node.Reviews {
+	struct Edge: Decodable {
+		let node: Node
+	}
+}
+
+extension GraphAPIResponse.Data.Repository.PullRequests.Edge.Node.Reviews.Edge {
+	struct Node: Decodable {
+		let author: Author
+	}
+}
+
+extension GraphAPIResponse.Data.Repository.PullRequests.Edge.Node.Reviews.Edge.Node {
+	struct Author: Decodable {
+		private enum CodingKeys: String, CodingKey {
+			case login
+			case avatarURL = "avatarUrl"
+		}
+
+		let login: String
+		let avatarURL: URL
+	}
+}
+
+extension GraphAPIResponse.Data.Repository.PullRequests.Edge.Node.ReviewRequests.Edge.Node {
+	struct RequestedReviewer: Decodable {
+		private enum CodingKeys: String, CodingKey {
+			case login
+			case avatarURL = "avatarUrl"
+		}
+
+		let login: String
+		let avatarURL: URL
+	}
+}
+
+// TODO: To be deleted.
 extension GraphAPIResponse.Data.Repository {
 	struct PullRequest: Decodable {
 		private enum CodingKeys: String, CodingKey {
-			case id
+			//case id
 			case title
 			case authorLogin
 			case mergeable
@@ -65,7 +180,7 @@ extension GraphAPIResponse.Data.Repository {
 			case reviewersReviewed
 		}
 
-		let id: String
+		//let id: String
 		let title: String
 		let authorLogin: String
 		let mergeable: String
@@ -74,23 +189,23 @@ extension GraphAPIResponse.Data.Repository {
 
 		init(from decoder: Decoder) throws {
 			let container = try decoder.container(keyedBy: CodingKeys.self)
-			let id: String = try container.decode(String.self, forKey: .id)
+			//let id: String = try container.decode(String.self, forKey: .id)
 			let title: String = try container.decode(String.self, forKey: .title)
 			let authorLogin: String = try container.decode(String.self, forKey: .authorLogin)
 			let mergeable: String = try container.decode(String.self, forKey: .mergeable)
 
-			self.init(id: id, title: title, authorLogin: authorLogin, mergeable: mergeable, reviewersRequested: [], reviewersReviewed: [])
+			self.init(title: title, authorLogin: authorLogin, mergeable: mergeable, reviewersRequested: [], reviewersReviewed: [])
 		}
 
 		init(
-			id: String,
+			//id: String,
 			title: String,
 			authorLogin: String,
 			mergeable: String,
 			reviewersRequested: [Reviewer] = [],
 			reviewersReviewed: [Reviewer] = []
 		) {
-			self.id = id
+			//self.id = id
 			self.title = title
 			self.authorLogin = authorLogin
 			self.mergeable = mergeable
@@ -148,7 +263,7 @@ final class QueryManager {
 			return nil
 		}
 
-		return "{\"query\": \"query { rateLimit { cost limit remaining resetAt } viewer { login avatarUrl } repository(owner: \\\"\(teamName)\\\", name: \\\"\(repositoryName)\\\") { url  pullRequests(last: 30, states: OPEN) { edges { node { id title author { login avatarUrl } updatedAt mergeable reviews(first: 100) { edges { node { id author { login avatarUrl } } } }, reviewRequests(first: 100) { edges { node { id requestedReviewer { ... on User { name login avatarUrl } } } } } } } }  }}\" }"
+		return "{\"query\": \"query { rateLimit { cost limit remaining resetAt } viewer { login avatarUrl } repository(owner: \\\"\(teamName)\\\", name: \\\"\(repositoryName)\\\") { url  pullRequests(last: 30, states: OPEN) { edges { node { title author { login avatarUrl } updatedAt mergeable reviews(first: 100) { edges { node { author { login avatarUrl } } } }, reviewRequests(first: 100) { edges { node { requestedReviewer { ... on User { login avatarUrl } } } } } } } }  }}\" }"
 	}
 
 	var allPullRequestsQuery: String? {
@@ -159,25 +274,10 @@ final class QueryManager {
 			return nil
 		}
 
-		return "{\"query\": \"query { rateLimit { cost limit remaining resetAt } viewer { login avatarUrl } repository(owner: \\\"\(teamName)\\\", name: \\\"\(repositoryName)\\\") { url  pullRequests(last: 100, states: [OPEN, MERGED]) { edges { node { id title author { login avatarUrl } updatedAt mergeable reviews(first: 100) { edges { node { id author { login avatarUrl } } } }, reviewRequests(first: 100) { edges { node { id requestedReviewer { ... on User { name login avatarUrl } } } } } } } }  }}\" }"
+		return "{\"query\": \"query { rateLimit { cost limit remaining resetAt } viewer { login avatarUrl } repository(owner: \\\"\(teamName)\\\", name: \\\"\(repositoryName)\\\") { url  pullRequests(last: 100, states: [OPEN, MERGED]) { edges { node { title author { login avatarUrl } updatedAt mergeable reviews(first: 100) { edges { node { author { login avatarUrl } } } }, reviewRequests(first: 100) { edges { node { requestedReviewer { ... on User { login avatarUrl } } } } } } } }  }}\" }"
 	}
 	
 	func parseResponse(data: Data) -> APIResponse? {
-
-		do {
-			let graphAPIResponse = try JSONDecoder().decode(GraphAPIResponse.self, from: data)
-
-			print("parsed")
-
-//			if let responseData = json as? [String: Any] {
-//				return parse(json: responseData)
-//			}
-		} catch {
-			print("JSON parsing error: \(error)")
-		}
-
-		print("decoded")
-
 		do {
 			let json = try JSONSerialization.jsonObject(with: data, options: [])
 
@@ -225,7 +325,7 @@ final class QueryManager {
 			}
 
 			guard
-				let id = node["id"] as? String,
+				//let id = node["id"] as? String,
 				let title = node["title"] as? String,
 				let mergeable = node["mergeable"] as? String,
 				let author = node["author"] as? [String: Any],
@@ -235,7 +335,7 @@ final class QueryManager {
 			}
 
 			var pullRequestData = GraphAPIResponse.Data.Repository.PullRequest(
-				id: id,
+				//id: id,
 				title: title,
 				authorLogin: authorLogin,
 				mergeable: mergeable

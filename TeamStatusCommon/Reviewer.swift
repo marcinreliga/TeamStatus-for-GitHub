@@ -8,18 +8,18 @@
 
 import Foundation
 
-struct Reviewer: Hashable, Equatable, Decodable {
-	let login: String
-	let avatarURL: URL
-
-	var hashValue: Int {
-		return login.hashValue
-	}
-
-	public static func ==(lhs: Reviewer, rhs: Reviewer) -> Bool {
-		return lhs.login == rhs.login
-	}
-}
+//struct Reviewer: Hashable, Equatable, Decodable {
+//	let login: String
+//	let avatarURL: URL
+//
+//	var hashValue: Int {
+//		return login.hashValue
+//	}
+//
+//	public static func ==(lhs: Reviewer, rhs: Reviewer) -> Bool {
+//		return lhs.login == rhs.login
+//	}
+//}
 
 extension Reviewer {
 	init(viewer: GraphAPIResponse.Data.Viewer) {
@@ -28,7 +28,7 @@ extension Reviewer {
 	}
 }
 
-extension Reviewer {
+extension Engineer {
 	func PRsToReview(in pullRequests: [GraphAPIResponse.Data.Repository.PullRequest]) -> [GraphAPIResponse.Data.Repository.PullRequest] {
 		return pullRequests.filter({
 			$0.reviewersRequested.contains(where: { $0.login == login })
