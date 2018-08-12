@@ -100,7 +100,7 @@ class StatusMenuController: NSObject {
 }
 
 extension StatusMenuController: MainViewProtocol {
-	func didFinishRunning(reviewers: [Engineer], pullRequests: [GraphAPIResponse.Data.Repository.PullRequest], viewer: GraphAPIResponse.Data.Viewer?) {
+	func didFinishRunning(reviewers: [Engineer], viewer: GraphAPIResponse.Data.Viewer?) {
 		self.viewer = viewer
 
 		self.tableView.reloadData()

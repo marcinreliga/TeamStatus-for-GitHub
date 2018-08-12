@@ -8,10 +8,8 @@
 
 import Foundation
 
-typealias Reviewer = GraphAPIResponse.Data.Repository.PullRequests.Edge.Node.ReviewRequests.Edge.Node.RequestedReviewer
-
 protocol MainViewProtocol {
-	func didFinishRunning(reviewers: [Engineer], pullRequests: [GraphAPIResponse.Data.Repository.PullRequest], viewer: GraphAPIResponse.Data.Viewer?)
+	func didFinishRunning(reviewers: [Engineer], viewer: GraphAPIResponse.Data.Viewer?)
 	func didFailToRun()
 	func updateStatusItem(title: String, isAttentionNeeded: Bool)
 	func updateViewerView(with engineer: Engineer, ownPullRequestsCount: Int, pullRequestsToReviewCount: Int, pullRequestsReviewed: Int)
@@ -23,7 +21,7 @@ final class MainViewModel {
 	private let networkManager: NetworkManager
 
 	var reviewersSorted: [Engineer] = []
-	private var pullRequests: [GraphAPIResponse.Data.Repository.PullRequest] = []
+	private var pullRequests: [GraphAPIResponse.Data.Repository.PullRequests.Edge.Node] = []
 	private var viewer: GraphAPIResponse.Data.Viewer?
 	private var repositoryURL: URL
 
@@ -46,33 +44,22 @@ final class MainViewModel {
 			switch result {
 			case .success(let data):
 				do {
-					guard let apiResponse = _self.queryManager.parseResponse(data: data) else {
-						return
-					}
-
 					let graphAPIResponse = try JSONDecoder().decode(GraphAPIResponse.self, from: data)
-					print("parsed")
 
-					//let reviewersRequested = apiResponse.pullRequests.flatMap({ $0.reviewersRequested })
 					let reviewersRequested = graphAPIResponse.data.repository.pullRequests.edges.map({
 						$0.node.reviewRequests.edges.map({ $0.node.requestedReviewer })
 					}).flatMap({ $0 })
 
-					//let reviewersReviewed = apiResponse.pullRequests.flatMap({ $0.reviewersReviewed })
 					let reviewersReviewed = graphAPIResponse.data.repository.pullRequests.edges.map({
 						$0.node.reviews.edges.map({ $0.node.author })
 					}).flatMap({ $0 })
 
 					let allEngineers = reviewersRequested.map({ Engineer(requestedReviewer: $0) }) + reviewersReviewed.map({ Engineer(author: $0) })
 
-					//let reviewers = (reviewersRequested + reviewersReviewed).uniqueElements
-
 					_self.queryOpenPullRequests(involving: allEngineers.uniqueElements)
 				} catch {
 					print("JSON parsing error: \(error)")
 				}
-
-
 			case .failure:
 				print("Failed to get all pull requests data.")
 			}
@@ -90,27 +77,28 @@ final class MainViewModel {
 			}
 			switch result {
 			case .success(let data):
-				if let apiResponse = _self.queryManager.parseResponse(data: data) {
+				do {
+					let graphAPIResponse = try JSONDecoder().decode(GraphAPIResponse.self, from: data)
+
+					_self.viewer = graphAPIResponse.data.viewer
+					_self.pullRequests = graphAPIResponse.data.repository.pullRequests.edges.map({ $0.node })
+
 					_self.reviewersSorted = engineers.sorted(by: { a, b in
-						a.PRsToReview(in: apiResponse.pullRequests).count < b.PRsToReview(in: apiResponse.pullRequests).count
+						a.PRsToReview(in: _self.pullRequests).count < b.PRsToReview(in: _self.pullRequests).count
 					})
 
-					let openPullRequests = apiResponse.pullRequests
-					_self.pullRequests = openPullRequests
-					_self.viewer = apiResponse.viewer
-
 					if let viewer = _self.viewer {
-						let reviewer = Engineer(viewer: viewer)
-						let pullRequestsCount = _self.pullRequestsToReviewCount(for: reviewer, in: openPullRequests)
-						let isAttentionNeeded = _self.hasAnyConflicts(for: viewer, in: openPullRequests)
-						let ownPullRequestsCount = _self.numberOfPullRequests(for: viewer, in: openPullRequests)
-						let pullRequestsReviewedCount = _self.numberOfPullRequestsReviewed(by: viewer, in: openPullRequests)
+						let engineer = Engineer(viewer: viewer)
+						let pullRequestsCount = _self.pullRequestsToReviewCount(for: engineer, in: _self.pullRequests)
+						let isAttentionNeeded = _self.hasAnyConflicts(for: viewer, in: _self.pullRequests)
+						let ownPullRequestsCount = _self.numberOfPullRequests(for: viewer, in: _self.pullRequests)
+						let pullRequestsReviewedCount = _self.numberOfPullRequestsReviewed(by: viewer, in: _self.pullRequests)
 
 						DispatchQueue.main.async {
 							// TODO: This can be merged into single call.
 							_self.view.updateStatusItem(title: "\(pullRequestsCount)", isAttentionNeeded: isAttentionNeeded)
 							_self.view.updateViewerView(
-								with: reviewer,
+								with: engineer,
 								ownPullRequestsCount: ownPullRequestsCount,
 								pullRequestsToReviewCount: pullRequestsCount,
 								pullRequestsReviewed: pullRequestsReviewedCount
@@ -119,8 +107,10 @@ final class MainViewModel {
 					}
 
 					DispatchQueue.main.async {
-						_self.view.didFinishRunning(reviewers: _self.reviewersSorted, pullRequests: openPullRequests, viewer: apiResponse.viewer)
+						_self.view.didFinishRunning(reviewers: _self.reviewersSorted, viewer: _self.viewer)
 					}
+				} catch {
+					print("JSON parsing error: \(error)")
 				}
 			case .failure:
 				DispatchQueue.main.async {
@@ -130,20 +120,20 @@ final class MainViewModel {
 		}
 	}
 
-	func pullRequestsToReviewCount(for engineer: Engineer, in pullRequests: [GraphAPIResponse.Data.Repository.PullRequest]) -> Int {
+	func pullRequestsToReviewCount(for engineer: Engineer, in pullRequests: [GraphAPIResponse.Data.Repository.PullRequests.Edge.Node]) -> Int {
 		return engineer.PRsToReview(in: pullRequests).count
 	}
 
-	func hasAnyConflicts(for viewer: GraphAPIResponse.Data.Viewer, in pullRequests: [GraphAPIResponse.Data.Repository.PullRequest]) -> Bool {
-		return pullRequests.first(where: { $0.mergeable == "CONFLICTING" && $0.authorLogin == viewer.login }) != nil
+	func hasAnyConflicts(for viewer: GraphAPIResponse.Data.Viewer, in pullRequests: [GraphAPIResponse.Data.Repository.PullRequests.Edge.Node]) -> Bool {
+		return pullRequests.first(where: { $0.mergeable == "CONFLICTING" && $0.author.login == viewer.login }) != nil
 	}
 
-	func numberOfPullRequests(for viewer: GraphAPIResponse.Data.Viewer, in pullRequests: [GraphAPIResponse.Data.Repository.PullRequest]) -> Int {
-		return pullRequests.filter({ $0.authorLogin == viewer.login }).count
+	func numberOfPullRequests(for viewer: GraphAPIResponse.Data.Viewer, in pullRequests: [GraphAPIResponse.Data.Repository.PullRequests.Edge.Node]) -> Int {
+		return pullRequests.filter({ $0.author.login == viewer.login }).count
 	}
 
-	func numberOfPullRequestsReviewed(by viewer: GraphAPIResponse.Data.Viewer, in pullRequests: [GraphAPIResponse.Data.Repository.PullRequest]) -> Int {
-		return pullRequests.filter({ $0.reviewersReviewed.contains(where: { $0.login == viewer.login }) }).count
+	func numberOfPullRequestsReviewed(by viewer: GraphAPIResponse.Data.Viewer, in pullRequests: [GraphAPIResponse.Data.Repository.PullRequests.Edge.Node]) -> Int {
+		return pullRequests.filter({ $0.reviews.edges.contains(where: { $0.node.author.login == viewer.login }) }).count
 	}
 
 	private var viewDataForReviewer: [ReviewerCellView.ViewData] {
