@@ -3,6 +3,10 @@ A macOS status bar application for tracking code review process within the team.
 
 <img src="https://raw.githubusercontent.com/marcinreliga/TeamStatus-for-GitHub/master/doc/preview.png" width="500">
 
+## Download
+Prebuilt binary version of the app is available here:
+<a href="https://github.com/marcinreliga/TeamStatus-for-GitHub/blob/master/release/TeamStatus.app.zip">TeamStatus.app.zip</a>.
+
 ## Configuration
 ### 1. Generate personal access token
 1. Sign in to your GitHub account.
